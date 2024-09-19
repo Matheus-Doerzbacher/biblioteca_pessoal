@@ -1,4 +1,4 @@
-package com.example.biblioteca_pessoal
+package com.example.biblioteca
 
 import io.flutter.embedding.android.FlutterActivity
 
