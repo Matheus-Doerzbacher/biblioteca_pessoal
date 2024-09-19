@@ -1,6 +1,7 @@
-import 'package:biblioteca_pessoal/controllers/user_controller.dart';
-import 'package:biblioteca_pessoal/page/home_page.dart';
-import 'package:biblioteca_pessoal/page/login_page.dart';
+import 'package:biblioteca_pessoal/core/inject/_inject.dart';
+import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
+import 'package:biblioteca_pessoal/layers/presentation/ui/pages/home_page.dart';
+import 'package:biblioteca_pessoal/layers/presentation/ui/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -11,6 +12,10 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  // Inicialize todos os módulos de injeção de dependências
+  Inject.init();
+
   runApp(const MyApp());
 }
 
@@ -21,7 +26,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Google Sing In',
+      title: 'Biblioteca Pessoal',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         textTheme: GoogleFonts.poppinsTextTheme(),

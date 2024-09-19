@@ -1,5 +1,5 @@
-import 'package:biblioteca_pessoal/controllers/user_controller.dart';
-import 'package:biblioteca_pessoal/page/login_page.dart';
+import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
+import 'package:biblioteca_pessoal/layers/presentation/ui/pages/login_page.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
