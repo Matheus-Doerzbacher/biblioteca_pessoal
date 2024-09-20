@@ -1,3 +1,4 @@
+import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:biblioteca_pessoal/layers/domain/entities/livro_entity.dart';
@@ -11,6 +12,7 @@ class LivroPage extends StatefulWidget {
 }
 
 class _LivroPageState extends State<LivroPage> {
+  final user = UserController.user;
   late LivroController controller;
 
   @override
@@ -21,6 +23,7 @@ class _LivroPageState extends State<LivroPage> {
 
   void _adicionarLivro() {
     Livro livro = Livro(
+      uidUsuario: user!.uid,
       autor: 'Nome do Autor',
       titulo: 'Como cagar em pé',
       paginas: 3054,

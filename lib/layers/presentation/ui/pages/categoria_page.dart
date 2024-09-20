@@ -1,5 +1,6 @@
 import 'package:biblioteca_pessoal/layers/domain/entities/categoria_entity.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/categoria_controller.dart';
+import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -11,6 +12,7 @@ class CategoriaPage extends StatefulWidget {
 }
 
 class _CategoriaPageState extends State<CategoriaPage> {
+  final user = UserController.user;
   late CategoriaController controller;
   final TextEditingController _textController = TextEditingController();
   final TextEditingController _editController = TextEditingController();
@@ -30,7 +32,9 @@ class _CategoriaPageState extends State<CategoriaPage> {
 
   void _adicionarCategoria() async {
     if (_textController.text.isNotEmpty) {
-      await controller.createCategoria(Categoria(nome: _textController.text));
+      await controller.createCategoria(
+        Categoria(nome: _textController.text, uidUsuario: user!.uid),
+      );
       _textController.clear();
       setState(() {});
     }
@@ -78,7 +82,12 @@ class _CategoriaPageState extends State<CategoriaPage> {
 
   Future<void> _salvarCategoria(Categoria categoria) async {
     await controller.updateCategoria(
-        Categoria(id: categoria.id, nome: _editController.text));
+      Categoria(
+        id: categoria.id,
+        nome: _editController.text,
+        uidUsuario: user!.uid,
+      ),
+    );
     if (mounted) {
       Navigator.of(context).pop();
       setState(() {});
@@ -94,6 +103,7 @@ class _CategoriaPageState extends State<CategoriaPage> {
       ),
       body: Column(
         children: [
+          Text(user?.uid ?? ''),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: TextField(
@@ -109,7 +119,7 @@ class _CategoriaPageState extends State<CategoriaPage> {
           ),
           Expanded(
             child: FutureBuilder<void>(
-              future: controller.getCategorias(),
+              future: controller.getCategorias(user!.uid),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());

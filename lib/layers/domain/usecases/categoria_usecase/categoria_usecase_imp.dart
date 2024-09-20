@@ -28,8 +28,8 @@ class GetCategoriasUsecaseImp implements GetCategoriasUsecase {
   GetCategoriasUsecaseImp(this._getCategoriasRepository);
 
   @override
-  Future<List<Categoria>> call() async {
-    return await _getCategoriasRepository();
+  Future<List<Categoria>> call(String uidUsuario) async {
+    return await _getCategoriasRepository(uidUsuario);
   }
 }
 

@@ -8,6 +8,7 @@ enum StatusLeitura {
 
 class Livro {
   String? id;
+  final String uidUsuario;
   final String autor;
   final String titulo;
   final int paginas;
@@ -22,6 +23,7 @@ class Livro {
 
   Livro({
     this.id,
+    required this.uidUsuario,
     required this.autor,
     required this.titulo,
     required this.paginas,
@@ -38,6 +40,7 @@ class Livro {
   factory Livro.fromJson(Map<String, dynamic> json) {
     return Livro(
       id: json['id'],
+      uidUsuario: json['uidUsuario'],
       autor: json['autor'],
       titulo: json['titulo'],
       paginas: json['paginas'],
@@ -61,6 +64,7 @@ class Livro {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
+      'uidUsuario': uidUsuario,
       'autor': autor,
       'titulo': titulo,
       'paginas': paginas,

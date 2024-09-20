@@ -9,7 +9,7 @@ abstract class DeleteCategoriaRepository {
 }
 
 abstract class GetCategoriasRepository {
-  Future<List<Categoria>> call();
+  Future<List<Categoria>> call(String uidUsuario);
 }
 
 abstract class UpdateCategoriaRepository {

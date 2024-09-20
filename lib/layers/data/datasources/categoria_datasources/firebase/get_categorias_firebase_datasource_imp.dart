@@ -4,10 +4,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class GetCategoriasFirebaseDatasourceImp implements GetCategoriasDatasource {
   @override
-  Future<List<Categoria>> call() async {
+  Future<List<Categoria>> call(String uidUsuario) async {
     try {
       final firestore = FirebaseFirestore.instance;
-      final querySnapshot = await firestore.collection('categorias').get();
+      final querySnapshot = await firestore
+          .collection('categorias')
+          .where('uidUsuario', isEqualTo: uidUsuario)
+          .get();
 
       return querySnapshot.docs.map((doc) {
         final data = doc.data();

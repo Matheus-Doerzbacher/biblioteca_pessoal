@@ -1,5 +1,6 @@
 import 'package:biblioteca_pessoal/layers/domain/entities/categoria_entity.dart';
 import 'package:biblioteca_pessoal/layers/domain/usecases/categoria_usecase/categoria_usecase.dart';
+import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
 
 class CategoriaController {
   final CreateCategoriaUsecase _createCategoriaUsecase;
@@ -13,7 +14,7 @@ class CategoriaController {
     this._getCategoriasUsecase,
     this._updateCategoriaUsecase,
   ) {
-    getCategorias();
+    getCategorias(UserController.user?.uid ?? '');
   }
 
   late List<Categoria> categorias;
@@ -26,8 +27,8 @@ class CategoriaController {
     return await _deleteCategoriaUsecase(idCategoria);
   }
 
-  getCategorias() async {
-    categorias = await _getCategoriasUsecase();
+  getCategorias(String uidUsuario) async {
+    categorias = await _getCategoriasUsecase(uidUsuario);
   }
 
   updateCategoria(Categoria categoria) async {

@@ -27,8 +27,8 @@ class GetCategoriasRepositoryImp implements GetCategoriasRepository {
 
   GetCategoriasRepositoryImp(this._getCategoriasDatasource);
   @override
-  Future<List<Categoria>> call() async {
-    return _getCategoriasDatasource();
+  Future<List<Categoria>> call(String uidUsuario) async {
+    return _getCategoriasDatasource(uidUsuario);
   }
 }
 

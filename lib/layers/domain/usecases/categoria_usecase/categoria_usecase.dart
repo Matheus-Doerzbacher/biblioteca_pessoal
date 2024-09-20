@@ -9,7 +9,7 @@ abstract class DeleteCategoriaUsecase {
 }
 
 abstract class GetCategoriasUsecase {
-  Future<List<Categoria>> call();
+  Future<List<Categoria>> call(String uidUsuario);
 }
 
 abstract class UpdateCategoriaUsecase {

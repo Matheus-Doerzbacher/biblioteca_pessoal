@@ -1,6 +1,7 @@
 import 'package:biblioteca_pessoal/layers/domain/entities/emprestimo_entity.dart';
 import 'package:biblioteca_pessoal/layers/domain/entities/livro_entity.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/emprestimo_controller.dart';
+import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -12,6 +13,7 @@ class EmprestimoPage extends StatefulWidget {
 }
 
 class _EmprestimoPageState extends State<EmprestimoPage> {
+  final user = UserController.user;
   late EmprestimoController controller;
   final TextEditingController _destinatarioController = TextEditingController();
   final TextEditingController _dataEmprestimoController =
@@ -34,6 +36,7 @@ class _EmprestimoPageState extends State<EmprestimoPage> {
 
   void _salvarEmprestimo() async {
     final livro = Livro(
+      uidUsuario: user!.uid,
       autor: 'autor',
       titulo: 'titulo',
       paginas: 10,
@@ -41,6 +44,7 @@ class _EmprestimoPageState extends State<EmprestimoPage> {
     );
 
     final emprestimo = Emprestimo(
+      uidUsuario: user!.uid,
       livro: livro,
       destinatario: _destinatarioController.text,
       dataEmprestimo: _dataEmprestimoController.text.isNotEmpty

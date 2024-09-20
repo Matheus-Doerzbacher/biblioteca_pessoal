@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 enum StatusEmprestimo { emprestado, atrasado, devolvido }
 
 class Emprestimo {
+  final String? id;
+  final String uidUsuario;
   final Livro livro;
   final String destinatario;
   final DateTime dataEmprestimo;
@@ -13,6 +15,8 @@ class Emprestimo {
 
   factory Emprestimo.fromJson(Map<String, dynamic> json) {
     return Emprestimo(
+      id: json['id'],
+      uidUsuario: json['uidUsuario'],
       livro: Livro.fromJson(json['livro']),
       destinatario: json['destinatario'],
       dataEmprestimo: (json['dataEmprestimo'] as Timestamp).toDate(),
@@ -27,6 +31,8 @@ class Emprestimo {
 
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
+      'uidUsuario': uidUsuario,
       'livro': livro.toJson(),
       'destinatario': destinatario,
       'dataEmprestimo': dataEmprestimo,
@@ -37,6 +43,8 @@ class Emprestimo {
   }
 
   Emprestimo({
+    this.id,
+    required this.uidUsuario,
     required this.livro,
     required this.destinatario,
     DateTime? dataEmprestimo,

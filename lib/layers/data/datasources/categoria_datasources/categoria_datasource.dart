@@ -9,7 +9,7 @@ abstract class DeleteCategoriaDatasource {
 }
 
 abstract class GetCategoriasDatasource {
-  Future<List<Categoria>> call();
+  Future<List<Categoria>> call(String uidUsuario);
 }
 
 abstract class UpdateCategoriaDatasource {
