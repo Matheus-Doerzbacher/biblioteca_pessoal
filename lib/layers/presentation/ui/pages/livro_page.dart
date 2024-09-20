@@ -31,7 +31,7 @@ class _LivroPageState extends State<LivroPage> {
     );
     controller.createLivro(livro);
     setState(() {
-      controller.getLivros();
+      controller.getLivros(user!.uid);
     });
   }
 
@@ -51,7 +51,7 @@ class _LivroPageState extends State<LivroPage> {
           ),
           Expanded(
             child: FutureBuilder<void>(
-              future: controller.getLivros(),
+              future: controller.getLivros(user!.uid),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());

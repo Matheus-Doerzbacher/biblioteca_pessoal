@@ -13,7 +13,7 @@ abstract class GetLivroByIdUsecase {
 }
 
 abstract class GetLivrosUsecase {
-  Future<List<Livro>> call();
+  Future<List<Livro>> call(String uidUsuario);
 }
 
 abstract class UpdateLivroUsecase {

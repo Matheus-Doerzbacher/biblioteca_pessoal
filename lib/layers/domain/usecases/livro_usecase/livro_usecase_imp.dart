@@ -47,8 +47,8 @@ class GetLivrosUsecaseImp implements GetLivrosUsecase {
   GetLivrosUsecaseImp(this._getLivrosRepository);
 
   @override
-  Future<List<Livro>> call() async {
-    return _getLivrosRepository();
+  Future<List<Livro>> call(String uidUsuario) async {
+    return _getLivrosRepository(uidUsuario);
   }
 }
 

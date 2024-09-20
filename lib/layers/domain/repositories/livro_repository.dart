@@ -13,7 +13,7 @@ abstract class GetLivroByIdRepository {
 }
 
 abstract class GetLivrosRepository {
-  Future<List<Livro>> call();
+  Future<List<Livro>> call(String uidUsuario);
 }
 
 abstract class UpdateLivroRepository {

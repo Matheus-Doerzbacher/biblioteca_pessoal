@@ -13,7 +13,7 @@ abstract class GetLivroByIdDatasource {
 }
 
 abstract class GetLivrosDatasource {
-  Future<List<Livro>> call();
+  Future<List<Livro>> call(String uidUsuario);
 }
 
 abstract class UpdateLivroDatasource {

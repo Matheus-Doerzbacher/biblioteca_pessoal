@@ -1,5 +1,6 @@
 import 'package:biblioteca_pessoal/layers/domain/entities/livro_entity.dart';
 import 'package:biblioteca_pessoal/layers/domain/usecases/livro_usecase/livro_usecase.dart';
+import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
 
 class LivroController {
   final GetLivroByIdUsecase _getLivroByIdUsecase;
@@ -15,7 +16,7 @@ class LivroController {
     this._updateLivroUsecase,
     this._deleteLivroUsecase,
   ) {
-    getLivros();
+    getLivros(UserController.user?.uid ?? '');
   }
 
   late List<Livro> livros;
@@ -24,8 +25,8 @@ class LivroController {
     return await _getLivroByIdUsecase(idLivro);
   }
 
-  getLivros() async {
-    livros = await _getLivrosUsecase();
+  getLivros(String uidUsuario) async {
+    livros = await _getLivrosUsecase(uidUsuario);
   }
 
   createLivro(Livro livro) async {

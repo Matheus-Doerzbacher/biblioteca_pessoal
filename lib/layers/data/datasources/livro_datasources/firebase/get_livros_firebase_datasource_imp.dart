@@ -4,10 +4,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class GetLivrosFirebaseDatasourceImp implements GetLivrosDatasource {
   @override
-  Future<List<Livro>> call() async {
+  Future<List<Livro>> call(String uidUsuario) async {
     try {
       final firestore = FirebaseFirestore.instance;
-      final querySnapshot = await firestore.collection('livros').get();
+      final querySnapshot = await firestore
+          .collection('livros')
+          .where('uidUsuario', isEqualTo: uidUsuario)
+          .get();
 
       final livros = querySnapshot.docs.map((doc) {
         final data = doc.data();

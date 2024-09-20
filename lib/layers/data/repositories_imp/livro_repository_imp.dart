@@ -47,8 +47,8 @@ class GetLivrosRepositoryImp implements GetLivrosRepository {
   GetLivrosRepositoryImp(this._getLivrosDatasource);
 
   @override
-  Future<List<Livro>> call() async {
-    return await _getLivrosDatasource();
+  Future<List<Livro>> call(String uidUsuario) async {
+    return await _getLivrosDatasource(uidUsuario);
   }
 }
 

@@ -1,6 +1,7 @@
 import 'package:biblioteca_pessoal/core/inject/_inject.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/ui/pages/emprestimo_page.dart';
+import 'package:biblioteca_pessoal/layers/presentation/ui/pages/livro_page.dart';
 import 'package:biblioteca_pessoal/layers/presentation/ui/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -34,9 +35,7 @@ class MyApp extends StatelessWidget {
             seedColor: const Color.fromARGB(255, 108, 99, 255)),
         useMaterial3: true,
       ),
-      home: UserController.user != null
-          ? const EmprestimoPage()
-          : const LoginPage(),
+      home: UserController.user != null ? const LivroPage() : const LoginPage(),
     );
   }
 }
