@@ -31,7 +31,6 @@ class Emprestimo {
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
       'uidUsuario': uidUsuario,
       'livro': livro.toJson(),
       'destinatario': destinatario,

@@ -9,7 +9,7 @@ abstract class GetEmprestimoByIdRepository {
 }
 
 abstract class GetEmprestimosRepository {
-  Future<List<Emprestimo>> call();
+  Future<List<Emprestimo>> call(String uidUsuario);
 }
 
 abstract class DeleteEmprestimoRepository {

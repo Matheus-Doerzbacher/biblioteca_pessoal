@@ -63,7 +63,6 @@ class Livro {
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
       'uidUsuario': uidUsuario,
       'autor': autor,
       'titulo': titulo,

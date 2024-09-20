@@ -4,11 +4,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class GetEmprestimosFirebaseDatasourceImp implements GetEmprestimosDatasource {
   @override
-  Future<List<Emprestimo>> call() async {
+  Future<List<Emprestimo>> call(String uidUsuario) async {
     final firestore = FirebaseFirestore.instance;
     final emprestimosRef = firestore.collection('emprestimos');
 
-    final snapshot = await emprestimosRef.get();
+    final snapshot =
+        await emprestimosRef.where('uidUsuario', isEqualTo: uidUsuario).get();
 
     if (snapshot.docs.isNotEmpty) {
       return snapshot.docs.map((doc) {

@@ -34,8 +34,8 @@ class GetEmprestimosRepositoryImp implements GetEmprestimosRepository {
   GetEmprestimosRepositoryImp(this._getEmprestimosDatasource);
 
   @override
-  Future<List<Emprestimo>> call() async {
-    return await _getEmprestimosDatasource();
+  Future<List<Emprestimo>> call(String uidUsuario) async {
+    return await _getEmprestimosDatasource(uidUsuario);
   }
 }
 

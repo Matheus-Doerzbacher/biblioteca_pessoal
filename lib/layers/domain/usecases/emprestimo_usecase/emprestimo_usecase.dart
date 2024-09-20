@@ -9,7 +9,7 @@ abstract class GetEmprestimoByIdUsecase {
 }
 
 abstract class GetEmprestimosUsecase {
-  Future<List<Emprestimo>> call();
+  Future<List<Emprestimo>> call(String uidUsuario);
 }
 
 abstract class DeleteEmprestimoUsecase {

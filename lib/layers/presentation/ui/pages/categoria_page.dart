@@ -103,7 +103,6 @@ class _CategoriaPageState extends State<CategoriaPage> {
       ),
       body: Column(
         children: [
-          Text(user?.uid ?? ''),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: TextField(

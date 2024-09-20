@@ -1,5 +1,6 @@
 import 'package:biblioteca_pessoal/layers/domain/entities/emprestimo_entity.dart';
 import 'package:biblioteca_pessoal/layers/domain/usecases/emprestimo_usecase/emprestimo_usecase.dart';
+import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
 
 class EmprestimoController {
   final CreateEmprestimoUsecase _createEmprestimoUsecase;
@@ -15,7 +16,7 @@ class EmprestimoController {
     this._updateEmprestimoUsecase,
     this._deleteEmprestimoUsecase,
   ) {
-    getEmprestimos();
+    getEmprestimos(UserController.user?.uid ?? '');
   }
 
   late List<Emprestimo> emprestimos;
@@ -24,8 +25,8 @@ class EmprestimoController {
     return await _getEmprestimoByIdUsecase(idLivro);
   }
 
-  getEmprestimos() async {
-    emprestimos = await _getEmprestimosUsecase();
+  getEmprestimos(String uidUsuario) async {
+    emprestimos = await _getEmprestimosUsecase(uidUsuario);
   }
 
   Future<bool> createEmprestimo(Emprestimo emprestimo) async {

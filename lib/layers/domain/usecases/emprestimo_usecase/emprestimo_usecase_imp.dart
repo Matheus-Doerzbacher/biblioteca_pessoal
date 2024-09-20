@@ -34,8 +34,8 @@ class GetEmprestimosUsecaseImp implements GetEmprestimosUsecase {
   GetEmprestimosUsecaseImp(this._getEmprestimosRepository);
 
   @override
-  Future<List<Emprestimo>> call() async {
-    return await _getEmprestimosRepository();
+  Future<List<Emprestimo>> call(String uidUsuario) async {
+    return await _getEmprestimosRepository(uidUsuario);
   }
 }
 
