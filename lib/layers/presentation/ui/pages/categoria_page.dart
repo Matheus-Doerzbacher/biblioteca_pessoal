@@ -1,6 +1,7 @@
 import 'package:biblioteca_pessoal/layers/domain/entities/categoria_entity.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/categoria_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
+import 'package:biblioteca_pessoal/layers/presentation/widgets/categoria_item.dart';
 import 'package:biblioteca_pessoal/layers/presentation/widgets/drawer_custom/drawer_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -97,67 +98,123 @@ class _CategoriaPageState extends State<CategoriaPage> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Categorias'),
         centerTitle: true,
       ),
       drawer: const DrawerCustom(namePageActive: '/categoria'),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextField(
-              controller: _textController,
-              decoration: InputDecoration(
-                labelText: 'Nova Categoria',
-                suffixIcon: IconButton(
-                  icon: const Icon(Icons.add),
+      body: Padding(
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 24),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      color: colorScheme.surfaceContainer,
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: 4,
+                          color: colorScheme.shadow,
+                          offset: const Offset(
+                            2,
+                            2,
+                          ),
+                        )
+                      ],
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      child: TextField(
+                        controller: _textController,
+                        decoration: InputDecoration(
+                          isDense: true,
+                          labelText: 'Nome da Categoria',
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                              color: Color(0x00000000),
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                              color: Color(0x00000000),
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: colorScheme.error,
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: colorScheme.error,
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          filled: true,
+                          fillColor: colorScheme.surfaceContainer,
+                        ),
+                        cursorColor: colorScheme.onSurface,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                IconButton(
+                  color: colorScheme.primary,
+                  style: IconButton.styleFrom(
+                    backgroundColor: colorScheme.primary,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  icon: Icon(
+                    Icons.add,
+                    color: colorScheme.onPrimary,
+                    size: 24,
+                  ),
                   onPressed: _adicionarCategoria,
                 ),
+              ],
+            ),
+            Expanded(
+              child: FutureBuilder<void>(
+                future: controller.getCategorias(user!.uid),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('Erro: ${snapshot.error}'));
+                  } else {
+                    return ListView.builder(
+                      itemCount: controller.categorias.length,
+                      itemBuilder: (context, index) {
+                        final categoria = controller.categorias[index];
+                        return CategoriaItem(
+                          text: categoria.nome,
+                          deleteCategoria: () => _deleteCategoria(categoria),
+                          updateCategoria: () => _editarCategoria(categoria),
+                        );
+                      },
+                    );
+                  }
+                },
               ),
             ),
-          ),
-          Expanded(
-            child: FutureBuilder<void>(
-              future: controller.getCategorias(user!.uid),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                } else if (snapshot.hasError) {
-                  return Center(child: Text('Erro: ${snapshot.error}'));
-                } else {
-                  return ListView.builder(
-                    itemCount: controller.categorias.length,
-                    itemBuilder: (context, index) {
-                      final categoria = controller.categorias[index];
-                      return ListTile(
-                        title: Text(categoria.nome),
-                        trailing: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            IconButton(
-                              icon: const Icon(Icons.edit),
-                              onPressed: () {
-                                _editarCategoria(categoria);
-                              },
-                            ),
-                            IconButton(
-                              icon: const Icon(Icons.delete),
-                              onPressed: () {
-                                _deleteCategoria(categoria);
-                              },
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  );
-                }
-              },
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

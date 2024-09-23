@@ -27,11 +27,3 @@ final ColorScheme darkColorSchema = ColorScheme.fromSeed(
   onSurfaceVariant: const Color(0xFF658593),
   shadow: const Color(0x3fffffff),
 );
-
-// Cores adicionais
-// const Color accent1 = Color(0xFF4D4B6C);
-// const Color accent2 = Color(0xFF4D9281);
-// const Color accent3 = Color(0xFF6D604A);
-// const Color accent4 = Color(0xcdffffff);
-// const Color success = Color(0xFF336A4A);
-// const Color warning = Color(0xFFF3C344);

@@ -25,7 +25,8 @@ class DrawerItem extends StatelessWidget {
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: isActive() ? colorScheme.secondaryContainer : null,
+          color:
+              isActive() ? colorScheme.primaryContainer.withOpacity(0.5) : null,
           borderRadius: BorderRadius.circular(8),
         ),
         child: Padding(
@@ -45,6 +46,7 @@ class DrawerItem extends StatelessWidget {
                 padding: const EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
                 child: Text(
                   text,
+                  style: TextStyle(color: colorScheme.onSurface),
                 ),
               ),
             ],

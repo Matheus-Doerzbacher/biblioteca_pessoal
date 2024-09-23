@@ -11,6 +11,7 @@ class DrawerCustom extends StatelessWidget {
     final colorSchema = Theme.of(context).colorScheme;
 
     return Drawer(
+      backgroundColor: colorSchema.surface,
       child: Padding(
         padding: const EdgeInsets.fromLTRB(16, 64, 16, 16),
         child: Column(
@@ -36,10 +37,17 @@ class DrawerCustom extends StatelessWidget {
               text: 'Meus Livros',
             ),
             DrawerItem(
-                namePage: '/categoria',
-                namePageActive: namePageActive,
-                icon: Icons.category,
-                text: 'Categorias')
+              namePage: '/adicionar',
+              namePageActive: namePageActive,
+              icon: Icons.add_circle_outline,
+              text: 'Adicionar um livro',
+            ),
+            DrawerItem(
+              namePage: '/categoria',
+              namePageActive: namePageActive,
+              icon: Icons.category,
+              text: 'Categorias',
+            ),
           ],
         ),
       ),
