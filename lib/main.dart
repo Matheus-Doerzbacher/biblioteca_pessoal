@@ -1,7 +1,7 @@
 import 'package:biblioteca_pessoal/core/inject/_inject.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
-import 'package:biblioteca_pessoal/layers/presentation/ui/pages/emprestimo_page.dart';
-import 'package:biblioteca_pessoal/layers/presentation/ui/pages/livro_page.dart';
+import 'package:biblioteca_pessoal/layers/presentation/theme/theme.dart';
+import 'package:biblioteca_pessoal/layers/presentation/ui/pages/home_page.dart';
 import 'package:biblioteca_pessoal/layers/presentation/ui/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -31,11 +31,20 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         textTheme: GoogleFonts.poppinsTextTheme(),
-        colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color.fromARGB(255, 108, 99, 255)),
+        colorScheme: lightColorSchema,
         useMaterial3: true,
       ),
-      home: UserController.user != null ? const LivroPage() : const LoginPage(),
+      darkTheme: ThemeData(
+        textTheme: GoogleFonts.poppinsTextTheme(),
+        colorScheme: darkColorSchema,
+        useMaterial3: true,
+      ),
+      initialRoute: UserController.user != null ? '/' : '/login',
+      routes: {
+        '/login': (context) => const LoginPage(),
+        '/': (context) => const HomePage()
+      },
+      themeMode: ThemeMode.light,
     );
   }
 }

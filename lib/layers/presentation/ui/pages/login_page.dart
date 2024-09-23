@@ -17,19 +17,38 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final colorSchema = Theme.of(context).colorScheme;
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             SvgPicture.asset('assets/images/login.svg'),
             Expanded(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text(
-                    'Faça login com o Google para prosseguir',
-                    style: Theme.of(context).textTheme.titleMedium,
+                  RichText(
+                    textScaler: MediaQuery.of(context).textScaler,
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: 'Minha',
+                          style: TextStyle(
+                            color: colorSchema.onSurface,
+                          ),
+                        ),
+                        TextSpan(
+                          text: 'Biblioteca',
+                          style: TextStyle(
+                            color: colorSchema.primary,
+                          ),
+                        )
+                      ],
+                      style: const TextStyle(fontSize: 32),
+                    ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -40,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
                               ? null
                               : () async {
                                   setState(() {
-                                    _isLoading = true; // Start loading
+                                    _isLoading = true;
                                   });
 
                                   try {
@@ -49,9 +68,7 @@ class _LoginPageState extends State<LoginPage> {
 
                                     if (user != null && context.mounted) {
                                       Navigator.of(context)
-                                          .pushReplacement(MaterialPageRoute(
-                                        builder: (context) => const HomePage(),
-                                      ));
+                                          .pushReplacementNamed('/');
                                     }
                                   } on FirebaseAuthException catch (error) {
                                     if (kDebugMode) {
@@ -61,8 +78,10 @@ class _LoginPageState extends State<LoginPage> {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
                                         SnackBar(
-                                          content: Text(error.message ??
-                                              'Erro não esperado'),
+                                          content: Text(
+                                            error.message ??
+                                                'Erro não esperado',
+                                          ),
                                         ),
                                       );
                                     }
@@ -85,13 +104,14 @@ class _LoginPageState extends State<LoginPage> {
                                   }
                                 },
                           label: _isLoading
-                              ? const SizedBox(
+                              ? SizedBox(
                                   width: 24,
                                   height: 24,
                                   child: CircularProgressIndicator(
                                     strokeWidth: 2,
                                     valueColor: AlwaysStoppedAnimation<Color>(
-                                        Colors.white),
+                                      colorSchema.onPrimary,
+                                    ),
                                   ),
                                 )
                               : const Text('Logar com Google'),
@@ -100,9 +120,8 @@ class _LoginPageState extends State<LoginPage> {
                             size: 35,
                           ),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                const Color.fromARGB(255, 108, 99, 255),
-                            foregroundColor: Colors.white,
+                            backgroundColor: colorSchema.primary,
+                            foregroundColor: colorSchema.onPrimary,
                             textStyle: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 18,

@@ -13,6 +13,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final user = UserController.user;
+    final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
       body: Center(
         child: Column(
@@ -25,20 +26,18 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(height: 20),
             Text(
               user?.displayName ?? 'teste',
-              style: const TextStyle(fontSize: 18),
+              style: TextStyle(fontSize: 18, color: colorScheme.onSurface),
             ),
             ElevatedButton(
               onPressed: () async {
                 await UserController.signOut();
                 if (context.mounted) {
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => const LoginPage(),
-                  ));
+                  Navigator.of(context).pushReplacementNamed('/login');
                 }
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Theme.of(context).colorScheme.secondary,
-                foregroundColor: Colors.white,
+                backgroundColor: colorScheme.error,
+                foregroundColor: colorScheme.onError,
               ),
               child: const Text('Logout'),
             )
