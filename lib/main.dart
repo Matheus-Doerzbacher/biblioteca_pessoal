@@ -1,6 +1,7 @@
 import 'package:biblioteca_pessoal/core/inject/_inject.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/theme/theme.dart';
+import 'package:biblioteca_pessoal/layers/presentation/ui/pages/categoria_page.dart';
 import 'package:biblioteca_pessoal/layers/presentation/ui/pages/home_page.dart';
 import 'package:biblioteca_pessoal/layers/presentation/ui/pages/login_page.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +43,8 @@ class MyApp extends StatelessWidget {
       initialRoute: UserController.user != null ? '/' : '/login',
       routes: {
         '/login': (context) => const LoginPage(),
-        '/': (context) => const HomePage()
+        '/': (context) => const HomePage(),
+        '/categoria': (context) => const CategoriaPage(),
       },
       themeMode: ThemeMode.light,
     );

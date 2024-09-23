@@ -1,5 +1,5 @@
 import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
-import 'package:biblioteca_pessoal/layers/presentation/ui/pages/login_page.dart';
+import 'package:biblioteca_pessoal/layers/presentation/widgets/drawer_custom/drawer_custom.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -15,6 +15,11 @@ class _HomePageState extends State<HomePage> {
     final user = UserController.user;
     final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Home Page'),
+        centerTitle: true,
+      ),
+      drawer: const DrawerCustom(namePageActive: '/'),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
