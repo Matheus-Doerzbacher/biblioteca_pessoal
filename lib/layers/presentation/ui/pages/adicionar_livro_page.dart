@@ -1,8 +1,12 @@
 import 'dart:io';
 
+import 'package:biblioteca_pessoal/layers/domain/entities/livro_entity.dart';
+import 'package:biblioteca_pessoal/layers/presentation/controllers/livro_controller.dart';
+import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/widgets/drawer_custom/drawer_custom.dart';
+import 'package:biblioteca_pessoal/layers/presentation/widgets/selecionar_foto.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:get_it/get_it.dart';
 
 class AdicionarLivroPage extends StatefulWidget {
   const AdicionarLivroPage({super.key});
@@ -12,26 +16,55 @@ class AdicionarLivroPage extends StatefulWidget {
 }
 
 class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
-  final TextEditingController _tituloController = TextEditingController();
-  XFile? _imageFile;
-
-  Future<void> _pickImage() async {
-    final ImagePicker picker = ImagePicker();
-    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      _imageFile = image;
-    });
-  }
+  final user = UserController.user;
+  late LivroController controller;
+  final _tituloController = TextEditingController();
+  File? _imageSelected;
 
   @override
   void initState() {
+    controller = GetIt.I.get<LivroController>();
     super.initState();
   }
 
-  @override
-  void dispose() {
-    _tituloController.dispose();
-    super.dispose();
+  void _handleImagePick(File image) {
+    _imageSelected = image;
+  }
+
+  void _showError(String msg) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(msg),
+        backgroundColor: Theme.of(context).colorScheme.error,
+      ),
+    );
+  }
+
+  void _handleSubmit() async {
+    if (_tituloController.text.isEmpty) {
+      _showError('Informe um titulo');
+    }
+
+    if (_imageSelected == null) {
+      _showError('Selecione uma imagem para o Livro');
+    }
+
+    final imageUrl = await controller.salvarImageFirebase(_imageSelected!);
+
+    if (imageUrl.isEmpty) {
+      _showError('Houve um problema ao salvar o livro');
+    }
+
+    final livro = Livro(
+      uidUsuario: user!.uid,
+      autor: '',
+      titulo: _tituloController.text,
+      paginas: 0,
+      ano: 2024,
+      urlImage: imageUrl,
+    );
+
+    await controller.createLivro(livro);
   }
 
   @override
@@ -48,30 +81,7 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(height: 24),
-            InkWell(
-              onTap: _pickImage,
-              child: Container(
-                width: 100,
-                height: 100,
-                decoration: BoxDecoration(
-                  color: const Color(0xFFDBE2E7),
-                  shape: BoxShape.circle,
-                  image: _imageFile != null
-                      ? DecorationImage(
-                          image: FileImage(File(_imageFile!.path)),
-                          fit: BoxFit.cover,
-                        )
-                      : null,
-                ),
-                child: _imageFile == null
-                    ? Icon(
-                        Icons.person,
-                        size: 60,
-                        color: colorScheme.primary,
-                      )
-                    : null,
-              ),
-            ),
+            SelecionarFotoWidget(onImagePick: _handleImagePick),
             const SizedBox(height: 24),
             Padding(
               padding: const EdgeInsetsDirectional.fromSTEB(14, 0, 14, 0),
@@ -140,6 +150,29 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
                 ),
               ),
             ),
+            const SizedBox(height: 24),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: colorScheme.primary,
+                      ),
+                      onPressed: _handleSubmit,
+                      child: Text(
+                        'Salvar',
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium
+                            ?.copyWith(color: colorScheme.onPrimary),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            )
           ],
         ),
       ),

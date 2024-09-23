@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:biblioteca_pessoal/layers/domain/entities/livro_entity.dart';
 import 'package:biblioteca_pessoal/layers/domain/usecases/livro_usecase/livro_usecase.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 
 class LivroController {
   final GetLivroByIdUsecase _getLivroByIdUsecase;
@@ -39,5 +43,21 @@ class LivroController {
 
   deleteLivro(String idLivro) async {
     return await _deleteLivroUsecase(idLivro);
+  }
+
+  Future<String> salvarImageFirebase(File image) async {
+    try {
+      final storage = FirebaseStorage.instance;
+      final Reference ref = storage.ref().child("livros");
+      final UploadTask uploadTask = ref.putFile(image);
+      final TaskSnapshot downloadUrl = (await uploadTask);
+      final String url = (await downloadUrl.ref.getDownloadURL());
+      return url;
+    } catch (e) {
+      if (kDebugMode) {
+        print('Erro ao salvar imagem no storage $e');
+      }
+      return '';
+    }
   }
 }

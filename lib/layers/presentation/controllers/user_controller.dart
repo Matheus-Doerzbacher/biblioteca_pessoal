@@ -11,7 +11,8 @@ class UserController {
   static Future<User?> loginWithGoogle() async {
     try {
       // Tentando logar no Google
-      final googleAccount = await GoogleSignIn().signIn();
+      final googleAccount =
+          await GoogleSignIn(scopes: ["profile", "email"]).signIn();
 
       if (googleAccount == null) {
         print('Login cancelado ou falhou');

@@ -28,6 +28,15 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Nós precissamos acesso para acessar a galeria</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Nós precissamos acesso para acessar a galeria</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Nós precissamos acesso para acessar a galeria</string>
+
+
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
