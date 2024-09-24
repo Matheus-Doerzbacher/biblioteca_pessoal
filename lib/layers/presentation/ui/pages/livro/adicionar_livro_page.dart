@@ -38,18 +38,20 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
   final MultiSelectController<Categoria> _multiSelectController =
       MultiSelectController<Categoria>();
 
-  void _limparControladores() {
-    _tituloController.clear();
-    _autorController.clear();
-    _editoraController.clear();
-    _paginaController.clear();
-    _anoController.clear();
-    _descricaoController.clear();
-    _quantidadeController.clear();
-    _statusController = StatusLeitura.queroLer;
-    _categoriasController = [];
-    _imageSelected = null;
-  }
+  bool _isLoading = false;
+
+  // void _limparControladores() {
+  //   _tituloController.clear();
+  //   _autorController.clear();
+  //   _editoraController.clear();
+  //   _paginaController.clear();
+  //   _anoController.clear();
+  //   _descricaoController.clear();
+  //   _quantidadeController.clear();
+  //   _statusController = StatusLeitura.queroLer;
+  //   _categoriasController = [];
+  //   _imageSelected = null;
+  // }
 
   @override
   void initState() {
@@ -101,74 +103,89 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
   }
 
   void _handleSubmit() async {
-    String imageUrl = '';
-    late int paginaInt;
-    late int anoInt;
-    late int quantidade;
-
-    if (_tituloController.text.isEmpty) {
-      _showError('Informe um Titulo');
-      return;
-    }
-
-    if (_autorController.text.isEmpty) {
-      _showError('Informe o Autor');
-      return;
-    }
-
-    if (_paginaController.text.isEmpty) {
-      _showError('Informe a Página');
-      return;
-    }
-
     try {
-      paginaInt = int.parse(_paginaController.text);
-    } catch (e) {
-      _showError('Informe um número válido na página');
-      return;
-    }
+      setState(() {
+        _isLoading = true;
+      });
 
-    try {
-      anoInt = int.parse(_anoController.text);
-    } catch (e) {
-      _showError('Informe um número válido para o Ano');
-      return;
-    }
+      String imageUrl = '';
+      late int paginaInt;
+      late int anoInt;
+      late int quantidade = 0;
 
-    try {
-      quantidade = int.parse(_quantidadeController.text);
-    } catch (e) {
-      _showError('Informe um número válido para a quantidade');
-      return;
-    }
-
-    if (_imageSelected != null) {
-      imageUrl = await controller.salvarImageLivro(_imageSelected!);
-
-      if (imageUrl.isEmpty) {
-        _showError('Houve um problema ao salvar o livro');
-        return;
+      if (_tituloController.text.isEmpty) {
+        throw Exception('Informe um Titulo');
       }
-    }
 
-    final livro = Livro(
-      uidUsuario: user!.uid,
-      autor: _autorController.text,
-      editora: _editoraController.text,
-      titulo: _tituloController.text,
-      paginas: paginaInt,
-      ano: anoInt,
-      urlImage: imageUrl,
-      status: _statusController,
-      categorias: _categoriasController,
-      descricao: _descricaoController.text,
-      estoque: quantidade,
-    );
+      if (_autorController.text.isEmpty) {
+        throw Exception('Informe o Autor');
+      }
 
-    bool result = controller.createLivro(livro);
+      if (_paginaController.text.isEmpty) {
+        throw Exception('Informe a Página');
+      }
 
-    if (result == true) {
-      _limparControladores();
+      try {
+        paginaInt = int.parse(_paginaController.text);
+      } catch (e) {
+        throw Exception('Informe um número válido na página');
+      }
+
+      try {
+        anoInt = int.parse(_anoController.text);
+      } catch (e) {
+        throw Exception('Informe um número válido para o Ano');
+      }
+
+      if (_quantidadeController.text.isNotEmpty) {
+        try {
+          quantidade = int.parse(_quantidadeController.text);
+        } catch (e) {
+          throw Exception('Informe um número válido para a quantidade');
+        }
+      }
+
+      if (_imageSelected != null) {
+        imageUrl = await controller.salvarImageLivro(_imageSelected!);
+
+        if (imageUrl.isEmpty) {
+          throw Exception('Houve um problema ao salvar o livro');
+        }
+      }
+
+      final livro = Livro(
+        uidUsuario: user!.uid,
+        autor: _autorController.text,
+        editora: _editoraController.text,
+        titulo: _tituloController.text,
+        paginas: paginaInt,
+        ano: anoInt,
+        urlImage: imageUrl,
+        status: _statusController,
+        categorias: _categoriasController,
+        descricao: _descricaoController.text,
+        estoque: quantidade,
+      );
+
+      bool result = await controller.createLivro(livro);
+
+      if (result == true) {
+        if (mounted) {
+          Navigator.of(context).pushNamed('/');
+        }
+      } else {
+        throw Exception('Houve um problema ao salvar o livro');
+      }
+    } catch (e) {
+      _showError(
+        e.toString().isEmpty
+            ? 'Houve um problema ao salvar o livro'
+            : e.toString().replaceAll('Exception: ', ''),
+      );
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
@@ -284,13 +301,17 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
                         backgroundColor: colorScheme.primary,
                       ),
                       onPressed: _handleSubmit,
-                      child: Text(
-                        'Salvar',
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleMedium
-                            ?.copyWith(color: colorScheme.onPrimary),
-                      ),
+                      child: _isLoading
+                          ? CircularProgressIndicator(
+                              color: colorScheme.onPrimary,
+                            )
+                          : Text(
+                              'Salvar',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.copyWith(color: colorScheme.onPrimary),
+                            ),
                     ),
                   ),
                 ],
