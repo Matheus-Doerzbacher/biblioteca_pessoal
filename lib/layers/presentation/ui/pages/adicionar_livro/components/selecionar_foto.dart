@@ -46,6 +46,13 @@ class _SelecionarFotoWidgetState extends State<SelecionarFotoWidget> {
                 ? DecorationImage(image: FileImage(_image!), fit: BoxFit.cover)
                 : null,
           ),
+          child: _image == null
+              ? Icon(
+                  Icons.menu_book,
+                  color: colorScheme.primary,
+                  size: 60,
+                )
+              : null,
         ),
         TextButton.icon(
           onPressed: _pickImage,

@@ -4,10 +4,12 @@ import 'package:biblioteca_pessoal/layers/domain/entities/categoria_entity.dart'
 import 'package:biblioteca_pessoal/layers/domain/entities/livro_entity.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/livro_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
+import 'package:biblioteca_pessoal/layers/presentation/ui/pages/adicionar_livro/components/drop_down_multi_custom.dart';
 import 'package:biblioteca_pessoal/layers/presentation/widgets/drawer_custom/drawer_custom.dart';
-import 'package:biblioteca_pessoal/layers/presentation/widgets/selecionar_foto.dart';
+import 'package:biblioteca_pessoal/layers/presentation/ui/pages/adicionar_livro/components/selecionar_foto.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:multi_dropdown/multi_dropdown.dart';
 
 class AdicionarLivroPage extends StatefulWidget {
   const AdicionarLivroPage({super.key});
@@ -28,6 +30,9 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
   StatusLeitura _statusController = StatusLeitura.queroLer;
   List<Categoria> _categoriasController = [];
   File? _imageSelected;
+
+  final MultiSelectController<Categoria> _multiSelectController =
+      MultiSelectController<Categoria>();
 
   @override
   void initState() {
@@ -73,26 +78,31 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
 
     if (_tituloController.text.isEmpty) {
       _showError('Informe um Titulo');
+      return;
     }
 
     if (_autorController.text.isEmpty) {
       _showError('Informe o Autor');
+      return;
     }
 
     if (_paginaController.text.isEmpty) {
       _showError('Informe a Página');
+      return;
     }
 
     try {
       paginaInt = int.parse(_paginaController.text);
     } catch (e) {
       _showError('Informe um número válido na página');
+      return;
     }
 
     try {
       anoInt = int.parse(_anoController.text);
     } catch (e) {
       _showError('Informe um número válido para o Ano');
+      return;
     }
 
     if (_imageSelected != null) {
@@ -100,6 +110,7 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
 
       if (imageUrl.isEmpty) {
         _showError('Houve um problema ao salvar o livro');
+        return;
       }
     }
 
@@ -154,8 +165,7 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
                 children: [
                   Expanded(
                     child: InputTextCustom(
-                      controller:
-                          _paginaController, // Corrigido o controller para _paginaController
+                      controller: _paginaController,
                       colorScheme: colorScheme,
                       text: 'Páginas',
                       isMeiaLinha: true,
@@ -164,8 +174,7 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
                   ),
                   Expanded(
                     child: InputTextCustom(
-                      controller:
-                          _anoController, // Corrigido o controller para _anoController
+                      controller: _anoController,
                       colorScheme: colorScheme,
                       text: 'Ano',
                       isMeiaLinha: true,
@@ -176,6 +185,14 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
               ),
             ),
             const SizedBox(height: 24),
+            DropDownMultiCustom(
+              alterarCategorias: _alterarCategoria,
+              categoriasSelecionadas: _categoriasController,
+              categorias: controller.categoriasDropDown,
+              colorScheme: colorScheme,
+              multiSelectController: _multiSelectController,
+            ),
+            const SizedBox(height: 24),
             DropDownSingleCustom(
               alterarStatus: (teste) => {
                 _handleStatus(teste),
@@ -184,12 +201,21 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
               statusAtual: _statusController,
             ),
             const SizedBox(height: 24),
-            DropDownMultiCustom(
-              alterarCategorias: _alterarCategoria,
-              categoriasSelecionadas: _categoriasController,
-              categorias: controller.categoriasDropDown,
-              colorScheme: colorScheme,
-            ),
+            // RatingBar(
+            //   onRatingChanged: (newValue) => setState(() {
+            //     if (_ratingController == newValue) {
+            //       _ratingController = 0.0;
+            //     } else {
+            //       _ratingController = newValue;
+            //     }
+            //   }),
+            //   filledIcon: Icons.star,
+            //   emptyIcon: Icons.star_border,
+            //   direction: Axis.horizontal,
+            //   initialRating: _ratingController,
+            //   maxRating: 5,
+            //   alignment: Alignment.center,
+            // ),
             const SizedBox(height: 24),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -382,88 +408,7 @@ class DropDownSingleCustom extends StatelessWidget {
                     child: Text('Quero ler'),
                   ),
                 ],
-                isExpanded:
-                    true, // Esta linha foi adicionada para que o Dropdown ocupe toda a linha
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class DropDownMultiCustom extends StatelessWidget {
-  final ColorScheme colorScheme;
-  final Function(List<Categoria>) alterarCategorias;
-  final List<Categoria> categoriasSelecionadas;
-  final List<Categoria> categorias;
-
-  const DropDownMultiCustom({
-    super.key,
-    required this.colorScheme,
-    required this.alterarCategorias,
-    required this.categoriasSelecionadas,
-    required this.categorias,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(14, 0, 14, 0),
-      child: Container(
-        decoration: const BoxDecoration(),
-        child: Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
-          child: Container(
-            width: MediaQuery.sizeOf(context).width,
-            decoration: BoxDecoration(
-              color: colorScheme.surface,
-              boxShadow: [
-                BoxShadow(
-                  blurRadius: 4,
-                  color: colorScheme.shadow,
-                  offset: const Offset(
-                    2,
-                    2,
-                  ),
-                )
-              ],
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 14),
-              child: DropdownButton<Categoria>(
-                iconSize: 24,
-                icon: const Icon(Icons.keyboard_arrow_down_rounded),
-                style: Theme.of(context)
-                    .textTheme
-                    .titleMedium
-                    ?.copyWith(color: colorScheme.onSurface),
-                underline: Container(
-                  color: colorScheme.onPrimary,
-                ),
-                onChanged: (Categoria? newValue) {
-                  if (newValue != null) {
-                    final categoriasAtualizadas =
-                        List<Categoria>.from(categoriasSelecionadas);
-                    if (categoriasAtualizadas.contains(newValue)) {
-                      categoriasAtualizadas.remove(newValue);
-                    } else {
-                      categoriasAtualizadas.add(newValue);
-                    }
-                    alterarCategorias(categoriasAtualizadas);
-                  }
-                },
-                items: categorias
-                    .map<DropdownMenuItem<Categoria>>((Categoria categoria) {
-                  return DropdownMenuItem<Categoria>(
-                    value: categoria,
-                    child: Text(categoria.nome),
-                  );
-                }).toList(),
-                isExpanded:
-                    true, // Esta linha foi adicionada para que o Dropdown ocupe toda a linha
+                isExpanded: true,
               ),
             ),
           ),

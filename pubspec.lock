@@ -105,6 +105,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.8"
+  custom_rating_bar:
+    dependency: "direct main"
+    description:
+      name: custom_rating_bar
+      sha256: c2dafa488843b29f50ac2c2905b6a4cefd2cb603de31c6224adb047b6ed8593e
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
   fake_async:
     dependency: transitive
     description:
@@ -472,6 +480,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.6"
+  multi_dropdown:
+    dependency: "direct main"
+    description:
+      name: multi_dropdown
+      sha256: da25f6defdc62aaf8ce0842d31ff7875fad29aeb13f5b2de9e157a06d53f4b74
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.1"
   path:
     dependency: transitive
     description:

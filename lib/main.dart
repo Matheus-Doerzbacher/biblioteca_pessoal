@@ -1,8 +1,8 @@
 import 'package:biblioteca_pessoal/core/inject/_inject.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/theme/theme.dart';
-import 'package:biblioteca_pessoal/layers/presentation/ui/pages/adicionar_livro_page.dart';
-import 'package:biblioteca_pessoal/layers/presentation/ui/pages/categoria_page.dart';
+import 'package:biblioteca_pessoal/layers/presentation/ui/pages/adicionar_livro/adicionar_livro_page.dart';
+import 'package:biblioteca_pessoal/layers/presentation/ui/pages/categoria/categoria_page.dart';
 import 'package:biblioteca_pessoal/layers/presentation/ui/pages/home_page.dart';
 import 'package:biblioteca_pessoal/layers/presentation/ui/pages/login_page.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
           foregroundColor: darkColorSchema.onPrimary,
         ),
       ),
-      initialRoute: UserController.user != null ? '/' : '/login',
+      initialRoute: UserController.user != null ? '/adicionar' : '/login',
       routes: {
         '/login': (context) => const LoginPage(),
         '/': (context) => const HomePage(),
