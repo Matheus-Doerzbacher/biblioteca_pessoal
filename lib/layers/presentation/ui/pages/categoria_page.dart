@@ -106,88 +106,94 @@ class _CategoriaPageState extends State<CategoriaPage> {
       ),
       drawer: const DrawerCustom(namePageActive: '/categoria'),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(24, 24, 24, 24),
+        padding: const EdgeInsets.fromLTRB(14, 24, 24, 0),
         child: Column(
           children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      color: colorScheme.surfaceContainer,
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 4,
-                          color: colorScheme.shadow,
-                          offset: const Offset(
-                            2,
-                            2,
-                          ),
-                        )
-                      ],
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: SizedBox(
+            Padding(
+              padding: const EdgeInsets.fromLTRB(10, 0, 10, 6),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Container(
                       width: MediaQuery.of(context).size.width,
-                      child: TextField(
-                        controller: _textController,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          labelText: 'Nome da Categoria',
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Color(0x00000000),
-                              width: 1,
+                      decoration: BoxDecoration(
+                        color: colorScheme.surfaceContainer,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 4,
+                            color: colorScheme.shadow,
+                            offset: const Offset(
+                              2,
+                              2,
                             ),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Color(0x00000000),
-                              width: 1,
+                          )
+                        ],
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: TextField(
+                          controller: _textController,
+                          style: TextStyle(
+                            color: colorScheme.onSurface,
+                          ), // Alteração para mudar a cor do texto
+                          decoration: InputDecoration(
+                            isDense: true,
+                            labelText: 'Nome da Categoria',
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Color(0x00000000),
+                                width: 1,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
                             ),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          errorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: colorScheme.error,
-                              width: 1,
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Color(0x00000000),
+                                width: 1,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
                             ),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          focusedErrorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: colorScheme.error,
-                              width: 1,
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: colorScheme.error,
+                                width: 1,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
                             ),
-                            borderRadius: BorderRadius.circular(8),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: colorScheme.error,
+                                width: 1,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            filled: true,
+                            fillColor: colorScheme.surfaceContainer,
                           ),
-                          filled: true,
-                          fillColor: colorScheme.surfaceContainer,
+                          cursorColor: colorScheme.onSurface,
                         ),
-                        cursorColor: colorScheme.onSurface,
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(width: 8),
-                IconButton(
-                  color: colorScheme.primary,
-                  style: IconButton.styleFrom(
-                    backgroundColor: colorScheme.primary,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
+                  const SizedBox(width: 8),
+                  IconButton(
+                    color: colorScheme.primary,
+                    style: IconButton.styleFrom(
+                      backgroundColor: colorScheme.primary,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
                     ),
+                    icon: Icon(
+                      Icons.add,
+                      color: colorScheme.onPrimary,
+                      size: 24,
+                    ),
+                    onPressed: _adicionarCategoria,
                   ),
-                  icon: Icon(
-                    Icons.add,
-                    color: colorScheme.onPrimary,
-                    size: 24,
-                  ),
-                  onPressed: _adicionarCategoria,
-                ),
-              ],
+                ],
+              ),
             ),
             Expanded(
               child: FutureBuilder<void>(

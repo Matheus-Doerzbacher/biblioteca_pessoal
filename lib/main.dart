@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
         '/categoria': (context) => const CategoriaPage(),
         '/adicionar': (context) => const AdicionarLivroPage()
       },
-      themeMode: ThemeMode.light,
+      themeMode: ThemeMode.system,
     );
   }
 }
