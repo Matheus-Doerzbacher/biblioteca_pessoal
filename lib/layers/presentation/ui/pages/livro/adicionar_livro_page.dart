@@ -29,6 +29,8 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
   final _editoraController = TextEditingController();
   final _paginaController = TextEditingController();
   final _anoController = TextEditingController();
+  final _descricaoController = TextEditingController();
+  final _quantidadeController = TextEditingController();
   StatusLeitura _statusController = StatusLeitura.queroLer;
   List<Categoria> _categoriasController = [];
   File? _imageSelected;
@@ -36,11 +38,36 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
   final MultiSelectController<Categoria> _multiSelectController =
       MultiSelectController<Categoria>();
 
+  void _limparControladores() {
+    _tituloController.clear();
+    _autorController.clear();
+    _editoraController.clear();
+    _paginaController.clear();
+    _anoController.clear();
+    _descricaoController.clear();
+    _quantidadeController.clear();
+    _statusController = StatusLeitura.queroLer;
+    _categoriasController = [];
+    _imageSelected = null;
+  }
+
   @override
   void initState() {
     controller = GetIt.I.get<LivroController>();
     _inicializarCategorias();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _tituloController.dispose();
+    _autorController.dispose();
+    _editoraController.dispose();
+    _paginaController.dispose();
+    _anoController.dispose();
+    _descricaoController.dispose();
+    _quantidadeController.dispose();
+    super.dispose();
   }
 
   void _inicializarCategorias() async {
@@ -77,6 +104,7 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
     String imageUrl = '';
     late int paginaInt;
     late int anoInt;
+    late int quantidade;
 
     if (_tituloController.text.isEmpty) {
       _showError('Informe um Titulo');
@@ -107,6 +135,13 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
       return;
     }
 
+    try {
+      quantidade = int.parse(_quantidadeController.text);
+    } catch (e) {
+      _showError('Informe um número válido para a quantidade');
+      return;
+    }
+
     if (_imageSelected != null) {
       imageUrl = await controller.salvarImageLivro(_imageSelected!);
 
@@ -126,9 +161,15 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
       urlImage: imageUrl,
       status: _statusController,
       categorias: _categoriasController,
+      descricao: _descricaoController.text,
+      estoque: quantidade,
     );
 
-    await controller.createLivro(livro);
+    bool result = controller.createLivro(livro);
+
+    if (result == true) {
+      _limparControladores();
+    }
   }
 
   @override
@@ -202,7 +243,8 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
               colorScheme: colorScheme,
               statusAtual: _statusController,
             ),
-            const SizedBox(height: 24),
+
+            // const SizedBox(height: 24),
             // RatingBar(
             //   onRatingChanged: (newValue) => setState(() {
             //     if (_ratingController == newValue) {
@@ -218,6 +260,19 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
             //   maxRating: 5,
             //   alignment: Alignment.center,
             // ),
+
+            InputTextCustom(
+              controller: _descricaoController,
+              colorScheme: colorScheme,
+              text: 'Descrição',
+              numeroLinhas: 5,
+            ),
+            InputTextCustom(
+              controller: _quantidadeController,
+              colorScheme: colorScheme,
+              text: 'Quantidade de Exemplares',
+              isNumber: true,
+            ),
             const SizedBox(height: 24),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),

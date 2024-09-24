@@ -24,7 +24,6 @@ class LivroController {
     this._getCategoriasUsecase,
     this._salvarImagemLivroUsecase,
   ) {
-    getCategoriasDropDown(UserController.user?.uid ?? '');
     getLivros(UserController.user?.uid ?? '');
   }
 

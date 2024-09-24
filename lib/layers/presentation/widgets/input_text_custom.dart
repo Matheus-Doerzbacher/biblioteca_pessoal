@@ -6,6 +6,7 @@ class InputTextCustom extends StatelessWidget {
   final String text;
   final bool? isMeiaLinha;
   final bool? isNumber;
+  final int? numeroLinhas;
 
   const InputTextCustom({
     super.key,
@@ -14,6 +15,7 @@ class InputTextCustom extends StatelessWidget {
     required this.text,
     this.isMeiaLinha = false,
     this.isNumber = false,
+    this.numeroLinhas = 1,
   });
 
   @override
@@ -45,6 +47,9 @@ class InputTextCustom extends StatelessWidget {
             child: SizedBox(
               width: 200,
               child: TextFormField(
+                textAlignVertical: TextAlignVertical.top,
+                minLines: numeroLinhas,
+                maxLines: numeroLinhas,
                 style: TextStyle(color: colorScheme.onSurface),
                 keyboardType: isNumber == true
                     ? TextInputType.number
@@ -55,6 +60,7 @@ class InputTextCustom extends StatelessWidget {
                 decoration: InputDecoration(
                   isDense: true,
                   labelText: text,
+                  alignLabelWithHint: true,
                   enabledBorder: OutlineInputBorder(
                     borderSide: const BorderSide(
                       color: Color(0x00000000),
