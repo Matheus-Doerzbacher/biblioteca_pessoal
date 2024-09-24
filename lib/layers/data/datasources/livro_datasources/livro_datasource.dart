@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:biblioteca_pessoal/layers/domain/entities/livro_entity.dart';
 
 abstract class CreateLivroDatasource {
@@ -18,4 +20,8 @@ abstract class GetLivrosDatasource {
 
 abstract class UpdateLivroDatasource {
   Future<bool> call(Livro livro);
+}
+
+abstract class SalvarImagemLivroDatasource {
+  Future<String> call(File imagem);
 }

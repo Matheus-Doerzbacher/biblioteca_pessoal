@@ -10,7 +10,6 @@ class GetCategoriasFirebaseDatasourceImp implements GetCategoriasDatasource {
       final querySnapshot = await firestore
           .collection('categorias')
           .where('uidUsuario', isEqualTo: uidUsuario)
-          .orderBy('nome')
           .get();
 
       return querySnapshot.docs.map((doc) {

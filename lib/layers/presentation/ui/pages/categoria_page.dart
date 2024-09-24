@@ -204,6 +204,8 @@ class _CategoriaPageState extends State<CategoriaPage> {
                   } else if (snapshot.hasError) {
                     return Center(child: Text('Erro: ${snapshot.error}'));
                   } else {
+                    controller.categorias
+                        .sort((a, b) => a.nome.compareTo(b.nome));
                     return ListView.builder(
                       itemCount: controller.categorias.length,
                       itemBuilder: (context, index) {

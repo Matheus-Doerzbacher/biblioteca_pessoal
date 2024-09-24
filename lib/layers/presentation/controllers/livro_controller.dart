@@ -1,10 +1,10 @@
 import 'dart:io';
 
+import 'package:biblioteca_pessoal/layers/domain/entities/categoria_entity.dart';
 import 'package:biblioteca_pessoal/layers/domain/entities/livro_entity.dart';
+import 'package:biblioteca_pessoal/layers/domain/usecases/categoria_usecase/categoria_usecase.dart';
 import 'package:biblioteca_pessoal/layers/domain/usecases/livro_usecase/livro_usecase.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart';
 
 class LivroController {
   final GetLivroByIdUsecase _getLivroByIdUsecase;
@@ -12,6 +12,8 @@ class LivroController {
   final CreateLivroUsecase _createLivroUsecase;
   final UpdateLivroUsecase _updateLivroUsecase;
   final DeleteLivroUsecase _deleteLivroUsecase;
+  final GetCategoriasUsecase _getCategoriasUsecase;
+  final SalvarImagemLivroUsecase _salvarImagemLivroUsecase;
 
   LivroController(
     this._getLivroByIdUsecase,
@@ -19,14 +21,22 @@ class LivroController {
     this._createLivroUsecase,
     this._updateLivroUsecase,
     this._deleteLivroUsecase,
+    this._getCategoriasUsecase,
+    this._salvarImagemLivroUsecase,
   ) {
+    getCategoriasDropDown(UserController.user?.uid ?? '');
     getLivros(UserController.user?.uid ?? '');
   }
 
   late List<Livro> livros;
+  late List<Categoria> categoriasDropDown = [];
 
   getLivroById(String idLivro) async {
     return await _getLivroByIdUsecase(idLivro);
+  }
+
+  getCategoriasDropDown(String uidUsuario) async {
+    categoriasDropDown = await _getCategoriasUsecase(uidUsuario);
   }
 
   getLivros(String uidUsuario) async {
@@ -45,19 +55,7 @@ class LivroController {
     return await _deleteLivroUsecase(idLivro);
   }
 
-  Future<String> salvarImageFirebase(File image) async {
-    try {
-      final storage = FirebaseStorage.instance;
-      final Reference ref = storage.ref().child("livros");
-      final UploadTask uploadTask = ref.putFile(image);
-      final TaskSnapshot downloadUrl = (await uploadTask);
-      final String url = (await downloadUrl.ref.getDownloadURL());
-      return url;
-    } catch (e) {
-      if (kDebugMode) {
-        print('Erro ao salvar imagem no storage $e');
-      }
-      return '';
-    }
+  Future<String> salvarImageLivro(File imagem) async {
+    return await _salvarImagemLivroUsecase(imagem);
   }
 }

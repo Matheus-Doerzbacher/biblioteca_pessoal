@@ -1,3 +1,4 @@
+import 'package:biblioteca_pessoal/layers/data/datasources/livro_datasources/firebase/salvar_imagem_livro_firabase_datasource_imp.dart';
 import 'package:get_it/get_it.dart';
 import 'package:biblioteca_pessoal/layers/data/datasources/livro_datasources/livro_datasource.dart';
 import 'package:biblioteca_pessoal/layers/data/datasources/livro_datasources/firebase/create_livro_firebase_datasource_imp.dart';
@@ -28,6 +29,9 @@ void livroInject(GetIt getIt) {
   getIt.registerLazySingleton<DeleteLivroDatasource>(
     () => DeleteLivroFirebaseDatasourceImp(),
   );
+  getIt.registerLazySingleton<SalvarImagemLivroDatasource>(
+    () => SalvarImagemLivroFirabaseDatasourceImp(),
+  );
 
   //repositories
   getIt.registerLazySingleton<GetLivrosRepository>(
@@ -44,6 +48,9 @@ void livroInject(GetIt getIt) {
   );
   getIt.registerLazySingleton<DeleteLivroRepository>(
     () => DeleteLivroRepositoryImp(getIt()),
+  );
+  getIt.registerLazySingleton<SalvarImagemLivroRepository>(
+    () => SalvarImagemLivroRepositoryImp(getIt()),
   );
 
   //usecases
@@ -62,10 +69,21 @@ void livroInject(GetIt getIt) {
   getIt.registerLazySingleton<DeleteLivroUsecase>(
     () => DeleteLivroUsecaseImp(getIt()),
   );
+  getIt.registerLazySingleton<SalvarImagemLivroUsecase>(
+    () => SalvarImagemLivroUsecaseImp(getIt()),
+  );
 
   //controllers
   getIt.registerLazySingleton<LivroController>(
-    () => LivroController(getIt(), getIt(), getIt(), getIt(), getIt()),
+    () => LivroController(
+      getIt(),
+      getIt(),
+      getIt(),
+      getIt(),
+      getIt(),
+      getIt(),
+      getIt(),
+    ),
   );
 }
 

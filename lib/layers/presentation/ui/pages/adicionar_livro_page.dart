@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:biblioteca_pessoal/layers/domain/entities/categoria_entity.dart';
 import 'package:biblioteca_pessoal/layers/domain/entities/livro_entity.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/livro_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
@@ -18,18 +19,26 @@ class AdicionarLivroPage extends StatefulWidget {
 class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
   final user = UserController.user;
   late LivroController controller;
+
   final _tituloController = TextEditingController();
   final _autorController = TextEditingController();
   final _editoraController = TextEditingController();
   final _paginaController = TextEditingController();
   final _anoController = TextEditingController();
   StatusLeitura _statusController = StatusLeitura.queroLer;
+  List<Categoria> _categoriasController = [];
   File? _imageSelected;
 
   @override
   void initState() {
     controller = GetIt.I.get<LivroController>();
+    _inicializarCategorias();
     super.initState();
+  }
+
+  void _inicializarCategorias() async {
+    await controller.getCategoriasDropDown(UserController.user?.uid ?? '');
+    setState(() {});
   }
 
   void _handleImagePick(File image) {
@@ -48,6 +57,12 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
   void _handleStatus(StatusLeitura value) {
     setState(() {
       _statusController = value;
+    });
+  }
+
+  void _alterarCategoria(List<Categoria> categorias) {
+    setState(() {
+      _categoriasController = categorias;
     });
   }
 
@@ -81,7 +96,7 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
     }
 
     if (_imageSelected != null) {
-      imageUrl = await controller.salvarImageFirebase(_imageSelected!);
+      imageUrl = await controller.salvarImageLivro(_imageSelected!);
 
       if (imageUrl.isEmpty) {
         _showError('Houve um problema ao salvar o livro');
@@ -89,14 +104,16 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
     }
 
     final livro = Livro(
-        uidUsuario: user!.uid,
-        autor: _autorController.text,
-        editora: _editoraController.text,
-        titulo: _tituloController.text,
-        paginas: paginaInt,
-        ano: anoInt,
-        urlImage: imageUrl,
-        status: _statusController);
+      uidUsuario: user!.uid,
+      autor: _autorController.text,
+      editora: _editoraController.text,
+      titulo: _tituloController.text,
+      paginas: paginaInt,
+      ano: anoInt,
+      urlImage: imageUrl,
+      status: _statusController,
+      categorias: _categoriasController,
+    );
 
     await controller.createLivro(livro);
   }
@@ -165,6 +182,13 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
               },
               colorScheme: colorScheme,
               statusAtual: _statusController,
+            ),
+            const SizedBox(height: 24),
+            DropDownMultiCustom(
+              alterarCategorias: _alterarCategoria,
+              categoriasSelecionadas: _categoriasController,
+              categorias: controller.categoriasDropDown,
+              colorScheme: colorScheme,
             ),
             const SizedBox(height: 24),
             Padding(
@@ -241,6 +265,7 @@ class InputTextCustom extends StatelessWidget {
             child: SizedBox(
               width: 200,
               child: TextFormField(
+                style: TextStyle(color: colorScheme.onSurface),
                 keyboardType: isNumber == true
                     ? TextInputType.number
                     : TextInputType.text,
@@ -331,7 +356,10 @@ class DropDownSingleCustom extends StatelessWidget {
                 iconSize: 24,
                 value: statusAtual,
                 icon: const Icon(Icons.keyboard_arrow_down_rounded),
-                style: Theme.of(context).textTheme.titleMedium,
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium
+                    ?.copyWith(color: colorScheme.onSurface),
                 underline: Container(
                   color: colorScheme.onPrimary,
                 ),
@@ -354,6 +382,86 @@ class DropDownSingleCustom extends StatelessWidget {
                     child: Text('Quero ler'),
                   ),
                 ],
+                isExpanded:
+                    true, // Esta linha foi adicionada para que o Dropdown ocupe toda a linha
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class DropDownMultiCustom extends StatelessWidget {
+  final ColorScheme colorScheme;
+  final Function(List<Categoria>) alterarCategorias;
+  final List<Categoria> categoriasSelecionadas;
+  final List<Categoria> categorias;
+
+  const DropDownMultiCustom({
+    super.key,
+    required this.colorScheme,
+    required this.alterarCategorias,
+    required this.categoriasSelecionadas,
+    required this.categorias,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsetsDirectional.fromSTEB(14, 0, 14, 0),
+      child: Container(
+        decoration: const BoxDecoration(),
+        child: Padding(
+          padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
+          child: Container(
+            width: MediaQuery.sizeOf(context).width,
+            decoration: BoxDecoration(
+              color: colorScheme.surface,
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 4,
+                  color: colorScheme.shadow,
+                  offset: const Offset(
+                    2,
+                    2,
+                  ),
+                )
+              ],
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 14),
+              child: DropdownButton<Categoria>(
+                iconSize: 24,
+                icon: const Icon(Icons.keyboard_arrow_down_rounded),
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium
+                    ?.copyWith(color: colorScheme.onSurface),
+                underline: Container(
+                  color: colorScheme.onPrimary,
+                ),
+                onChanged: (Categoria? newValue) {
+                  if (newValue != null) {
+                    final categoriasAtualizadas =
+                        List<Categoria>.from(categoriasSelecionadas);
+                    if (categoriasAtualizadas.contains(newValue)) {
+                      categoriasAtualizadas.remove(newValue);
+                    } else {
+                      categoriasAtualizadas.add(newValue);
+                    }
+                    alterarCategorias(categoriasAtualizadas);
+                  }
+                },
+                items: categorias
+                    .map<DropdownMenuItem<Categoria>>((Categoria categoria) {
+                  return DropdownMenuItem<Categoria>(
+                    value: categoria,
+                    child: Text(categoria.nome),
+                  );
+                }).toList(),
                 isExpanded:
                     true, // Esta linha foi adicionada para que o Dropdown ocupe toda a linha
               ),

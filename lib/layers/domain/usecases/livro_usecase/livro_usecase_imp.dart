@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:biblioteca_pessoal/layers/domain/entities/livro_entity.dart';
 import 'package:biblioteca_pessoal/layers/domain/repositories/livro_repository.dart';
 import 'package:biblioteca_pessoal/layers/domain/usecases/livro_usecase/livro_usecase.dart';
@@ -62,5 +64,18 @@ class UpdateLivroUsecaseImp implements UpdateLivroUsecase {
   @override
   Future<bool> call(Livro livro) async {
     return await _updateLivroRepository(livro);
+  }
+}
+
+// --------------------------------------------------
+
+class SalvarImagemLivroUsecaseImp implements SalvarImagemLivroUsecase {
+  final SalvarImagemLivroRepository _salvarImagemLivroRepository;
+
+  SalvarImagemLivroUsecaseImp(this._salvarImagemLivroRepository);
+
+  @override
+  Future<String> call(File imagem) async {
+    return await _salvarImagemLivroRepository(imagem);
   }
 }

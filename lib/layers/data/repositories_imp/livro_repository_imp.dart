@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:biblioteca_pessoal/layers/data/datasources/livro_datasources/livro_datasource.dart';
 import 'package:biblioteca_pessoal/layers/domain/entities/livro_entity.dart';
 import 'package:biblioteca_pessoal/layers/domain/repositories/livro_repository.dart';
@@ -62,5 +64,17 @@ class UpdateLivroRepositoryImp implements UpdateLivroRepository {
   @override
   Future<bool> call(Livro livro) async {
     return await _updateLivroDatasource(livro);
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class SalvarImagemLivroRepositoryImp implements SalvarImagemLivroRepository {
+  final SalvarImagemLivroDatasource _salvarImagemLivroDatasource;
+
+  SalvarImagemLivroRepositoryImp(this._salvarImagemLivroDatasource);
+  @override
+  Future<String> call(File imagem) async {
+    return await _salvarImagemLivroDatasource(imagem);
   }
 }
