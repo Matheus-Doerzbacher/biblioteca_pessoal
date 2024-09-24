@@ -1,8 +1,8 @@
 import 'package:biblioteca_pessoal/core/inject/_inject.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/theme/theme.dart';
-import 'package:biblioteca_pessoal/layers/presentation/ui/pages/adicionar_livro/adicionar_livro_page.dart';
-import 'package:biblioteca_pessoal/layers/presentation/ui/pages/categoria/categoria_page.dart';
+import 'package:biblioteca_pessoal/layers/presentation/ui/pages/livro/adicionar_livro_page.dart';
+import 'package:biblioteca_pessoal/layers/presentation/ui/pages/categoria_page.dart';
 import 'package:biblioteca_pessoal/layers/presentation/ui/pages/home_page.dart';
 import 'package:biblioteca_pessoal/layers/presentation/ui/pages/login_page.dart';
 import 'package:flutter/material.dart';

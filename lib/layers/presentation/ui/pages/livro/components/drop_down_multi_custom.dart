@@ -52,6 +52,7 @@ class DropDownMultiCustom extends StatelessWidget {
               controller: multiSelectController,
               enabled: true,
               fieldDecoration: FieldDecoration(
+                suffixIcon: const Icon(Icons.keyboard_arrow_down),
                 hintText: 'Categorias',
                 hintStyle: TextStyle(color: colorScheme.onSurface),
                 border: OutlineInputBorder(
