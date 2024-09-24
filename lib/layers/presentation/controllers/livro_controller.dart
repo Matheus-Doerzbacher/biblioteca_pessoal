@@ -27,7 +27,7 @@ class LivroController {
     getLivros(UserController.user?.uid ?? '');
   }
 
-  late List<Livro> livros;
+  late List<Livro> livros = [];
   late List<Categoria> categoriasDropDown = [];
 
   getLivroById(String idLivro) async {

@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
           foregroundColor: darkColorSchema.onPrimary,
         ),
       ),
-      initialRoute: UserController.user != null ? '/adicionar' : '/login',
+      initialRoute: UserController.user != null ? '/' : '/login',
       routes: {
         '/login': (context) => const LoginPage(),
         '/': (context) => const HomePage(),
