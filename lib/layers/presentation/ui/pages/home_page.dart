@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
             ),
             ElevatedButton(
               onPressed: () async {
-                await UserController.signOut();
+                await UserController.signOut(context);
                 if (context.mounted) {
                   Navigator.of(context).pushReplacementNamed('/login');
                 }
