@@ -13,6 +13,7 @@ class CreateLivroFirebaseDatasourceImp implements CreateLivroDatasource {
 
       return true;
     } catch (e) {
+      print(e);
       return false;
     }
   }

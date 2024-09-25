@@ -128,7 +128,16 @@ class _HomePageState extends State<HomePage> {
               itemCount: livros.length,
               itemBuilder: (context, index) {
                 final livro = livros[index];
-                return LivroCard(livro: livro, context: context);
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      '/livro-detail',
+                      arguments: livro,
+                    );
+                  },
+                  child: LivroCard(livro: livro, context: context),
+                );
               },
             ),
           ),

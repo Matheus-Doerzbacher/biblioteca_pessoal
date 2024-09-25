@@ -84,7 +84,20 @@ class _PesquisaApiPageState extends State<PesquisaApiPage> {
                       style: TextStyle(color: colorScheme.onSurface),
                       controller: _pesquisarController,
                       decoration: InputDecoration(
-                        suffixIcon: const Icon(Icons.search),
+                        suffixIcon: ValueListenableBuilder<TextEditingValue>(
+                          valueListenable: _pesquisarController,
+                          builder: (context, value, child) {
+                            return value.text.isNotEmpty
+                                ? IconButton(
+                                    onPressed: () {
+                                      _pesquisarController.clear();
+                                      controller.clearLivros();
+                                    },
+                                    icon: const Icon(Icons.close),
+                                  )
+                                : const Icon(Icons.search);
+                          },
+                        ),
                         isDense: true,
                         labelText: 'Pesquisar Livro',
                         alignLabelWithHint: true,
@@ -140,10 +153,20 @@ class _PesquisaApiPageState extends State<PesquisaApiPage> {
                   ),
                   itemCount: controller.livros.length,
                   itemBuilder: (context, index) {
-                    return LivroCard(
-                      livro: controller.livros[index],
-                      context: context,
-                      isPesquisa: true,
+                    final livro = controller.livros[index];
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          '/livro-detail',
+                          arguments: livro,
+                        );
+                      },
+                      child: LivroCard(
+                        livro: livro,
+                        context: context,
+                        isPesquisa: true,
+                      ),
                     );
                   },
                 ),

@@ -12,6 +12,7 @@ class LivroDto extends Livro {
     super.urlImage,
     super.descricao,
     super.status,
+    super.isPesquisa,
   });
 
   factory LivroDto.fromJson(Map<String, dynamic> json) {
@@ -23,28 +24,14 @@ class LivroDto extends Livro {
           ? int.parse(json['pageCount'].toString())
           : 0,
       ano: json['publishedDate'] != null
-          ? int.parse(json['publishedDate'].toString().split('-')[0])
-          : 0,
+          ? json['publishedDate'].toString().split('-')[0]
+          : '0',
       editora: json['publisher'] ?? '',
       urlImage:
           json['imageLinks'] != null ? json['imageLinks']['thumbnail'] : '',
       descricao: json['description'] ?? '',
       status: StatusLeitura.queroLer,
+      isPesquisa: true,
     );
-  }
-
-  @override
-  Map<String, dynamic> toJson() {
-    return {
-      'uidUsuario': UserController.user?.uid ?? '',
-      'autor': autor,
-      'titulo': titulo,
-      'paginas': paginas,
-      'ano': ano,
-      'editora': editora,
-      'urlImage': urlImage,
-      'descricao': descricao,
-      'status': status,
-    };
   }
 }

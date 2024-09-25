@@ -15,11 +15,12 @@ class Livro {
   final int estoque;
   final int avaliacao;
   final String editora;
-  final int ano;
+  final String ano;
   final List<Categoria> categorias;
   final String descricao;
   final StatusLeitura status;
   final String urlImage;
+  final bool isPesquisa;
 
   Livro({
     this.id,
@@ -35,6 +36,7 @@ class Livro {
     this.descricao = '',
     this.status = StatusLeitura.queroLer,
     this.urlImage = '',
+    this.isPesquisa = false,
   });
 
   String get statusName {
@@ -58,6 +60,7 @@ class Livro {
       avaliacao: json['avaliacao'] ?? 0,
       editora: json['editora'] ?? '',
       ano: json['ano'],
+      isPesquisa: json['isPesquisa'] ?? false,
       categorias: (json['categorias'] as List<dynamic>?)
               ?.map((e) => Categoria.fromJson(e as Map<String, dynamic>))
               .toList() ??
@@ -83,8 +86,9 @@ class Livro {
       'ano': ano,
       'categorias': categorias.map((e) => e.toJson()).toList(),
       'descricao': descricao,
-      'status': status.toString().split('.').last,
+      'status': status.name,
       'urlImage': urlImage,
+      'isPesquisa': false,
     };
   }
 }

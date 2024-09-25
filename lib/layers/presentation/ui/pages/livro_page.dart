@@ -27,7 +27,7 @@ class _LivroPageState extends State<LivroPage> {
       autor: 'Nome do Autor',
       titulo: 'Como cagar em pé',
       paginas: 3054,
-      ano: 2065,
+      ano: '2065',
     );
     controller.createLivro(livro);
     setState(() {

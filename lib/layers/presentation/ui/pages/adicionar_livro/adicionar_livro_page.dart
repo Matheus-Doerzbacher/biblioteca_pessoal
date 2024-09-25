@@ -104,7 +104,6 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
 
       String imageUrl = '';
       late int paginaInt;
-      late int anoInt;
       late int quantidade = 0;
 
       if (_tituloController.text.isEmpty) {
@@ -123,12 +122,6 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
         paginaInt = int.parse(_paginaController.text);
       } catch (e) {
         throw Exception('Informe um número válido na página');
-      }
-
-      try {
-        anoInt = int.parse(_anoController.text);
-      } catch (e) {
-        throw Exception('Informe um número válido para o Ano');
       }
 
       if (_quantidadeController.text.isNotEmpty) {
@@ -153,7 +146,7 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
         editora: _editoraController.text,
         titulo: _tituloController.text,
         paginas: paginaInt,
-        ano: anoInt,
+        ano: _anoController.text,
         urlImage: imageUrl,
         status: _statusController,
         categorias: _categoriasController,

@@ -40,7 +40,7 @@ class _EmprestimoPageState extends State<EmprestimoPage> {
       autor: 'autor',
       titulo: 'titulo',
       paginas: 10,
-      ano: 2023,
+      ano: '2023',
     );
 
     final emprestimo = Emprestimo(

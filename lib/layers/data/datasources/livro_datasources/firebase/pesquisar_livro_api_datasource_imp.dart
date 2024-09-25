@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 class PesquisarLivroApiDatasourceImp implements PesquisarLivroApiDatasource {
   @override
   Future<List<Livro>> call(String titulo) async {
+    // try {
     final response = await http.get(
       Uri.parse(
         'https://www.googleapis.com/books/v1/volumes?q=[$titulo]&key=AIzaSyCU8yALKVrT1ojPrd3s0rA3EJVP612NE4Y&maxResults=30',
@@ -17,6 +18,10 @@ class PesquisarLivroApiDatasourceImp implements PesquisarLivroApiDatasource {
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       final List<Livro> livros = [];
+
+      if (data['items'] == null) {
+        return [];
+      }
 
       for (var item in data['items']) {
         final volumeInfo = item['volumeInfo'];
@@ -28,5 +33,8 @@ class PesquisarLivroApiDatasourceImp implements PesquisarLivroApiDatasource {
     } else {
       throw Exception('Falha ao carregar livros');
     }
+    // } catch (e) {
+    //   return [];
+    // }
   }
 }
