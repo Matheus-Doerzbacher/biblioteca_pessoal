@@ -37,6 +37,16 @@ class Livro {
     this.urlImage = '',
   });
 
+  String get statusName {
+    if (status == StatusLeitura.lendo) {
+      return 'Lendo';
+    } else if (status == StatusLeitura.lido) {
+      return 'Lido';
+    } else {
+      return 'Quero ler';
+    }
+  }
+
   factory Livro.fromJson(Map<String, dynamic> json) {
     return Livro(
       id: json['id'],

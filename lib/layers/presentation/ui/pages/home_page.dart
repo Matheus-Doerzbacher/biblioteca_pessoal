@@ -14,9 +14,30 @@ class _HomePageState extends State<HomePage> {
   final _pesquisarController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    _pesquisarController.addListener(_onSearchChanged);
+  }
+
+  @override
+  void dispose() {
+    _pesquisarController.removeListener(_onSearchChanged);
+    _pesquisarController.dispose();
+    super.dispose();
+  }
+
+  void _onSearchChanged() {
+    setState(() {});
+  }
+
+  @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final livros = Provider.of<LivroController>(context).livros;
+    final livros = Provider.of<LivroController>(context).livros.where((livro) {
+      final query = _pesquisarController.text.toLowerCase();
+      return livro.titulo.toLowerCase().contains(query) ||
+          livro.autor.toLowerCase().contains(query);
+    }).toList();
 
     return Scaffold(
       appBar: AppBar(
@@ -132,8 +153,9 @@ class _HomePageState extends State<HomePage> {
                           child: Image.network(
                             livro.urlImage.isNotEmpty
                                 ? livro.urlImage
-                                : 'https://via.placeholder.com/150',
-                            height: 180,
+                                : 'https://cdn.pixabay.com/photo/2017/08/11/09/11/books-2630076_1280.jpg',
+                            // : 'https://marketplace.canva.com/EAFq91U_RUs/1/0/1003w/canva-capa-de-livro-de-fantasia-elegante-verde-e-bege-awJX91ybn9w.jpg',
+                            height: 200,
                             width: double.infinity,
                             fit: BoxFit.cover,
                           ),
@@ -151,19 +173,48 @@ class _HomePageState extends State<HomePage> {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(livro.titulo),
-                                  Text(livro.autor),
+                                  Text(
+                                    livro.titulo,
+                                    style:
+                                        Theme.of(context).textTheme.titleMedium,
+                                  ),
+                                  Text(
+                                    livro.autor,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelSmall
+                                        ?.copyWith(
+                                          color: colorScheme.onSurfaceVariant,
+                                        ),
+                                  ),
                                   Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text(livro.status.name),
-                                      IconButton(
-                                        onPressed: () {},
-                                        icon:
-                                            const Icon(Icons.bookmark_outlined),
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          color: colorScheme.secondaryContainer,
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 8,
+                                            vertical: 4,
+                                          ),
+                                          child: Text(livro.statusName),
+                                        ),
+                                      ),
+                                      GestureDetector(
+                                        onTap: () {},
+                                        child: const Icon(
+                                          Icons.bookmark_outlined,
+                                          size: 30,
+                                        ),
                                       ),
                                     ],
                                   ),
