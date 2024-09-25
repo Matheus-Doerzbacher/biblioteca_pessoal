@@ -18,7 +18,7 @@ class CategoriaController extends ChangeNotifier {
     getCategorias(userId);
   }
   final userId = UserController.user?.uid ?? '';
-  late List<Categoria> categorias;
+  late List<Categoria> categorias = [];
 
   Future<dynamic> createCategoria(Categoria categoria) async {
     final result = await _createCategoriaUsecase(categoria);

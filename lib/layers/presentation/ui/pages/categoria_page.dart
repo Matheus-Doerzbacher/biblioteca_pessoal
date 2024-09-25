@@ -5,7 +5,6 @@ import 'package:biblioteca_pessoal/layers/presentation/ui/pages/categoria/compon
 import 'package:biblioteca_pessoal/layers/presentation/widgets/drawer_custom/drawer_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:provider/provider.dart';
 
 class CategoriaPage extends StatefulWidget {
   const CategoriaPage({super.key});
@@ -16,14 +15,14 @@ class CategoriaPage extends StatefulWidget {
 
 class _CategoriaPageState extends State<CategoriaPage> {
   final user = UserController.user;
-  late CategoriaController controller;
+  final CategoriaController controller = GetIt.instance<CategoriaController>();
   final TextEditingController _textController = TextEditingController();
   final TextEditingController _editController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    controller = Provider.of<CategoriaController>(context, listen: false);
+    // Não é mais necessário usar o Provider aqui
   }
 
   @override
@@ -197,17 +196,18 @@ class _CategoriaPageState extends State<CategoriaPage> {
               ),
             ),
             Expanded(
-                child: ListView.builder(
-              itemCount: controller.categorias.length,
-              itemBuilder: (context, index) {
-                final categoria = controller.categorias[index];
-                return CategoriaItem(
-                  text: categoria.nome,
-                  deleteCategoria: () => _deleteCategoria(categoria),
-                  updateCategoria: () => _editarCategoria(categoria),
-                );
-              },
-            )),
+              child: ListView.builder(
+                itemCount: controller.categorias.length,
+                itemBuilder: (context, index) {
+                  final categoria = controller.categorias[index];
+                  return CategoriaItem(
+                    text: categoria.nome,
+                    deleteCategoria: () => _deleteCategoria(categoria),
+                    updateCategoria: () => _editarCategoria(categoria),
+                  );
+                },
+              ),
+            ),
           ],
         ),
       ),

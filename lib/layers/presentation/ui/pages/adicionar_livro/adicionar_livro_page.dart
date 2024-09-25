@@ -11,6 +11,7 @@ import 'package:biblioteca_pessoal/layers/presentation/ui/pages/adicionar_livro/
 import 'package:biblioteca_pessoal/layers/presentation/widgets/drawer_custom/drawer_custom.dart';
 import 'package:biblioteca_pessoal/layers/presentation/widgets/input_text_custom.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:multi_dropdown/multi_dropdown.dart';
 import 'package:provider/provider.dart';
 
@@ -23,7 +24,7 @@ class AdicionarLivroPage extends StatefulWidget {
 
 class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
   final user = UserController.user;
-  late LivroController controller;
+  final LivroController controller = GetIt.instance<LivroController>();
 
   final _tituloController = TextEditingController();
   final _autorController = TextEditingController();
@@ -56,7 +57,6 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
 
   @override
   void initState() {
-    controller = Provider.of<LivroController>(context, listen: false);
     super.initState();
   }
 
