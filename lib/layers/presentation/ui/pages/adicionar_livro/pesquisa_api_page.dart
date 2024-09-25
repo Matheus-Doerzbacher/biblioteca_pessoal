@@ -1,5 +1,6 @@
 import 'package:biblioteca_pessoal/layers/presentation/controllers/pesquisa_api_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/widgets/drawer_custom/drawer_custom.dart';
+import 'package:biblioteca_pessoal/layers/presentation/widgets/livro_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -129,31 +130,23 @@ class _PesquisaApiPageState extends State<PesquisaApiPage> {
             ),
           if (controller.livros.isNotEmpty && !controller.isLoading)
             Expanded(
-              child: ListView.builder(
-                itemCount: controller.livros.length,
-                itemBuilder: (context, index) {
-                  return Column(
-                    children: [
-                      Container(
-                        height: 180,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: NetworkImage(
-                              controller.livros[index].urlImage.isNotEmpty
-                                  ? controller.livros[index].urlImage
-                                  : 'https://www.maisaprendizagem.com.br/wp-content/uploads/2019/01/pilha-de-livros.png',
-                            ),
-                          ),
-                          color: colorScheme.surface,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      Text(controller.livros[index].titulo),
-                      Text(controller.livros[index].autor),
-                      const SizedBox(height: 30),
-                    ],
-                  );
-                },
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(14, 0, 14, 0),
+                child: GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 0.67,
+                    mainAxisSpacing: 10,
+                  ),
+                  itemCount: controller.livros.length,
+                  itemBuilder: (context, index) {
+                    return LivroCard(
+                      livro: controller.livros[index],
+                      context: context,
+                      isPesquisa: true,
+                    );
+                  },
+                ),
               ),
             ),
         ],

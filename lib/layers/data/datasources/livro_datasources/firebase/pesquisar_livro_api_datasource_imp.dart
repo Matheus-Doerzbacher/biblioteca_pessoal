@@ -10,7 +10,7 @@ class PesquisarLivroApiDatasourceImp implements PesquisarLivroApiDatasource {
   Future<List<Livro>> call(String titulo) async {
     final response = await http.get(
       Uri.parse(
-        'https://www.googleapis.com/books/v1/volumes?q=[$titulo]&key=AIzaSyCU8yALKVrT1ojPrd3s0rA3EJVP612NE4Y',
+        'https://www.googleapis.com/books/v1/volumes?q=[$titulo]&key=AIzaSyCU8yALKVrT1ojPrd3s0rA3EJVP612NE4Y&maxResults=30',
       ),
     );
 
