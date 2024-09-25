@@ -1,3 +1,4 @@
+import 'package:biblioteca_pessoal/core/inject/pesquisa_livro_inject.dart';
 import 'package:get_it/get_it.dart';
 import 'package:biblioteca_pessoal/core/inject/categoria_inject.dart';
 import 'package:biblioteca_pessoal/core/inject/emprestimo_inject.dart';
@@ -10,5 +11,6 @@ class Inject {
     livroInject(getIt);
     categoriaInject(getIt);
     emprestimoInject(getIt);
+    pesquisaLivroInject(getIt);
   }
 }

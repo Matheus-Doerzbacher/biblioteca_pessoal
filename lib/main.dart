@@ -1,9 +1,11 @@
 import 'package:biblioteca_pessoal/core/inject/_inject.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/categoria_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/emprestimo_controller.dart';
+import 'package:biblioteca_pessoal/layers/presentation/controllers/pesquisa_api_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/theme/theme.dart';
 import 'package:biblioteca_pessoal/layers/presentation/ui/pages/adicionar_livro/adicionar_livro_page.dart';
+import 'package:biblioteca_pessoal/layers/presentation/ui/pages/adicionar_livro/pesquisa_api_page.dart';
 import 'package:biblioteca_pessoal/layers/presentation/ui/pages/categoria_page.dart';
 import 'package:biblioteca_pessoal/layers/presentation/ui/pages/home_page.dart';
 import 'package:biblioteca_pessoal/layers/presentation/ui/pages/login_page.dart';
@@ -35,6 +37,9 @@ void main() async {
         ),
         ChangeNotifierProvider(
           create: (context) => GetIt.I<EmprestimoController>(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => GetIt.I<PesquisaApiController>(),
         ),
       ],
       child: const MyApp(),
@@ -76,7 +81,8 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const LoginPage(),
         '/': (context) => const HomePage(),
         '/categoria': (context) => const CategoriaPage(),
-        '/adicionar': (context) => const AdicionarLivroPage()
+        '/adicionar': (context) => const PesquisaApiPage(),
+        '/adicionar-manual': (context) => const AdicionarLivroPage(),
       },
       themeMode: ThemeMode.system,
     );

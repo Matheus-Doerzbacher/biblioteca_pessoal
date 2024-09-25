@@ -78,3 +78,16 @@ class SalvarImagemLivroRepositoryImp implements SalvarImagemLivroRepository {
     return await _salvarImagemLivroDatasource(imagem);
   }
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class PesquisarLivroApiRepositoryImp implements PesquisarLivroApiRepository {
+  final PesquisarLivroApiDatasource _pesquisarLivroApiDatasource;
+
+  PesquisarLivroApiRepositoryImp(this._pesquisarLivroApiDatasource);
+
+  @override
+  Future<List<Livro>> call(String titulo) async {
+    return await _pesquisarLivroApiDatasource(titulo);
+  }
+}

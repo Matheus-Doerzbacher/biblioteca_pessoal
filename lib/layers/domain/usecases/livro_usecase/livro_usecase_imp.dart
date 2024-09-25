@@ -79,3 +79,16 @@ class SalvarImagemLivroUsecaseImp implements SalvarImagemLivroUsecase {
     return await _salvarImagemLivroRepository(imagem);
   }
 }
+
+// --------------------------------------------------
+
+class PesquisarLivroApiUsecaseImp implements PesquisarLivroApiUsecase {
+  final PesquisarLivroApiRepository _pesquisarLivroApiRepository;
+
+  PesquisarLivroApiUsecaseImp(this._pesquisarLivroApiRepository);
+
+  @override
+  Future<List<Livro>> call(String titulo) async {
+    return await _pesquisarLivroApiRepository(titulo);
+  }
+}

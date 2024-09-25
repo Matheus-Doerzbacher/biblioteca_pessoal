@@ -121,7 +121,7 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                childAspectRatio: 0.63,
+                childAspectRatio: 0.58,
                 mainAxisSpacing: 16,
               ),
               itemCount: livros.length,
@@ -145,19 +145,21 @@ class _HomePageState extends State<HomePage> {
                     ),
                     child: Column(
                       children: [
-                        ClipRRect(
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(8),
-                            topRight: Radius.circular(8),
-                          ),
-                          child: Image.network(
-                            livro.urlImage.isNotEmpty
-                                ? livro.urlImage
-                                : 'https://cdn.pixabay.com/photo/2017/08/11/09/11/books-2630076_1280.jpg',
-                            // : 'https://marketplace.canva.com/EAFq91U_RUs/1/0/1003w/canva-capa-de-livro-de-fantasia-elegante-verde-e-bege-awJX91ybn9w.jpg',
-                            height: 200,
-                            width: double.infinity,
-                            fit: BoxFit.cover,
+                        Container(
+                          padding: const EdgeInsets.fromLTRB(4, 4, 4, 0),
+                          color: colorScheme.surface,
+                          child: ClipRRect(
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(8),
+                              topRight: Radius.circular(8),
+                            ),
+                            child: Image.network(
+                              livro.urlImage.isNotEmpty
+                                  ? livro.urlImage
+                                  : 'https://cdn.pixabay.com/photo/2017/08/11/09/11/books-2630076_1280.jpg',
+                              height: 200,
+                              width: double.infinity,
+                            ),
                           ),
                         ),
                         Expanded(
@@ -171,16 +173,18 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             child: Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.all(8),
                               child: Column(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    livro.titulo,
+                                    livro.titulo.length > 25
+                                        ? '${livro.titulo.substring(0, 25)}...'
+                                        : livro.titulo,
                                     style:
-                                        Theme.of(context).textTheme.titleMedium,
+                                        Theme.of(context).textTheme.titleSmall,
                                   ),
                                   Text(
                                     livro.autor,

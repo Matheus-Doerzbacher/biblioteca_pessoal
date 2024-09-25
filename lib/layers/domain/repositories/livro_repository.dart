@@ -25,3 +25,7 @@ abstract class UpdateLivroRepository {
 abstract class SalvarImagemLivroRepository {
   Future<String> call(File imagem);
 }
+
+abstract class PesquisarLivroApiRepository {
+  Future<List<Livro>> call(String titulo);
+}

@@ -25,3 +25,7 @@ abstract class UpdateLivroUsecase {
 abstract class SalvarImagemLivroUsecase {
   Future<String> call(File imagem);
 }
+
+abstract class PesquisarLivroApiUsecase {
+  Future<List<Livro>> call(String titulo);
+}

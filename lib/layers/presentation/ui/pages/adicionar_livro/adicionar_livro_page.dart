@@ -191,9 +191,8 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Adicionar Livro'),
+        title: const Text('Adicionar Manualmente'),
       ),
-      drawer: const DrawerCustom(namePageActive: '/adicionar'),
       body: SingleChildScrollView(
         primary: false,
         child: Column(

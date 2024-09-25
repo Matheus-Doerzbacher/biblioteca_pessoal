@@ -25,3 +25,7 @@ abstract class UpdateLivroDatasource {
 abstract class SalvarImagemLivroDatasource {
   Future<String> call(File imagem);
 }
+
+abstract class PesquisarLivroApiDatasource {
+  Future<List<Livro>> call(String titulo);
+}
