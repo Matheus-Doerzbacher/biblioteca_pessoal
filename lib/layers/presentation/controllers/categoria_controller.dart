@@ -1,8 +1,9 @@
 import 'package:biblioteca_pessoal/layers/domain/entities/categoria_entity.dart';
 import 'package:biblioteca_pessoal/layers/domain/usecases/categoria_usecase/categoria_usecase.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
+import 'package:flutter/material.dart';
 
-class CategoriaController {
+class CategoriaController extends ChangeNotifier {
   final CreateCategoriaUsecase _createCategoriaUsecase;
   final DeleteCategoriaUsecase _deleteCategoriaUsecase;
   final GetCategoriasUsecase _getCategoriasUsecase;
@@ -14,24 +15,31 @@ class CategoriaController {
     this._getCategoriasUsecase,
     this._updateCategoriaUsecase,
   ) {
-    getCategorias(UserController.user?.uid ?? '');
+    getCategorias(userId);
   }
-
+  final userId = UserController.user?.uid ?? '';
   late List<Categoria> categorias;
 
-  createCategoria(Categoria categoria) async {
-    return await _createCategoriaUsecase(categoria);
+  Future<dynamic> createCategoria(Categoria categoria) async {
+    final result = await _createCategoriaUsecase(categoria);
+    await getCategorias(userId);
+    return result;
   }
 
-  deleteCategoria(String idCategoria) async {
-    return await _deleteCategoriaUsecase(idCategoria);
+  Future<dynamic> deleteCategoria(String idCategoria) async {
+    final result = await _deleteCategoriaUsecase(idCategoria);
+    await getCategorias(userId);
+    return result;
   }
 
-  getCategorias(String uidUsuario) async {
+  Future<dynamic> getCategorias(String uidUsuario) async {
     categorias = await _getCategoriasUsecase(uidUsuario);
+    notifyListeners();
   }
 
-  updateCategoria(Categoria categoria) async {
-    return await _updateCategoriaUsecase(categoria);
+  Future<dynamic> updateCategoria(Categoria categoria) async {
+    final result = await _updateCategoriaUsecase(categoria);
+    await getCategorias(userId);
+    return result;
   }
 }

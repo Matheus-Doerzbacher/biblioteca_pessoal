@@ -5,6 +5,7 @@ import 'package:biblioteca_pessoal/layers/presentation/ui/pages/categoria/compon
 import 'package:biblioteca_pessoal/layers/presentation/widgets/drawer_custom/drawer_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:provider/provider.dart';
 
 class CategoriaPage extends StatefulWidget {
   const CategoriaPage({super.key});
@@ -22,7 +23,7 @@ class _CategoriaPageState extends State<CategoriaPage> {
   @override
   void initState() {
     super.initState();
-    controller = GetIt.I.get<CategoriaController>();
+    controller = Provider.of<CategoriaController>(context, listen: false);
   }
 
   @override
@@ -196,31 +197,17 @@ class _CategoriaPageState extends State<CategoriaPage> {
               ),
             ),
             Expanded(
-              child: FutureBuilder<void>(
-                future: controller.getCategorias(user!.uid),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (snapshot.hasError) {
-                    return Center(child: Text('Erro: ${snapshot.error}'));
-                  } else {
-                    controller.categorias
-                        .sort((a, b) => a.nome.compareTo(b.nome));
-                    return ListView.builder(
-                      itemCount: controller.categorias.length,
-                      itemBuilder: (context, index) {
-                        final categoria = controller.categorias[index];
-                        return CategoriaItem(
-                          text: categoria.nome,
-                          deleteCategoria: () => _deleteCategoria(categoria),
-                          updateCategoria: () => _editarCategoria(categoria),
-                        );
-                      },
-                    );
-                  }
-                },
-              ),
-            ),
+                child: ListView.builder(
+              itemCount: controller.categorias.length,
+              itemBuilder: (context, index) {
+                final categoria = controller.categorias[index];
+                return CategoriaItem(
+                  text: categoria.nome,
+                  deleteCategoria: () => _deleteCategoria(categoria),
+                  updateCategoria: () => _editarCategoria(categoria),
+                );
+              },
+            )),
           ],
         ),
       ),

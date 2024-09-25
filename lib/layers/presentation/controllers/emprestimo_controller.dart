@@ -1,8 +1,9 @@
 import 'package:biblioteca_pessoal/layers/domain/entities/emprestimo_entity.dart';
 import 'package:biblioteca_pessoal/layers/domain/usecases/emprestimo_usecase/emprestimo_usecase.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
+import 'package:flutter/material.dart';
 
-class EmprestimoController {
+class EmprestimoController extends ChangeNotifier {
   final CreateEmprestimoUsecase _createEmprestimoUsecase;
   final GetEmprestimoByIdUsecase _getEmprestimoByIdUsecase;
   final GetEmprestimosUsecase _getEmprestimosUsecase;
@@ -16,28 +17,37 @@ class EmprestimoController {
     this._updateEmprestimoUsecase,
     this._deleteEmprestimoUsecase,
   ) {
-    getEmprestimos(UserController.user?.uid ?? '');
+    getEmprestimos(userId);
   }
+
+  final userId = UserController.user?.uid ?? '';
 
   late List<Emprestimo> emprestimos;
 
-  getEmprestimoById(String idLivro) async {
+  Future<Emprestimo> getEmprestimoById(String idLivro) async {
     return await _getEmprestimoByIdUsecase(idLivro);
   }
 
-  getEmprestimos(String uidUsuario) async {
+  Future<void> getEmprestimos(String uidUsuario) async {
     emprestimos = await _getEmprestimosUsecase(uidUsuario);
+    notifyListeners();
   }
 
   Future<bool> createEmprestimo(Emprestimo emprestimo) async {
-    return await _createEmprestimoUsecase(emprestimo);
+    final result = await _createEmprestimoUsecase(emprestimo);
+    await getEmprestimos(userId);
+    return result;
   }
 
-  updateEmprestimo(Emprestimo emprestimo) async {
-    return await _updateEmprestimoUsecase(emprestimo);
+  Future<bool> updateEmprestimo(Emprestimo emprestimo) async {
+    final result = await _updateEmprestimoUsecase(emprestimo);
+    await getEmprestimos(userId);
+    return result;
   }
 
-  deleteEmprestimo(String idEmprestimo) async {
-    return await _deleteEmprestimoUsecase(idEmprestimo);
+  Future<bool> deleteEmprestimo(String idEmprestimo) async {
+    final result = await _deleteEmprestimoUsecase(idEmprestimo);
+    await getEmprestimos(userId);
+    return result;
   }
 }

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:biblioteca_pessoal/layers/domain/entities/categoria_entity.dart';
 import 'package:biblioteca_pessoal/layers/domain/entities/livro_entity.dart';
+import 'package:biblioteca_pessoal/layers/presentation/controllers/categoria_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/livro_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/ui/pages/adicionar_livro/components/drop_down_multi_custom.dart';
@@ -10,8 +11,8 @@ import 'package:biblioteca_pessoal/layers/presentation/ui/pages/adicionar_livro/
 import 'package:biblioteca_pessoal/layers/presentation/widgets/drawer_custom/drawer_custom.dart';
 import 'package:biblioteca_pessoal/layers/presentation/widgets/input_text_custom.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:multi_dropdown/multi_dropdown.dart';
+import 'package:provider/provider.dart';
 
 class AdicionarLivroPage extends StatefulWidget {
   const AdicionarLivroPage({super.key});
@@ -55,8 +56,7 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
 
   @override
   void initState() {
-    controller = GetIt.I.get<LivroController>();
-    _inicializarCategorias();
+    controller = Provider.of<LivroController>(context, listen: false);
     super.initState();
   }
 
@@ -70,11 +70,6 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
     _descricaoController.dispose();
     _quantidadeController.dispose();
     super.dispose();
-  }
-
-  void _inicializarCategorias() async {
-    await controller.getCategoriasDropDown(UserController.user?.uid ?? '');
-    setState(() {});
   }
 
   void _handleImagePick(File image) {
@@ -192,6 +187,8 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final categorias = Provider.of<CategoriaController>(context).categorias;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Adicionar Livro'),
@@ -248,7 +245,7 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
             DropDownMultiCustom(
               alterarCategorias: _alterarCategoria,
               categoriasSelecionadas: _categoriasController,
-              categorias: controller.categoriasDropDown,
+              categorias: categorias,
               colorScheme: colorScheme,
               multiSelectController: _multiSelectController,
             ),

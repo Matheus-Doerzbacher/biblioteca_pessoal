@@ -82,7 +82,6 @@ void livroInject(GetIt getIt) {
       getIt(),
       getIt(),
       getIt(),
-      getIt(),
     ),
   );
 }

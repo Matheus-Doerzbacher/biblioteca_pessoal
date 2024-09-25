@@ -1,7 +1,7 @@
 import 'package:biblioteca_pessoal/layers/presentation/controllers/livro_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/widgets/drawer_custom/drawer_custom.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -11,19 +11,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late LivroController controller;
   final _pesquisarController = TextEditingController();
 
   @override
-  void initState() {
-    controller = GetIt.I<LivroController>();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    // final user = UserController.user;
     final colorScheme = Theme.of(context).colorScheme;
+    final livros = Provider.of<LivroController>(context).livros;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home Page'),
@@ -109,9 +103,9 @@ class _HomePageState extends State<HomePage> {
                 childAspectRatio: 0.63,
                 mainAxisSpacing: 16,
               ),
-              itemCount: controller.livros.length,
+              itemCount: livros.length,
               itemBuilder: (context, index) {
-                final livro = controller.livros[index];
+                final livro = livros[index];
                 return Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: Container(
@@ -167,11 +161,12 @@ class _HomePageState extends State<HomePage> {
                                     children: [
                                       Text(livro.status.name),
                                       IconButton(
-                                          onPressed: () {},
-                                          icon: const Icon(
-                                              Icons.bookmark_outlined))
+                                        onPressed: () {},
+                                        icon:
+                                            const Icon(Icons.bookmark_outlined),
+                                      ),
                                     ],
-                                  )
+                                  ),
                                 ],
                               ),
                             ),

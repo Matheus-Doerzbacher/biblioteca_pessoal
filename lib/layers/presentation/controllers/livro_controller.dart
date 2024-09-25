@@ -1,18 +1,15 @@
 import 'dart:io';
-
-import 'package:biblioteca_pessoal/layers/domain/entities/categoria_entity.dart';
+import 'package:flutter/material.dart';
 import 'package:biblioteca_pessoal/layers/domain/entities/livro_entity.dart';
-import 'package:biblioteca_pessoal/layers/domain/usecases/categoria_usecase/categoria_usecase.dart';
 import 'package:biblioteca_pessoal/layers/domain/usecases/livro_usecase/livro_usecase.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
 
-class LivroController {
+class LivroController extends ChangeNotifier {
   final GetLivroByIdUsecase _getLivroByIdUsecase;
   final GetLivrosUsecase _getLivrosUsecase;
   final CreateLivroUsecase _createLivroUsecase;
   final UpdateLivroUsecase _updateLivroUsecase;
   final DeleteLivroUsecase _deleteLivroUsecase;
-  final GetCategoriasUsecase _getCategoriasUsecase;
   final SalvarImagemLivroUsecase _salvarImagemLivroUsecase;
 
   LivroController(
@@ -21,37 +18,40 @@ class LivroController {
     this._createLivroUsecase,
     this._updateLivroUsecase,
     this._deleteLivroUsecase,
-    this._getCategoriasUsecase,
     this._salvarImagemLivroUsecase,
   ) {
-    getLivros(UserController.user?.uid ?? '');
+    getLivros(userId);
   }
 
-  late List<Livro> livros = [];
-  late List<Categoria> categoriasDropDown = [];
+  final userId = UserController.user?.uid ?? '';
 
-  getLivroById(String idLivro) async {
+  late List<Livro> livros = [];
+
+  Future<Livro> getLivroById(String idLivro) async {
     return await _getLivroByIdUsecase(idLivro);
   }
 
-  getCategoriasDropDown(String uidUsuario) async {
-    categoriasDropDown = await _getCategoriasUsecase(uidUsuario);
-  }
-
-  getLivros(String uidUsuario) async {
+  Future<void> getLivros(String uidUsuario) async {
     livros = await _getLivrosUsecase(uidUsuario);
+    notifyListeners();
   }
 
-  createLivro(Livro livro) async {
-    return await _createLivroUsecase(livro);
+  Future<bool> createLivro(Livro livro) async {
+    final result = await _createLivroUsecase(livro);
+    await getLivros(userId);
+    return result;
   }
 
-  updateLivro(Livro livro) async {
-    return await _updateLivroUsecase(livro);
+  Future<bool> updateLivro(Livro livro) async {
+    final result = await _updateLivroUsecase(livro);
+    await getLivros(userId);
+    return result;
   }
 
-  deleteLivro(String idLivro) async {
-    return await _deleteLivroUsecase(idLivro);
+  Future<bool> deleteLivro(String idLivro) async {
+    final result = await _deleteLivroUsecase(idLivro);
+    await getLivros(userId);
+    return result;
   }
 
   Future<String> salvarImageLivro(File imagem) async {
