@@ -195,19 +195,24 @@ class _CategoriaPageState extends State<CategoriaPage> {
                 ],
               ),
             ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: controller.categorias.length,
-                itemBuilder: (context, index) {
-                  final categoria = controller.categorias[index];
-                  return CategoriaItem(
-                    text: categoria.nome,
-                    deleteCategoria: () => _deleteCategoria(categoria),
-                    updateCategoria: () => _editarCategoria(categoria),
-                  );
-                },
+            if (!controller.isLoading)
+              Expanded(
+                child: ListView.builder(
+                  itemCount: controller.categorias.length,
+                  itemBuilder: (context, index) {
+                    final categoria = controller.categorias[index];
+                    return CategoriaItem(
+                      text: categoria.nome,
+                      deleteCategoria: () => _deleteCategoria(categoria),
+                      updateCategoria: () => _editarCategoria(categoria),
+                    );
+                  },
+                ),
               ),
-            ),
+            if (controller.isLoading)
+              const Center(
+                child: CircularProgressIndicator(),
+              ),
           ],
         ),
       ),

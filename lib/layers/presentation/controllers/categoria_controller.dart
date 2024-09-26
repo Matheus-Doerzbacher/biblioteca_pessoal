@@ -18,26 +18,39 @@ class CategoriaController extends ChangeNotifier {
     getCategorias(userId);
   }
   final userId = UserController.user?.uid ?? '';
+  late bool isLoading = false;
   late List<Categoria> categorias = [];
 
   Future<dynamic> createCategoria(Categoria categoria) async {
+    isLoading = true;
+    notifyListeners();
     final result = await _createCategoriaUsecase(categoria);
     await getCategorias(userId);
     return result;
   }
 
   Future<dynamic> deleteCategoria(String idCategoria) async {
+    isLoading = true;
+    notifyListeners();
     final result = await _deleteCategoriaUsecase(idCategoria);
     await getCategorias(userId);
     return result;
   }
 
   Future<dynamic> getCategorias(String uidUsuario) async {
-    categorias = await _getCategoriasUsecase(uidUsuario);
-    notifyListeners();
+    try {
+      notifyListeners();
+      categorias = await _getCategoriasUsecase(uidUsuario);
+      notifyListeners();
+    } finally {
+      isLoading = false;
+      notifyListeners();
+    }
   }
 
   Future<dynamic> updateCategoria(Categoria categoria) async {
+    isLoading = true;
+    notifyListeners();
     final result = await _updateCategoriaUsecase(categoria);
     await getCategorias(userId);
     return result;

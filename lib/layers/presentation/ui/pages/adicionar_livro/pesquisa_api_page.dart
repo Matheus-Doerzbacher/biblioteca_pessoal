@@ -148,7 +148,7 @@ class _PesquisaApiPageState extends State<PesquisaApiPage> {
                 child: GridView.builder(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
-                    childAspectRatio: 0.67,
+                    childAspectRatio: 0.65,
                     mainAxisSpacing: 10,
                   ),
                   itemCount: controller.livros.length,

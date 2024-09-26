@@ -20,10 +20,10 @@ class LivroController extends ChangeNotifier {
     this._deleteLivroUsecase,
     this._salvarImagemLivroUsecase,
   ) {
-    getLivros(userId);
+    getLivros(UserController.user?.uid ?? '');
   }
 
-  final userId = UserController.user?.uid ?? '';
+  final _userId = UserController.user?.uid ?? '';
 
   late List<Livro> livros = [];
 
@@ -38,19 +38,19 @@ class LivroController extends ChangeNotifier {
 
   Future<bool> createLivro(Livro livro) async {
     final result = await _createLivroUsecase(livro);
-    await getLivros(userId);
+    await getLivros(_userId);
     return result;
   }
 
   Future<bool> updateLivro(Livro livro) async {
     final result = await _updateLivroUsecase(livro);
-    await getLivros(userId);
+    await getLivros(_userId);
     return result;
   }
 
   Future<bool> deleteLivro(String idLivro) async {
     final result = await _deleteLivroUsecase(idLivro);
-    await getLivros(userId);
+    await getLivros(_userId);
     return result;
   }
 

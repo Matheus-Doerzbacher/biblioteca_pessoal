@@ -1,8 +1,9 @@
 import 'package:biblioteca_pessoal/layers/presentation/controllers/livro_controller.dart';
+import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/widgets/drawer_custom/drawer_custom.dart';
 import 'package:biblioteca_pessoal/layers/presentation/widgets/livro_card_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:get_it/get_it.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,11 +14,13 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _pesquisarController = TextEditingController();
+  final controller = GetIt.instance.get<LivroController>();
 
   @override
   void initState() {
     super.initState();
     _pesquisarController.addListener(_onSearchChanged);
+    controller.getLivros(UserController.user?.uid ?? '');
   }
 
   @override
@@ -34,11 +37,12 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final livros = Provider.of<LivroController>(context).livros.where((livro) {
-      final query = _pesquisarController.text.toLowerCase();
-      return livro.titulo.toLowerCase().contains(query) ||
-          livro.autor.toLowerCase().contains(query);
-    }).toList();
+    final livros = controller.livros;
+    // final livros = Provider.of<LivroController>(context).livros.where((livro) {
+    //   final query = _pesquisarController.text.toLowerCase();
+    //   return livro.titulo.toLowerCase().contains(query) ||
+    //       livro.autor.toLowerCase().contains(query);
+    // }).toList();
 
     return Scaffold(
       appBar: AppBar(
