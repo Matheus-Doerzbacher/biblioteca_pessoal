@@ -60,19 +60,19 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
       _categoriasController = widget.livroUpdate!.categorias;
       _ratingController = widget.livroUpdate!.avaliacao.toDouble();
       _urlImage = widget.livroUpdate!.urlImage;
-    }
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _multiSelectController.setItems(
-        _categoriasController.map((categoria) {
-          return DropdownItem(
-            label: categoria.nome,
-            value: categoria,
-            selected: _categoriasController.contains(categoria),
-          );
-        }).toList(),
-      );
-    });
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _multiSelectController.setItems(
+          _categoriasController.map((categoria) {
+            return DropdownItem(
+              label: categoria.nome,
+              value: categoria,
+              selected: _categoriasController.contains(categoria),
+            );
+          }).toList(),
+        );
+      });
+    }
   }
 
   @override
