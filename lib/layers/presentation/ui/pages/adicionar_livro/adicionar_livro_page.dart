@@ -72,7 +72,9 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
   }
 
   void _handleImagePick(File image) {
-    _imageSelected = image;
+    setState(() {
+      _imageSelected = image;
+    });
   }
 
   void _showError(String msg) {
@@ -96,15 +98,15 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
     });
   }
 
-  void _handleSubmit() async {
+  Future<void> _handleSubmit() async {
     try {
       setState(() {
         _isLoading = true;
       });
 
-      String imageUrl = '';
+      var imageUrl = '';
       late int paginaInt;
-      late int quantidade = 0;
+      late var quantidade = 0;
 
       if (_tituloController.text.isEmpty) {
         throw Exception('Informe um Titulo');
@@ -154,11 +156,11 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
         estoque: quantidade,
       );
 
-      bool result = await controller.createLivro(livro);
+      final result = await controller.createLivro(livro);
 
       if (result == true) {
         if (mounted) {
-          Navigator.of(context).pushNamed('/');
+          await Navigator.of(context).pushNamed('/');
         }
       } else {
         throw Exception('Houve um problema ao salvar o livro');
@@ -188,7 +190,6 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
       body: SingleChildScrollView(
         primary: false,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(height: 24),
             SelecionarFotoWidget(onImagePick: _handleImagePick),
@@ -304,7 +305,7 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
                   ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),

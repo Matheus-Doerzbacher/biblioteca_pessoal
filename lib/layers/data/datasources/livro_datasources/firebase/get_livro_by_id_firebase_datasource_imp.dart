@@ -11,7 +11,7 @@ class GetLivroByIdFirebaseDatasourceImp implements GetLivroByIdDatasource {
       final docSnapshot = await docRef.get();
 
       if (docSnapshot.exists) {
-        final data = docSnapshot.data() as Map<String, dynamic>;
+        final data = docSnapshot.data()!;
         return Livro.fromJson(data);
       } else {
         throw Exception('Livro não encontrado');

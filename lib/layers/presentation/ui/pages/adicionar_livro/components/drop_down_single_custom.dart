@@ -33,14 +33,13 @@ class DropDownSingleCustom extends StatelessWidget {
                     2,
                     2,
                   ),
-                )
+                ),
               ],
               borderRadius: BorderRadius.circular(8),
             ),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 14),
               child: DropdownButton<StatusLeitura>(
-                iconSize: 24,
                 value: statusAtual,
                 icon: const Icon(Icons.keyboard_arrow_down_rounded),
                 style: Theme.of(context)

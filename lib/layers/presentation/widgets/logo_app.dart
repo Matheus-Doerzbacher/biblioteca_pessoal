@@ -22,7 +22,7 @@ class LogoApp extends StatelessWidget {
             style: TextStyle(
               color: colorScheme.primary,
             ),
-          )
+          ),
         ],
         style: TextStyle(fontSize: size),
       ),

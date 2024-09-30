@@ -6,11 +6,12 @@ class LivroCard extends StatelessWidget {
   final BuildContext context;
   final bool isPesquisa;
 
-  const LivroCard(
-      {super.key,
-      required this.livro,
-      required this.context,
-      this.isPesquisa = false});
+  const LivroCard({
+    super.key,
+    required this.livro,
+    required this.context,
+    this.isPesquisa = false,
+  });
 
   @override
   Widget build(BuildContext context) {

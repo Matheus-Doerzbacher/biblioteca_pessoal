@@ -20,7 +20,7 @@ class PesquisaApiController extends ChangeNotifier {
     return livros;
   }
 
-  clearLivros() {
+  void clearLivros() {
     livros = [];
     notifyListeners();
   }

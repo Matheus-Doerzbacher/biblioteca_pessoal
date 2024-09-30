@@ -11,7 +11,7 @@ class CreateLivroUsecaseImp implements CreateLivroUsecase {
 
   @override
   Future<bool> call(Livro livro) async {
-    return await _createLivroRepository(livro);
+    return _createLivroRepository(livro);
   }
 }
 
@@ -24,7 +24,7 @@ class DeleteLivroUsecaseImp implements DeleteLivroUsecase {
 
   @override
   Future<bool> call(String id) async {
-    return await _deleteLivroRepository(id);
+    return _deleteLivroRepository(id);
   }
 }
 
@@ -37,7 +37,7 @@ class GetLivroByIdUsecaseImp implements GetLivroByIdUsecase {
 
   @override
   Future<Livro> call(String idLivro) async {
-    return await _getLivroByIdRepository(idLivro);
+    return _getLivroByIdRepository(idLivro);
   }
 }
 
@@ -63,7 +63,7 @@ class UpdateLivroUsecaseImp implements UpdateLivroUsecase {
 
   @override
   Future<bool> call(Livro livro) async {
-    return await _updateLivroRepository(livro);
+    return _updateLivroRepository(livro);
   }
 }
 
@@ -76,7 +76,7 @@ class SalvarImagemLivroUsecaseImp implements SalvarImagemLivroUsecase {
 
   @override
   Future<String> call(File imagem) async {
-    return await _salvarImagemLivroRepository(imagem);
+    return _salvarImagemLivroRepository(imagem);
   }
 }
 
@@ -89,6 +89,6 @@ class PesquisarLivroApiUsecaseImp implements PesquisarLivroApiUsecase {
 
   @override
   Future<List<Livro>> call(String titulo) async {
-    return await _pesquisarLivroApiRepository(titulo);
+    return _pesquisarLivroApiRepository(titulo);
   }
 }

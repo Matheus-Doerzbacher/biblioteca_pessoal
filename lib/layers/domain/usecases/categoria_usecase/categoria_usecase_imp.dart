@@ -8,7 +8,7 @@ class CreateCategoriaUsecaseImp implements CreateCategoriaUsecase {
   CreateCategoriaUsecaseImp(this._createCategoriaRepository);
   @override
   Future<bool> call(Categoria categoria) async {
-    return await _createCategoriaRepository(categoria);
+    return _createCategoriaRepository(categoria);
   }
 }
 
@@ -18,7 +18,7 @@ class DeleteCategoriaUsecaseImp implements DeleteCategoriaUsecase {
   DeleteCategoriaUsecaseImp(this._deleteCategoriaRepository);
   @override
   Future<bool> call(String idCategoria) async {
-    return await _deleteCategoriaRepository(idCategoria);
+    return _deleteCategoriaRepository(idCategoria);
   }
 }
 
@@ -29,7 +29,7 @@ class GetCategoriasUsecaseImp implements GetCategoriasUsecase {
 
   @override
   Future<List<Categoria>> call(String uidUsuario) async {
-    return await _getCategoriasRepository(uidUsuario);
+    return _getCategoriasRepository(uidUsuario);
   }
 }
 
@@ -39,6 +39,6 @@ class UpdateCategoriaUsecaseImp implements UpdateCategoriaUsecase {
   UpdateCategoriaUsecaseImp(this._updateCategoriaRepository);
   @override
   Future<bool> call(Categoria categoria) async {
-    return await _updateCategoriaRepository(categoria);
+    return _updateCategoriaRepository(categoria);
   }
 }

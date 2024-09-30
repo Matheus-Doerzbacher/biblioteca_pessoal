@@ -9,7 +9,7 @@ class CreateEmprestimoUsecaseImp implements CreateEmprestimoUsecase {
 
   @override
   Future<bool> call(Emprestimo emprestimo) async {
-    return await _createEmprestimoRepository(emprestimo);
+    return _createEmprestimoRepository(emprestimo);
   }
 }
 
@@ -22,7 +22,7 @@ class GetEmprestimoByIdUsecaseImp implements GetEmprestimoByIdUsecase {
 
   @override
   Future<Emprestimo> call(String idEmprestimo) async {
-    return await _getEmprestimoByIdRepository(idEmprestimo);
+    return _getEmprestimoByIdRepository(idEmprestimo);
   }
 }
 
@@ -35,7 +35,7 @@ class GetEmprestimosUsecaseImp implements GetEmprestimosUsecase {
 
   @override
   Future<List<Emprestimo>> call(String uidUsuario) async {
-    return await _getEmprestimosRepository(uidUsuario);
+    return _getEmprestimosRepository(uidUsuario);
   }
 }
 
@@ -48,7 +48,7 @@ class UpdateEmprestimoUsecaseImp implements UpdateEmprestimoUsecase {
 
   @override
   Future<bool> call(Emprestimo emprestimo) async {
-    return await _updateEmprestimoRepository(emprestimo);
+    return _updateEmprestimoRepository(emprestimo);
   }
 }
 
@@ -61,6 +61,6 @@ class DeleteEmprestimoUsecaseImp implements DeleteEmprestimoUsecase {
 
   @override
   Future<bool> call(String idEmprestimo) async {
-    return await _deleteEmprestimoRepository(idEmprestimo);
+    return _deleteEmprestimoRepository(idEmprestimo);
   }
 }

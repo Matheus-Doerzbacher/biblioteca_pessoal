@@ -13,6 +13,17 @@ class Emprestimo {
   final int dias;
   StatusEmprestimo status;
 
+  Emprestimo({
+    this.id,
+    required this.uidUsuario,
+    required this.livro,
+    required this.destinatario,
+    DateTime? dataEmprestimo,
+    this.dataDevolucao,
+    this.status = StatusEmprestimo.emprestado,
+    required this.dias,
+  }) : dataEmprestimo = dataEmprestimo ?? DateTime.now();
+
   factory Emprestimo.fromJson(Map<String, dynamic> json) {
     return Emprestimo(
       id: json['id'],
@@ -40,17 +51,6 @@ class Emprestimo {
       'status': status.toString().split('.').last,
     };
   }
-
-  Emprestimo({
-    this.id,
-    required this.uidUsuario,
-    required this.livro,
-    required this.destinatario,
-    DateTime? dataEmprestimo,
-    this.dataDevolucao,
-    this.status = StatusEmprestimo.emprestado,
-    required this.dias,
-  }) : dataEmprestimo = dataEmprestimo ?? DateTime.now();
 
   bool get estaAtrasado {
     if (status == StatusEmprestimo.devolvido) return false;

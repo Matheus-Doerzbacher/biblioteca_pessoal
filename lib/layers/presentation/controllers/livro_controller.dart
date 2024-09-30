@@ -1,8 +1,9 @@
 import 'dart:io';
-import 'package:flutter/material.dart';
+
 import 'package:biblioteca_pessoal/layers/domain/entities/livro_entity.dart';
 import 'package:biblioteca_pessoal/layers/domain/usecases/livro_usecase/livro_usecase.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
+import 'package:flutter/material.dart';
 
 class LivroController extends ChangeNotifier {
   final GetLivroByIdUsecase _getLivroByIdUsecase;
@@ -28,7 +29,7 @@ class LivroController extends ChangeNotifier {
   late List<Livro> livros = [];
 
   Future<Livro> getLivroById(String idLivro) async {
-    return await _getLivroByIdUsecase(idLivro);
+    return _getLivroByIdUsecase(idLivro);
   }
 
   Future<void> getLivros(String uidUsuario) async {
@@ -55,6 +56,6 @@ class LivroController extends ChangeNotifier {
   }
 
   Future<String> salvarImageLivro(File imagem) async {
-    return await _salvarImagemLivroUsecase(imagem);
+    return _salvarImagemLivroUsecase(imagem);
   }
 }

@@ -9,7 +9,7 @@ class CreateEmprestimoRepositoryImp implements CreateEmprestimoRepository {
 
   @override
   Future<bool> call(Emprestimo emprestimo) async {
-    return await _createEmprestimoDatasource(emprestimo);
+    return _createEmprestimoDatasource(emprestimo);
   }
 }
 
@@ -22,7 +22,7 @@ class GetEmprestimoByIdRepositoryImp implements GetEmprestimoByIdRepository {
 
   @override
   Future<Emprestimo> call(String idEmprestimo) async {
-    return await _getEmprestimoByIdDatasource(idEmprestimo);
+    return _getEmprestimoByIdDatasource(idEmprestimo);
   }
 }
 
@@ -35,7 +35,7 @@ class GetEmprestimosRepositoryImp implements GetEmprestimosRepository {
 
   @override
   Future<List<Emprestimo>> call(String uidUsuario) async {
-    return await _getEmprestimosDatasource(uidUsuario);
+    return _getEmprestimosDatasource(uidUsuario);
   }
 }
 
@@ -48,7 +48,7 @@ class UpdateEmprestimoRepositoryImp implements UpdateEmprestimoRepository {
 
   @override
   Future<bool> call(Emprestimo emprestimo) async {
-    return await _updateEmprestimoDatasource(emprestimo);
+    return _updateEmprestimoDatasource(emprestimo);
   }
 }
 
@@ -60,6 +60,6 @@ class DeleteEmprestimoRepositoryImp implements DeleteEmprestimoRepository {
   DeleteEmprestimoRepositoryImp(this._deleteEmprestimoDatasource);
   @override
   Future<bool> call(String idEmprestimo) async {
-    return await _deleteEmprestimoDatasource(idEmprestimo);
+    return _deleteEmprestimoDatasource(idEmprestimo);
   }
 }

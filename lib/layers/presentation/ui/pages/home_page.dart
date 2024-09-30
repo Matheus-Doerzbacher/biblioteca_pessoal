@@ -25,8 +25,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void dispose() {
-    _pesquisarController.removeListener(_onSearchChanged);
-    _pesquisarController.dispose();
+    _pesquisarController
+      ..removeListener(_onSearchChanged)
+      ..dispose();
     super.dispose();
   }
 
@@ -38,7 +39,9 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final livros = controller.livros;
-    // final livros = Provider.of<LivroController>(context).livros.where((livro) {
+
+    // final livros =
+    //  Provider.of<LivroController>(context).livros.where((livro) {
     //   final query = _pesquisarController.text.toLowerCase();
     //   return livro.titulo.toLowerCase().contains(query) ||
     //       livro.autor.toLowerCase().contains(query);
@@ -70,7 +73,7 @@ class _HomePageState extends State<HomePage> {
                           2,
                           2,
                         ),
-                      )
+                      ),
                     ],
                     borderRadius: BorderRadius.circular(8),
                   ),
@@ -88,28 +91,24 @@ class _HomePageState extends State<HomePage> {
                         enabledBorder: OutlineInputBorder(
                           borderSide: const BorderSide(
                             color: Color(0x00000000),
-                            width: 1,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: const BorderSide(
                             color: Color(0x00000000),
-                            width: 1,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         errorBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color: colorScheme.error,
-                            width: 1,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         focusedErrorBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color: colorScheme.error,
-                            width: 1,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),

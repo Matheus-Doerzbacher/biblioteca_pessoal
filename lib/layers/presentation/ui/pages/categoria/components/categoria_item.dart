@@ -17,7 +17,6 @@ class CategoriaItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
-        mainAxisSize: MainAxisSize.max,
         children: [
           Expanded(
             child: Container(
@@ -34,7 +33,7 @@ class CategoriaItem extends StatelessWidget {
                         0,
                         2,
                       ),
-                    )
+                    ),
                   ],
                   borderRadius: BorderRadius.circular(12),
                 ),
@@ -43,7 +42,6 @@ class CategoriaItem extends StatelessWidget {
                   child: Container(
                     decoration: const BoxDecoration(),
                     child: Row(
-                      mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
@@ -51,7 +49,6 @@ class CategoriaItem extends StatelessWidget {
                           style: TextStyle(color: colorScheme.onSurfaceVariant),
                         ),
                         Row(
-                          mainAxisSize: MainAxisSize.max,
                           children: [
                             IconButton(
                               icon: Icon(
@@ -59,9 +56,7 @@ class CategoriaItem extends StatelessWidget {
                                 color: colorScheme.inversePrimary,
                                 size: 24,
                               ),
-                              onPressed: () {
-                                updateCategoria();
-                              },
+                              onPressed: updateCategoria,
                             ),
                             IconButton(
                               icon: Icon(
@@ -69,9 +64,7 @@ class CategoriaItem extends StatelessWidget {
                                 color: colorScheme.error,
                                 size: 24,
                               ),
-                              onPressed: () {
-                                deleteCategoria();
-                              },
+                              onPressed: deleteCategoria,
                             ),
                           ],
                         ),

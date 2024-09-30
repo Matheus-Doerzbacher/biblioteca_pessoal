@@ -17,13 +17,13 @@ class PesquisarLivroApiDatasourceImp implements PesquisarLivroApiDatasource {
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
-      final List<Livro> livros = [];
+      final livros = <Livro>[];
 
       if (data['items'] == null) {
         return [];
       }
 
-      for (var item in data['items']) {
+      for (final item in data['items']) {
         final volumeInfo = item['volumeInfo'];
         final livro = LivroDto.fromJson(volumeInfo);
         livros.add(livro);

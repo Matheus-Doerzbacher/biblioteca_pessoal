@@ -1,4 +1,3 @@
-import 'package:get_it/get_it.dart';
 import 'package:biblioteca_pessoal/layers/data/datasources/emprestimo_datasources/emprestimo_datasource.dart';
 import 'package:biblioteca_pessoal/layers/data/datasources/emprestimo_datasources/firebase/create_emprestimo_firebase_datasource_imp.dart';
 import 'package:biblioteca_pessoal/layers/data/datasources/emprestimo_datasources/firebase/delete_emprestimo_firebase_imp.dart';
@@ -10,61 +9,63 @@ import 'package:biblioteca_pessoal/layers/domain/repositories/emprestimo_resposi
 import 'package:biblioteca_pessoal/layers/domain/usecases/emprestimo_usecase/emprestimo_usecase.dart';
 import 'package:biblioteca_pessoal/layers/domain/usecases/emprestimo_usecase/emprestimo_usecase_imp.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/emprestimo_controller.dart';
+import 'package:get_it/get_it.dart';
 
 void emprestimoInject(GetIt getIt) {
   // DATASOURCE
-  getIt.registerLazySingleton<CreateEmprestimoDatasource>(
-    () => CreateEmprestimoFirebaseDatasourceImp(),
-  );
-  getIt.registerLazySingleton<GetEmprestimoByIdDatasource>(
-    () => GetEmprestimosByIdFirebaseDatasourceImp(),
-  );
-  getIt.registerLazySingleton<GetEmprestimosDatasource>(
-    () => GetEmprestimosFirebaseDatasourceImp(),
-  );
-  getIt.registerLazySingleton<UpdateEmprestimoDatasource>(
-    () => UpdateEmprestimoFirebaseDatasourceImp(),
-  );
-  getIt.registerLazySingleton<DeleteEmprestimoDatasource>(
-    () => DeleteEmprestimoFirebaseDatasourceImp(),
-  );
+  getIt
+    ..registerLazySingleton<CreateEmprestimoDatasource>(
+      CreateEmprestimoFirebaseDatasourceImp.new,
+    )
+    ..registerLazySingleton<GetEmprestimoByIdDatasource>(
+      GetEmprestimosByIdFirebaseDatasourceImp.new,
+    )
+    ..registerLazySingleton<GetEmprestimosDatasource>(
+      GetEmprestimosFirebaseDatasourceImp.new,
+    )
+    ..registerLazySingleton<UpdateEmprestimoDatasource>(
+      UpdateEmprestimoFirebaseDatasourceImp.new,
+    )
+    ..registerLazySingleton<DeleteEmprestimoDatasource>(
+      DeleteEmprestimoFirebaseDatasourceImp.new,
+    )
 
-  // REPOSITORIES
-  getIt.registerLazySingleton<CreateEmprestimoRepository>(
-    () => CreateEmprestimoRepositoryImp(getIt()),
-  );
-  getIt.registerLazySingleton<GetEmprestimoByIdRepository>(
-    () => GetEmprestimoByIdRepositoryImp(getIt()),
-  );
-  getIt.registerLazySingleton<GetEmprestimosRepository>(
-    () => GetEmprestimosRepositoryImp(getIt()),
-  );
-  getIt.registerLazySingleton<UpdateEmprestimoRepository>(
-    () => UpdateEmprestimoRepositoryImp(getIt()),
-  );
-  getIt.registerLazySingleton<DeleteEmprestimoRepository>(
-    () => DeleteEmprestimoRepositoryImp(getIt()),
-  );
+    // REPOSITORIES
+    ..registerLazySingleton<CreateEmprestimoRepository>(
+      () => CreateEmprestimoRepositoryImp(getIt()),
+    )
+    ..registerLazySingleton<GetEmprestimoByIdRepository>(
+      () => GetEmprestimoByIdRepositoryImp(getIt()),
+    )
+    ..registerLazySingleton<GetEmprestimosRepository>(
+      () => GetEmprestimosRepositoryImp(getIt()),
+    )
+    ..registerLazySingleton<UpdateEmprestimoRepository>(
+      () => UpdateEmprestimoRepositoryImp(getIt()),
+    )
+    ..registerLazySingleton<DeleteEmprestimoRepository>(
+      () => DeleteEmprestimoRepositoryImp(getIt()),
+    )
 
-  //USECASES
-  getIt.registerLazySingleton<CreateEmprestimoUsecase>(
-    () => CreateEmprestimoUsecaseImp(getIt()),
-  );
-  getIt.registerLazySingleton<GetEmprestimoByIdUsecase>(
-    () => GetEmprestimoByIdUsecaseImp(getIt()),
-  );
-  getIt.registerLazySingleton<GetEmprestimosUsecase>(
-    () => GetEmprestimosUsecaseImp(getIt()),
-  );
-  getIt.registerLazySingleton<UpdateEmprestimoUsecase>(
-    () => UpdateEmprestimoUsecaseImp(getIt()),
-  );
-  getIt.registerLazySingleton<DeleteEmprestimoUsecase>(
-    () => DeleteEmprestimoUsecaseImp(getIt()),
-  );
+    //USECASES
+    ..registerLazySingleton<CreateEmprestimoUsecase>(
+      () => CreateEmprestimoUsecaseImp(getIt()),
+    )
+    ..registerLazySingleton<GetEmprestimoByIdUsecase>(
+      () => GetEmprestimoByIdUsecaseImp(getIt()),
+    )
+    ..registerLazySingleton<GetEmprestimosUsecase>(
+      () => GetEmprestimosUsecaseImp(getIt()),
+    )
+    ..registerLazySingleton<UpdateEmprestimoUsecase>(
+      () => UpdateEmprestimoUsecaseImp(getIt()),
+    )
+    ..registerLazySingleton<DeleteEmprestimoUsecase>(
+      () => DeleteEmprestimoUsecaseImp(getIt()),
+    )
 
-  //CONTROLLER
-  getIt.registerLazySingleton<EmprestimoController>(
-    () => EmprestimoController(getIt(), getIt(), getIt(), getIt(), getIt()),
-  );
+    //CONTROLLER
+    ..registerLazySingleton<EmprestimoController>(
+      () => EmprestimoController(getIt(), getIt(), getIt(), getIt(), getIt()),
+    );
 }

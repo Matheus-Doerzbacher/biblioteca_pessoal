@@ -38,7 +38,7 @@ class DropDownMultiCustom extends StatelessWidget {
                     2,
                     2,
                   ),
-                )
+                ),
               ],
               borderRadius: BorderRadius.circular(8),
             ),
@@ -50,7 +50,6 @@ class DropDownMultiCustom extends StatelessWidget {
                 );
               }).toList(),
               controller: multiSelectController,
-              enabled: true,
               fieldDecoration: FieldDecoration(
                 suffixIcon: const Icon(Icons.keyboard_arrow_down),
                 hintText: 'Categorias',
@@ -85,9 +84,7 @@ class DropDownMultiCustom extends StatelessWidget {
 
                 return null;
               },
-              onSelectionChange: (selectedItems) {
-                alterarCategorias(selectedItems);
-              },
+              onSelectionChange: alterarCategorias,
             ),
           ),
         ),

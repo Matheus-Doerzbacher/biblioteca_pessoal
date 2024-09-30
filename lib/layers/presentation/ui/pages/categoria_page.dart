@@ -32,7 +32,7 @@ class _CategoriaPageState extends State<CategoriaPage> {
     super.dispose();
   }
 
-  void _adicionarCategoria() async {
+  Future<void> _adicionarCategoria() async {
     if (_textController.text.isNotEmpty) {
       await controller.createCategoria(
         Categoria(nome: _textController.text, uidUsuario: user!.uid),
@@ -42,7 +42,7 @@ class _CategoriaPageState extends State<CategoriaPage> {
     }
   }
 
-  void _deleteCategoria(Categoria categoria) async {
+  Future<void> _deleteCategoria(Categoria categoria) async {
     if (categoria.nome.isNotEmpty && categoria.id != null) {
       await controller.deleteCategoria(categoria.id!);
       setState(() {});
@@ -59,7 +59,7 @@ class _CategoriaPageState extends State<CategoriaPage> {
           content: TextField(
             controller: _editController,
             decoration:
-                const InputDecoration(hintText: "Novo nome da categoria"),
+                const InputDecoration(hintText: 'Novo nome da categoria'),
           ),
           actions: <Widget>[
             TextButton(
@@ -126,7 +126,7 @@ class _CategoriaPageState extends State<CategoriaPage> {
                               2,
                               2,
                             ),
-                          )
+                          ),
                         ],
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -143,28 +143,24 @@ class _CategoriaPageState extends State<CategoriaPage> {
                             enabledBorder: OutlineInputBorder(
                               borderSide: const BorderSide(
                                 color: Color(0x00000000),
-                                width: 1,
                               ),
                               borderRadius: BorderRadius.circular(8),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: const BorderSide(
                                 color: Color(0x00000000),
-                                width: 1,
                               ),
                               borderRadius: BorderRadius.circular(8),
                             ),
                             errorBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: colorScheme.error,
-                                width: 1,
                               ),
                               borderRadius: BorderRadius.circular(8),
                             ),
                             focusedErrorBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: colorScheme.error,
-                                width: 1,
                               ),
                               borderRadius: BorderRadius.circular(8),
                             ),

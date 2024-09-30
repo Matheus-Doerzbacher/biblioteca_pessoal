@@ -22,7 +22,7 @@ class InputTextCustom extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: isMeiaLinha == true
-          ? const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0)
+          ? EdgeInsetsDirectional.zero
           : const EdgeInsetsDirectional.fromSTEB(14, 24, 14, 0),
       child: Container(
         decoration: const BoxDecoration(),
@@ -40,7 +40,7 @@ class InputTextCustom extends StatelessWidget {
                     2,
                     2,
                   ),
-                )
+                ),
               ],
               borderRadius: BorderRadius.circular(8),
             ),
@@ -55,8 +55,6 @@ class InputTextCustom extends StatelessWidget {
                     ? TextInputType.number
                     : TextInputType.text,
                 controller: controller,
-                autofocus: false,
-                obscureText: false,
                 decoration: InputDecoration(
                   isDense: true,
                   labelText: text,
@@ -64,28 +62,24 @@ class InputTextCustom extends StatelessWidget {
                   enabledBorder: OutlineInputBorder(
                     borderSide: const BorderSide(
                       color: Color(0x00000000),
-                      width: 1,
                     ),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: const BorderSide(
                       color: Color(0x00000000),
-                      width: 1,
                     ),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   errorBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: colorScheme.error,
-                      width: 1,
                     ),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   focusedErrorBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: colorScheme.error,
-                      width: 1,
                     ),
                     borderRadius: BorderRadius.circular(8),
                   ),

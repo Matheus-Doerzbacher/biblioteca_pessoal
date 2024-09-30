@@ -1,8 +1,8 @@
+import 'package:biblioteca_pessoal/layers/domain/entities/livro_entity.dart';
+import 'package:biblioteca_pessoal/layers/presentation/controllers/livro_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:biblioteca_pessoal/layers/domain/entities/livro_entity.dart';
-import 'package:biblioteca_pessoal/layers/presentation/controllers/livro_controller.dart';
 
 class LivroPage extends StatefulWidget {
   const LivroPage({super.key});
@@ -22,7 +22,7 @@ class _LivroPageState extends State<LivroPage> {
   }
 
   void _adicionarLivro() {
-    Livro livro = Livro(
+    final livro = Livro(
       uidUsuario: user!.uid,
       autor: 'Nome do Autor',
       titulo: 'Como cagar em pé',
@@ -44,9 +44,7 @@ class _LivroPageState extends State<LivroPage> {
       body: Column(
         children: [
           ElevatedButton(
-            onPressed: () {
-              _adicionarLivro();
-            },
+            onPressed: _adicionarLivro,
             child: const Text('Adicionar um livro'),
           ),
           Expanded(

@@ -75,6 +75,7 @@ class DrawerCustom extends StatelessWidget {
                       children: [
                         Text(
                           user.displayName != null
+                              // ignore: lines_longer_than_80_chars
                               ? '${user.displayName!.split(' ')[0]} ${user.displayName!.split(' ').skip(1).map((e) => '${e[0]}.').join(' ')}'
                               : '',
                           style: const TextStyle(
@@ -94,11 +95,11 @@ class DrawerCustom extends StatelessWidget {
                         UserController.signOut(context);
                       },
                       icon: const Icon(Icons.logout),
-                    )
+                    ),
                   ],
                 ),
               ],
-            )
+            ),
           ],
         ),
       ),

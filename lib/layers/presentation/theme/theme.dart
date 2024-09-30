@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 final ColorScheme lightColorSchema = ColorScheme.fromSeed(
   dynamicSchemeVariant: DynamicSchemeVariant.fidelity,
-  brightness: Brightness.light,
   seedColor: const Color(0xFF928163),
   secondary: const Color(0xFF4b986c),
   tertiary: const Color(0xFF6D604A),
@@ -16,7 +15,7 @@ final ColorScheme lightColorSchema = ColorScheme.fromSeed(
 
 final ColorScheme darkColorSchema = ColorScheme.fromSeed(
   dynamicSchemeVariant: DynamicSchemeVariant.fidelity,
-  brightness: Brightness.light,
+  brightness: Brightness.dark,
   seedColor: const Color(0xFF928163),
   secondary: const Color(0xFF4b986c),
   tertiary: const Color(0xFF6D604A),

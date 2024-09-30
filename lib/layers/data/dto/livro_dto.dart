@@ -30,7 +30,6 @@ class LivroDto extends Livro {
       urlImage:
           json['imageLinks'] != null ? json['imageLinks']['thumbnail'] : '',
       descricao: json['description'] ?? '',
-      status: StatusLeitura.queroLer,
       isPesquisa: true,
     );
   }

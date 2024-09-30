@@ -13,7 +13,7 @@ class UserController {
     try {
       // Tentando logar no Google
       final googleAccount =
-          await GoogleSignIn(scopes: ["profile", "email"]).signIn();
+          await GoogleSignIn(scopes: ['profile', 'email']).signIn();
 
       if (googleAccount == null) {
         print('Login cancelado ou falhou');
@@ -53,7 +53,8 @@ class UserController {
     await GoogleSignIn().signOut();
     user = null;
     if (context.mounted) {
-      Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false);
+      await Navigator.of(context)
+          .pushNamedAndRemoveUntil('/login', (route) => false);
     }
   }
 }

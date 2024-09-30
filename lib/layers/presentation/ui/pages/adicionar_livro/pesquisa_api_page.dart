@@ -24,8 +24,9 @@ class _PesquisaApiPageState extends State<PesquisaApiPage> {
   @override
   void dispose() {
     _pesquisarController.dispose();
-    controller.removeListener(_updateState);
-    controller.clearLivros();
+    controller
+      ..removeListener(_updateState)
+      ..clearLivros();
     super.dispose();
   }
 
@@ -70,16 +71,14 @@ class _PesquisaApiPageState extends State<PesquisaApiPage> {
                           2,
                           2,
                         ),
-                      )
+                      ),
                     ],
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: TextFormField(
-                      onFieldSubmitted: (value) {
-                        controller.getLivrosApi(value);
-                      },
+                      onFieldSubmitted: controller.getLivrosApi,
                       textAlignVertical: TextAlignVertical.top,
                       style: TextStyle(color: colorScheme.onSurface),
                       controller: _pesquisarController,
@@ -104,28 +103,24 @@ class _PesquisaApiPageState extends State<PesquisaApiPage> {
                         enabledBorder: OutlineInputBorder(
                           borderSide: const BorderSide(
                             color: Color(0x00000000),
-                            width: 1,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: const BorderSide(
                             color: Color(0x00000000),
-                            width: 1,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         errorBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color: colorScheme.error,
-                            width: 1,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         focusedErrorBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color: colorScheme.error,
-                            width: 1,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),

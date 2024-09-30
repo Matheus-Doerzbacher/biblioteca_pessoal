@@ -1,7 +1,7 @@
 import 'package:biblioteca_pessoal/layers/domain/entities/livro_entity.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/livro_controller.dart';
-import 'package:flutter/material.dart';
 import 'package:custom_rating_bar/custom_rating_bar.dart';
+import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 class LivroDatailPage extends StatefulWidget {
@@ -24,9 +24,8 @@ class _LivroDatailPageState extends State<LivroDatailPage> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(24.0),
+          padding: const EdgeInsets.all(24),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
                 height: 300,
@@ -103,7 +102,8 @@ class _LivroDatailPageState extends State<LivroDatailPage> {
                         onPressed: () async {
                           await controller.createLivro(livro);
                           if (context.mounted) {
-                            Navigator.of(context).pushReplacementNamed('/');
+                            await Navigator.of(context)
+                                .pushReplacementNamed('/');
                           }
                         },
                         child: const Text('Adicionar a minha biblioteca'),

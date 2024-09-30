@@ -11,7 +11,7 @@ class CreateLivroRepositoryImp implements CreateLivroRepository {
 
   @override
   Future<bool> call(Livro livro) async {
-    return await _createLivroDatasource(livro);
+    return _createLivroDatasource(livro);
   }
 }
 
@@ -24,7 +24,7 @@ class DeleteLivroRepositoryImp implements DeleteLivroRepository {
 
   @override
   Future<bool> call(String id) async {
-    return await _deleteLivroDatasource(id);
+    return _deleteLivroDatasource(id);
   }
 }
 
@@ -37,7 +37,7 @@ class GetLivroByIdRepositoryImp implements GetLivroByIdRepository {
 
   @override
   Future<Livro> call(String idLivro) async {
-    return await _getLivroByIdDatasource(idLivro);
+    return _getLivroByIdDatasource(idLivro);
   }
 }
 
@@ -50,7 +50,7 @@ class GetLivrosRepositoryImp implements GetLivrosRepository {
 
   @override
   Future<List<Livro>> call(String uidUsuario) async {
-    return await _getLivrosDatasource(uidUsuario);
+    return _getLivrosDatasource(uidUsuario);
   }
 }
 
@@ -63,7 +63,7 @@ class UpdateLivroRepositoryImp implements UpdateLivroRepository {
 
   @override
   Future<bool> call(Livro livro) async {
-    return await _updateLivroDatasource(livro);
+    return _updateLivroDatasource(livro);
   }
 }
 
@@ -75,7 +75,7 @@ class SalvarImagemLivroRepositoryImp implements SalvarImagemLivroRepository {
   SalvarImagemLivroRepositoryImp(this._salvarImagemLivroDatasource);
   @override
   Future<String> call(File imagem) async {
-    return await _salvarImagemLivroDatasource(imagem);
+    return _salvarImagemLivroDatasource(imagem);
   }
 }
 
@@ -88,6 +88,6 @@ class PesquisarLivroApiRepositoryImp implements PesquisarLivroApiRepository {
 
   @override
   Future<List<Livro>> call(String titulo) async {
-    return await _pesquisarLivroApiDatasource(titulo);
+    return _pesquisarLivroApiDatasource(titulo);
   }
 }

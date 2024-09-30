@@ -2,6 +2,7 @@ import 'package:biblioteca_pessoal/core/inject/_inject.dart';
 import 'package:biblioteca_pessoal/layers/domain/entities/livro_entity.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/categoria_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/emprestimo_controller.dart';
+import 'package:biblioteca_pessoal/layers/presentation/controllers/livro_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/pesquisa_api_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/theme/theme.dart';
@@ -11,13 +12,13 @@ import 'package:biblioteca_pessoal/layers/presentation/ui/pages/categoria_page.d
 import 'package:biblioteca_pessoal/layers/presentation/ui/pages/home_page.dart';
 import 'package:biblioteca_pessoal/layers/presentation/ui/pages/livro_datail_page.dart';
 import 'package:biblioteca_pessoal/layers/presentation/ui/pages/login_page.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
 import 'package:provider/provider.dart';
-import 'package:biblioteca_pessoal/layers/presentation/controllers/livro_controller.dart';
+
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -86,10 +87,9 @@ class MyApp extends StatelessWidget {
         '/adicionar': (context) => const PesquisaApiPage(),
         '/adicionar-manual': (context) => const AdicionarLivroPage(),
         '/livro-detail': (context) => LivroDatailPage(
-              livro: ModalRoute.of(context)!.settings.arguments as Livro,
+              livro: ModalRoute.of(context)!.settings.arguments! as Livro,
             ),
       },
-      themeMode: ThemeMode.system,
     );
   }
 }

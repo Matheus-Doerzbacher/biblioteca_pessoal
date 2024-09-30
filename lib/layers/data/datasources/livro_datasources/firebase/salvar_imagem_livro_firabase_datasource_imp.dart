@@ -11,14 +11,14 @@ class SalvarImagemLivroFirabaseDatasourceImp
   Future<String> call(File imagem) async {
     try {
       final storage = FirebaseStorage.instance;
-      final Reference ref = storage
+      final ref = storage
           .ref()
-          .child("livros")
+          .child('livros')
           .child(UserController.user?.uid ?? '')
           .child(DateTime.now().toIso8601String());
-      final UploadTask uploadTask = ref.putFile(imagem);
-      final TaskSnapshot downloadUrl = (await uploadTask);
-      final String url = (await downloadUrl.ref.getDownloadURL());
+      final uploadTask = ref.putFile(imagem);
+      final downloadUrl = await uploadTask;
+      final url = await downloadUrl.ref.getDownloadURL();
       return url;
     } catch (e) {
       if (kDebugMode) {

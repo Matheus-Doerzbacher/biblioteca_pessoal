@@ -34,7 +34,7 @@ class _EmprestimoPageState extends State<EmprestimoPage> {
     super.dispose();
   }
 
-  void _salvarEmprestimo() async {
+  Future<void> _salvarEmprestimo() async {
     final livro = Livro(
       uidUsuario: user!.uid,
       autor: 'autor',
@@ -49,7 +49,8 @@ class _EmprestimoPageState extends State<EmprestimoPage> {
       destinatario: _destinatarioController.text,
       dataEmprestimo: _dataEmprestimoController.text.isNotEmpty
           ? DateTime.parse(
-              _dataEmprestimoController.text.split('/').reversed.join('-'))
+              _dataEmprestimoController.text.split('/').reversed.join('-'),
+            )
           : DateTime.now(),
       dias: int.parse(_diasController.text), // Convertendo a string para int
     );
@@ -71,7 +72,7 @@ class _EmprestimoPageState extends State<EmprestimoPage> {
       ),
       body: Form(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16),
           child: Column(
             children: [
               TextFormField(
@@ -90,7 +91,8 @@ class _EmprestimoPageState extends State<EmprestimoPage> {
                     child: TextFormField(
                       controller: _dataEmprestimoController,
                       decoration: const InputDecoration(
-                          labelText: 'Data do Empréstimo'),
+                        labelText: 'Data do Empréstimo',
+                      ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Por favor, insira a data do empréstimo';
@@ -102,7 +104,7 @@ class _EmprestimoPageState extends State<EmprestimoPage> {
                   IconButton(
                     icon: const Icon(Icons.calendar_today),
                     onPressed: () async {
-                      DateTime? pickedDate = await showDatePicker(
+                      final pickedDate = await showDatePicker(
                         context: context,
                         initialDate: DateTime.now(),
                         firstDate: DateTime(2000),
@@ -110,7 +112,7 @@ class _EmprestimoPageState extends State<EmprestimoPage> {
                       );
                       if (pickedDate != null) {
                         // Formata a data para o padrão brasileiro (dd/MM/yyyy)
-                        String formattedDate =
+                        final formattedDate =
                             "${pickedDate.day.toString().padLeft(2, '0')}/${pickedDate.month.toString().padLeft(2, '0')}/${pickedDate.year}";
                         _dataEmprestimoController.text = formattedDate;
                       }

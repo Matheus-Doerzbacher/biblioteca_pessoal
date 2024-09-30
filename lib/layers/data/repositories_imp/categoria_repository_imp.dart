@@ -8,7 +8,7 @@ class CreateCategoriaRepositoryImp implements CreateCategoriaRepository {
   CreateCategoriaRepositoryImp(this._createCategoriaDatasource);
   @override
   Future<bool> call(Categoria categoria) async {
-    return await _createCategoriaDatasource(categoria);
+    return _createCategoriaDatasource(categoria);
   }
 }
 
@@ -18,7 +18,7 @@ class DeleteCategoriaRepositoryImp implements DeleteCategoriaRepository {
   DeleteCategoriaRepositoryImp(this._deleteCategoriaDatasource);
   @override
   Future<bool> call(String idCategoria) async {
-    return await _deleteCategoriaDatasource(idCategoria);
+    return _deleteCategoriaDatasource(idCategoria);
   }
 }
 
@@ -38,6 +38,6 @@ class UpdateCategoriaRepositoryImp implements UpdateCategoriaRepository {
   UpdateCategoriaRepositoryImp(this._updateCategoriaDatasource);
   @override
   Future<bool> call(Categoria categoria) async {
-    return await _updateCategoriaDatasource(categoria);
+    return _updateCategoriaDatasource(categoria);
   }
 }

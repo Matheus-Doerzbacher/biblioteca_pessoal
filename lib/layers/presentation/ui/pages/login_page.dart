@@ -44,7 +44,7 @@ class _LoginPageState extends State<LoginPage> {
                           style: TextStyle(
                             color: colorSchema.primary,
                           ),
-                        )
+                        ),
                       ],
                       style: const TextStyle(fontSize: 32),
                     ),
@@ -66,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
                                         await UserController.loginWithGoogle();
 
                                     if (user != null && context.mounted) {
-                                      Navigator.of(context)
+                                      await Navigator.of(context)
                                           .pushReplacementNamed('/');
                                     }
                                   } on FirebaseAuthException catch (error) {
@@ -129,7 +129,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                     ],
-                  )
+                  ),
                 ],
               ),
             ),

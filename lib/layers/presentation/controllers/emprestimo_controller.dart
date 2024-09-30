@@ -25,7 +25,7 @@ class EmprestimoController extends ChangeNotifier {
   late List<Emprestimo> emprestimos;
 
   Future<Emprestimo> getEmprestimoById(String idLivro) async {
-    return await _getEmprestimoByIdUsecase(idLivro);
+    return _getEmprestimoByIdUsecase(idLivro);
   }
 
   Future<void> getEmprestimos(String uidUsuario) async {
