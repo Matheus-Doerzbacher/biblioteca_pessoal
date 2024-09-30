@@ -35,7 +35,7 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
   final _quantidadeController = TextEditingController();
   StatusLeitura _statusController = StatusLeitura.queroLer;
   List<Categoria> _categoriasController = [];
-  double _ratingController = 0;
+  double _ratingController = 3;
   File? _imageSelected;
 
   final MultiSelectController<Categoria> _multiSelectController =
