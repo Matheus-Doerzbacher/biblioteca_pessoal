@@ -85,7 +85,9 @@ class MyApp extends StatelessWidget {
         '/': (context) => const HomePage(),
         '/categoria': (context) => const CategoriaPage(),
         '/adicionar': (context) => const PesquisaApiPage(),
-        '/adicionar-manual': (context) => const AdicionarLivroPage(),
+        '/adicionar-manual': (context) => AdicionarLivroPage(
+              livroUpdate: ModalRoute.of(context)!.settings.arguments as Livro?,
+            ),
         '/livro-detail': (context) => LivroDetailPage(
               livro: ModalRoute.of(context)!.settings.arguments! as Livro,
             ),

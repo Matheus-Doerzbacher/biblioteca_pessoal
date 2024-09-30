@@ -39,6 +39,7 @@ class CategoriaController extends ChangeNotifier {
 
   Future<dynamic> getCategorias(String uidUsuario) async {
     try {
+      isLoading = true;
       notifyListeners();
       categorias = await _getCategoriasUsecase(uidUsuario);
       notifyListeners();

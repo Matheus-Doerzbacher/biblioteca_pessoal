@@ -191,7 +191,11 @@ class _CategoriaPageState extends State<CategoriaPage> {
                 ],
               ),
             ),
-            if (!controller.isLoading)
+            if (controller.isLoading)
+              const Center(
+                child: CircularProgressIndicator(),
+              )
+            else
               Expanded(
                 child: ListView.builder(
                   itemCount: controller.categorias.length,
@@ -204,10 +208,6 @@ class _CategoriaPageState extends State<CategoriaPage> {
                     );
                   },
                 ),
-              ),
-            if (controller.isLoading)
-              const Center(
-                child: CircularProgressIndicator(),
               ),
           ],
         ),

@@ -108,29 +108,65 @@ class _LivroDetailPageState extends State<LivroDetailPage> {
                   ],
                 )
               else
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                Column(
                   children: [
-                    Expanded(
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Theme.of(context).colorScheme.error,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.error,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              foregroundColor:
+                                  Theme.of(context).colorScheme.onError,
+                            ),
+                            onPressed: () async {
+                              await controller.deleteLivro(livro.id!);
+                              if (context.mounted) {
+                                await Navigator.of(context)
+                                    .pushReplacementNamed('/');
+                              }
+                            },
+                            child: const Text(
+                              'Deletar o livro da minha biblioteca',
+                            ),
                           ),
-                          foregroundColor:
-                              Theme.of(context).colorScheme.onError,
                         ),
-                        onPressed: () async {
-                          await controller.deleteLivro(livro.id!);
-                          if (context.mounted) {
-                            await Navigator.of(context)
-                                .pushReplacementNamed('/');
-                          }
-                        },
-                        child:
-                            const Text('Deletar o livro da minha biblioteca'),
-                      ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.secondary,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              foregroundColor:
+                                  Theme.of(context).colorScheme.onError,
+                            ),
+                            onPressed: () async {
+                              if (context.mounted) {
+                                await Navigator.of(context)
+                                    .pushReplacementNamed(
+                                  '/adicionar-manual',
+                                  arguments: livro,
+                                );
+                              }
+                            },
+                            child: const Text(
+                              'Editar o livro',
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),

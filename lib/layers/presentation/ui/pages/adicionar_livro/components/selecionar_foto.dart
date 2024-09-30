@@ -5,7 +5,13 @@ import 'package:image_picker/image_picker.dart';
 
 class SelecionarFotoWidget extends StatefulWidget {
   final void Function(File imagem) onImagePick;
-  const SelecionarFotoWidget({super.key, required this.onImagePick});
+  final String? urlImage;
+
+  const SelecionarFotoWidget({
+    super.key,
+    required this.onImagePick,
+    this.urlImage,
+  });
 
   @override
   State<SelecionarFotoWidget> createState() => _SelecionarFotoWidgetState();
@@ -42,11 +48,19 @@ class _SelecionarFotoWidgetState extends State<SelecionarFotoWidget> {
           decoration: BoxDecoration(
             color: colorScheme.primaryContainer,
             borderRadius: BorderRadius.circular(8),
-            image: _image != null
-                ? DecorationImage(image: FileImage(_image!), fit: BoxFit.cover)
-                : null,
+            image: widget.urlImage != null
+                ? DecorationImage(
+                    image: NetworkImage(widget.urlImage!),
+                    fit: BoxFit.cover,
+                  )
+                : _image != null
+                    ? DecorationImage(
+                        image: FileImage(_image!),
+                        fit: BoxFit.cover,
+                      )
+                    : null,
           ),
-          child: _image == null
+          child: _image == null && widget.urlImage == null
               ? Icon(
                   Icons.menu_book,
                   color: colorScheme.primary,

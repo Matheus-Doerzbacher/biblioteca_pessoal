@@ -16,7 +16,8 @@ import 'package:multi_dropdown/multi_dropdown.dart';
 import 'package:provider/provider.dart';
 
 class AdicionarLivroPage extends StatefulWidget {
-  const AdicionarLivroPage({super.key});
+  final Livro? livroUpdate;
+  const AdicionarLivroPage({super.key, this.livroUpdate});
 
   @override
   State<AdicionarLivroPage> createState() => _AdicionarLivroPageState();
@@ -37,27 +38,28 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
   List<Categoria> _categoriasController = [];
   double _ratingController = 3;
   File? _imageSelected;
+  String? _urlImage;
 
   final MultiSelectController<Categoria> _multiSelectController =
       MultiSelectController<Categoria>();
 
   bool _isLoading = false;
 
-  // void _limparControladores() {
-  //   _tituloController.clear();
-  //   _autorController.clear();
-  //   _editoraController.clear();
-  //   _paginaController.clear();
-  //   _anoController.clear();
-  //   _descricaoController.clear();
-  //   _quantidadeController.clear();
-  //   _statusController = StatusLeitura.queroLer;
-  //   _categoriasController = [];
-  //   _imageSelected = null;
-  // }
-
   @override
   void initState() {
+    if (widget.livroUpdate != null) {
+      _tituloController.text = widget.livroUpdate!.titulo;
+      _autorController.text = widget.livroUpdate!.autor;
+      _editoraController.text = widget.livroUpdate!.editora;
+      _paginaController.text = widget.livroUpdate!.paginas.toString();
+      _anoController.text = widget.livroUpdate!.ano;
+      _descricaoController.text = widget.livroUpdate!.descricao;
+      _quantidadeController.text = widget.livroUpdate!.estoque.toString();
+      _statusController = widget.livroUpdate!.status;
+      _categoriasController = widget.livroUpdate!.categorias;
+      _ratingController = widget.livroUpdate!.avaliacao.toDouble();
+      _urlImage = widget.livroUpdate!.urlImage;
+    }
     super.initState();
   }
 
@@ -76,6 +78,7 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
   void _handleImagePick(File image) {
     setState(() {
       _imageSelected = image;
+      _urlImage = null;
     });
   }
 
@@ -145,13 +148,15 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
       }
 
       final livro = Livro(
+        id: widget.livroUpdate?.id,
         uidUsuario: user!.uid,
         autor: _autorController.text,
         editora: _editoraController.text,
         titulo: _tituloController.text,
         paginas: paginaInt,
         ano: _anoController.text,
-        urlImage: imageUrl,
+        urlImage:
+            imageUrl.isEmpty ? widget.livroUpdate?.urlImage ?? '' : imageUrl,
         status: _statusController,
         categorias: _categoriasController,
         descricao: _descricaoController.text,
@@ -161,7 +166,13 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
             : _ratingController.toInt(),
       );
 
-      final result = await controller.createLivro(livro);
+      late bool result;
+
+      if (widget.livroUpdate != null) {
+        result = await controller.updateLivro(livro);
+      } else {
+        result = await controller.createLivro(livro);
+      }
 
       if (result == true) {
         if (mounted) {
@@ -197,7 +208,10 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
         child: Column(
           children: [
             const SizedBox(height: 24),
-            SelecionarFotoWidget(onImagePick: _handleImagePick),
+            SelecionarFotoWidget(
+              onImagePick: _handleImagePick,
+              urlImage: _urlImage,
+            ),
             InputTextCustom(
               controller: _tituloController,
               colorScheme: colorScheme,
