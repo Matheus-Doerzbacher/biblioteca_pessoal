@@ -9,6 +9,7 @@ import 'package:biblioteca_pessoal/layers/presentation/ui/pages/adicionar_livro/
 import 'package:biblioteca_pessoal/layers/presentation/ui/pages/adicionar_livro/components/drop_down_single_custom.dart';
 import 'package:biblioteca_pessoal/layers/presentation/ui/pages/adicionar_livro/components/selecionar_foto.dart';
 import 'package:biblioteca_pessoal/layers/presentation/widgets/input_text_custom.dart';
+import 'package:custom_rating_bar/custom_rating_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:multi_dropdown/multi_dropdown.dart';
@@ -34,6 +35,7 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
   final _quantidadeController = TextEditingController();
   StatusLeitura _statusController = StatusLeitura.queroLer;
   List<Categoria> _categoriasController = [];
+  double _ratingController = 0;
   File? _imageSelected;
 
   final MultiSelectController<Categoria> _multiSelectController =
@@ -154,6 +156,9 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
         categorias: _categoriasController,
         descricao: _descricaoController.text,
         estoque: quantidade,
+        avaliacao: _statusController == StatusLeitura.queroLer
+            ? 0
+            : _ratingController.toInt(),
       );
 
       final result = await controller.createLivro(livro);
@@ -249,24 +254,21 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
               colorScheme: colorScheme,
               statusAtual: _statusController,
             ),
-
-            // const SizedBox(height: 24),
-            // RatingBar(
-            //   onRatingChanged: (newValue) => setState(() {
-            //     if (_ratingController == newValue) {
-            //       _ratingController = 0.0;
-            //     } else {
-            //       _ratingController = newValue;
-            //     }
-            //   }),
-            //   filledIcon: Icons.star,
-            //   emptyIcon: Icons.star_border,
-            //   direction: Axis.horizontal,
-            //   initialRating: _ratingController,
-            //   maxRating: 5,
-            //   alignment: Alignment.center,
-            // ),
-
+            if (_statusController != StatusLeitura.queroLer)
+              Padding(
+                padding: const EdgeInsets.only(top: 24),
+                child: RatingBar(
+                  onRatingChanged: (newValue) => setState(() {
+                    setState(() {
+                      _ratingController = newValue;
+                    });
+                  }),
+                  filledIcon: Icons.star,
+                  emptyIcon: Icons.star_border,
+                  initialRating: _ratingController,
+                  alignment: Alignment.center,
+                ),
+              ),
             InputTextCustom(
               controller: _descricaoController,
               colorScheme: colorScheme,
