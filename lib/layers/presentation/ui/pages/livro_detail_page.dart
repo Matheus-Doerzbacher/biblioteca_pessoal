@@ -82,13 +82,44 @@ class _LivroDetailPageState extends State<LivroDetailPage> {
                     value: livro.paginas.toString(),
                   ),
                   DetailLivroRow(title: 'Ano', value: livro.ano),
-                  if (!livro.isPesquisa)
+                  if (livro.estoque > 0)
                     DetailLivroRow(
                       title: 'Quant.',
                       value: livro.estoque.toString(),
                     ),
+                  if (!livro.isPesquisa)
+                    DetailLivroRow(
+                      title: 'Status',
+                      value: livro.statusName,
+                    ),
                 ],
               ),
+              const SizedBox(height: 24),
+              if (livro.categorias.isNotEmpty)
+                Column(
+                  children: [
+                    Text(
+                      'Categorias',
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
+                    const SizedBox(height: 8),
+                    Wrap(
+                      alignment: WrapAlignment.center,
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: [
+                        for (int i = 0; i < livro.categorias.length; i++)
+                          Text(
+                            i < livro.categorias.length - 1
+                                ? '${livro.categorias[i].nome} /'
+                                : livro.categorias[i].nome,
+                          ),
+                      ],
+                    ),
+                  ],
+                ),
               const SizedBox(height: 24),
               Text(
                 livro.descricao,

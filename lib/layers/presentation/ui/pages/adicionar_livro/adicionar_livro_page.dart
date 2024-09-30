@@ -47,6 +47,7 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
 
   @override
   void initState() {
+    super.initState();
     if (widget.livroUpdate != null) {
       _tituloController.text = widget.livroUpdate!.titulo;
       _autorController.text = widget.livroUpdate!.autor;
@@ -60,7 +61,18 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
       _ratingController = widget.livroUpdate!.avaliacao.toDouble();
       _urlImage = widget.livroUpdate!.urlImage;
     }
-    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _multiSelectController.setItems(
+        _categoriasController.map((categoria) {
+          return DropdownItem(
+            label: categoria.nome,
+            value: categoria,
+            selected: _categoriasController.contains(categoria),
+          );
+        }).toList(),
+      );
+    });
   }
 
   @override
@@ -204,7 +216,6 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
         title: const Text('Adicionar Manualmente'),
       ),
       body: SingleChildScrollView(
-        primary: false,
         child: Column(
           children: [
             const SizedBox(height: 24),
@@ -273,9 +284,7 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
                 padding: const EdgeInsets.only(top: 24),
                 child: RatingBar(
                   onRatingChanged: (newValue) => setState(() {
-                    setState(() {
-                      _ratingController = newValue;
-                    });
+                    _ratingController = newValue;
                   }),
                   filledIcon: Icons.star,
                   emptyIcon: Icons.star_border,
