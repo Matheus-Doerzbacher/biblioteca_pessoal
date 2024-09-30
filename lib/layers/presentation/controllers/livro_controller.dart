@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 
 class LivroController extends ChangeNotifier {
   final GetLivroByIdUsecase _getLivroByIdUsecase;
+  final GetLivroByNameUsecase _getLivroByNameUsecase;
   final GetLivrosUsecase _getLivrosUsecase;
   final CreateLivroUsecase _createLivroUsecase;
   final UpdateLivroUsecase _updateLivroUsecase;
@@ -15,6 +16,7 @@ class LivroController extends ChangeNotifier {
 
   LivroController(
     this._getLivroByIdUsecase,
+    this._getLivroByNameUsecase,
     this._getLivrosUsecase,
     this._createLivroUsecase,
     this._updateLivroUsecase,
@@ -30,6 +32,10 @@ class LivroController extends ChangeNotifier {
 
   Future<Livro> getLivroById(String idLivro) async {
     return _getLivroByIdUsecase(idLivro);
+  }
+
+  Future<Livro?> getLivroByName(String titulo) async {
+    return _getLivroByNameUsecase(titulo);
   }
 
   Future<void> getLivros(String uidUsuario) async {

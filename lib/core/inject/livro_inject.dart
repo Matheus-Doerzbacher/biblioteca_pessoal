@@ -1,6 +1,7 @@
 import 'package:biblioteca_pessoal/layers/data/datasources/livro_datasources/firebase/create_livro_firebase_datasource_imp.dart';
 import 'package:biblioteca_pessoal/layers/data/datasources/livro_datasources/firebase/delete_livro_firebase_datasource_imp.dart';
 import 'package:biblioteca_pessoal/layers/data/datasources/livro_datasources/firebase/get_livro_by_id_firebase_datasource_imp.dart';
+import 'package:biblioteca_pessoal/layers/data/datasources/livro_datasources/firebase/get_livro_by_name_firebase_datasource_imp.dart';
 import 'package:biblioteca_pessoal/layers/data/datasources/livro_datasources/firebase/get_livros_firebase_datasource_imp.dart';
 import 'package:biblioteca_pessoal/layers/data/datasources/livro_datasources/firebase/salvar_imagem_livro_firabase_datasource_imp.dart';
 import 'package:biblioteca_pessoal/layers/data/datasources/livro_datasources/firebase/update_livro_firebase_datasource_imp.dart';
@@ -33,6 +34,9 @@ void livroInject(GetIt getIt) {
     ..registerLazySingleton<SalvarImagemLivroDatasource>(
       SalvarImagemLivroFirabaseDatasourceImp.new,
     )
+    ..registerLazySingleton<GetLivroByNameDatasource>(
+      GetLivroByNameFirebaseDatasourceImp.new,
+    )
 
     //repositories
     ..registerLazySingleton<GetLivrosRepository>(
@@ -52,6 +56,9 @@ void livroInject(GetIt getIt) {
     )
     ..registerLazySingleton<SalvarImagemLivroRepository>(
       () => SalvarImagemLivroRepositoryImp(getIt()),
+    )
+    ..registerLazySingleton<GetLivroByNameRepository>(
+      () => GetLivroByNameRepositoryImp(getIt()),
     )
 
     //usecases
@@ -73,10 +80,14 @@ void livroInject(GetIt getIt) {
     ..registerLazySingleton<SalvarImagemLivroUsecase>(
       () => SalvarImagemLivroUsecaseImp(getIt()),
     )
+    ..registerLazySingleton<GetLivroByNameUsecase>(
+      () => GetLivroByNameUsecaseImp(getIt()),
+    )
 
     //controllers
     ..registerLazySingleton<LivroController>(
       () => LivroController(
+        getIt(),
         getIt(),
         getIt(),
         getIt(),

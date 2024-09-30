@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home Page'),
+        title: const Text('Meus Livros'),
         centerTitle: true,
       ),
       drawer: const DrawerCustom(namePageActive: '/'),
@@ -121,28 +121,33 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           Expanded(
-            child: GridView.builder(
-              padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 0.58,
-                mainAxisSpacing: 16,
-              ),
-              itemCount: livros.length,
-              itemBuilder: (context, index) {
-                final livro = livros[index];
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(
-                      context,
-                      '/livro-detail',
-                      arguments: livro,
-                    );
-                  },
-                  child: LivroCard(livro: livro, context: context),
-                );
-              },
-            ),
+            child: livros.isNotEmpty
+                ? GridView.builder(
+                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 0.58,
+                      mainAxisSpacing: 16,
+                    ),
+                    itemCount: livros.length,
+                    itemBuilder: (context, index) {
+                      final livro = livros[index];
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            '/livro-detail',
+                            arguments: livro,
+                          );
+                        },
+                        child: LivroCard(livro: livro, context: context),
+                      );
+                    },
+                  )
+                : const Center(
+                    child: Text('Nenhum livro encontrado'),
+                  ),
           ),
         ],
       ),

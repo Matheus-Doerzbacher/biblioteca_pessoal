@@ -10,7 +10,7 @@ import 'package:biblioteca_pessoal/layers/presentation/ui/pages/adicionar_livro/
 import 'package:biblioteca_pessoal/layers/presentation/ui/pages/adicionar_livro/pesquisa_api_page.dart';
 import 'package:biblioteca_pessoal/layers/presentation/ui/pages/categoria_page.dart';
 import 'package:biblioteca_pessoal/layers/presentation/ui/pages/home_page.dart';
-import 'package:biblioteca_pessoal/layers/presentation/ui/pages/livro_datail_page.dart';
+import 'package:biblioteca_pessoal/layers/presentation/ui/pages/livro_detail_page.dart';
 import 'package:biblioteca_pessoal/layers/presentation/ui/pages/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -86,7 +86,7 @@ class MyApp extends StatelessWidget {
         '/categoria': (context) => const CategoriaPage(),
         '/adicionar': (context) => const PesquisaApiPage(),
         '/adicionar-manual': (context) => const AdicionarLivroPage(),
-        '/livro-detail': (context) => LivroDatailPage(
+        '/livro-detail': (context) => LivroDetailPage(
               livro: ModalRoute.of(context)!.settings.arguments! as Livro,
             ),
       },

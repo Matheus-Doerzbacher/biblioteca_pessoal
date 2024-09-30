@@ -14,6 +14,10 @@ abstract class GetLivroByIdUsecase {
   Future<Livro> call(String id);
 }
 
+abstract class GetLivroByNameUsecase {
+  Future<Livro?> call(String titulo);
+}
+
 abstract class GetLivrosUsecase {
   Future<List<Livro>> call(String uidUsuario);
 }

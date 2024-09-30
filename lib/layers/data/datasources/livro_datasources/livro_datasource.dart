@@ -14,6 +14,10 @@ abstract class GetLivroByIdDatasource {
   Future<Livro> call(String idLivro);
 }
 
+abstract class GetLivroByNameDatasource {
+  Future<Livro?> call(String titulo);
+}
+
 abstract class GetLivrosDatasource {
   Future<List<Livro>> call(String uidUsuario);
 }

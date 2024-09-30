@@ -43,6 +43,19 @@ class GetLivroByIdUsecaseImp implements GetLivroByIdUsecase {
 
 // --------------------------------------------------
 
+class GetLivroByNameUsecaseImp implements GetLivroByNameUsecase {
+  final GetLivroByNameRepository _getLivroByNameRepository;
+
+  GetLivroByNameUsecaseImp(this._getLivroByNameRepository);
+
+  @override
+  Future<Livro?> call(String titulo) async {
+    return _getLivroByNameRepository(titulo);
+  }
+}
+
+// --------------------------------------------------
+
 class GetLivrosUsecaseImp implements GetLivrosUsecase {
   final GetLivrosRepository _getLivrosRepository;
 

@@ -24,9 +24,10 @@ class _PesquisaApiPageState extends State<PesquisaApiPage> {
   @override
   void dispose() {
     _pesquisarController.dispose();
-    controller
-      ..removeListener(_updateState)
-      ..clearLivros();
+    controller.removeListener(_updateState);
+    Future.microtask(
+      controller.clearLivros,
+    );
     super.dispose();
   }
 

@@ -43,6 +43,19 @@ class GetLivroByIdRepositoryImp implements GetLivroByIdRepository {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+class GetLivroByNameRepositoryImp implements GetLivroByNameRepository {
+  final GetLivroByNameDatasource _getLivroByNameDatasource;
+
+  GetLivroByNameRepositoryImp(this._getLivroByNameDatasource);
+
+  @override
+  Future<Livro?> call(String titulo) async {
+    return _getLivroByNameDatasource(titulo);
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 class GetLivrosRepositoryImp implements GetLivrosRepository {
   final GetLivrosDatasource _getLivrosDatasource;
 

@@ -4,15 +4,15 @@ import 'package:custom_rating_bar/custom_rating_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-class LivroDatailPage extends StatefulWidget {
+class LivroDetailPage extends StatefulWidget {
   final Livro livro;
-  const LivroDatailPage({super.key, required this.livro});
+  const LivroDetailPage({super.key, required this.livro});
 
   @override
-  State<LivroDatailPage> createState() => _LivroDatailPageState();
+  State<LivroDetailPage> createState() => _LivroDetailPageState();
 }
 
-class _LivroDatailPageState extends State<LivroDatailPage> {
+class _LivroDetailPageState extends State<LivroDetailPage> {
   final LivroController controller = GetIt.instance<LivroController>();
   @override
   Widget build(BuildContext context) {
@@ -80,10 +80,6 @@ class _LivroDatailPageState extends State<LivroDatailPage> {
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
               const SizedBox(height: 16),
-              Text(
-                'Estoque: ${livro.estoque}',
-                style: Theme.of(context).textTheme.bodyLarge,
-              ),
               if (livro.isPesquisa)
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -107,6 +103,33 @@ class _LivroDatailPageState extends State<LivroDatailPage> {
                           }
                         },
                         child: const Text('Adicionar a minha biblioteca'),
+                      ),
+                    ),
+                  ],
+                )
+              else
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Theme.of(context).colorScheme.error,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          foregroundColor:
+                              Theme.of(context).colorScheme.onError,
+                        ),
+                        onPressed: () async {
+                          await controller.deleteLivro(livro.id!);
+                          if (context.mounted) {
+                            await Navigator.of(context)
+                                .pushReplacementNamed('/');
+                          }
+                        },
+                        child:
+                            const Text('Deletar o livro da minha biblioteca'),
                       ),
                     ),
                   ],

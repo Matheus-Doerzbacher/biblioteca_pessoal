@@ -14,6 +14,10 @@ abstract class GetLivroByIdRepository {
   Future<Livro> call(String idLivro);
 }
 
+abstract class GetLivroByNameRepository {
+  Future<Livro?> call(String titulo);
+}
+
 abstract class GetLivrosRepository {
   Future<List<Livro>> call(String uidUsuario);
 }
