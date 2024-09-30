@@ -48,17 +48,14 @@ class _SelecionarFotoWidgetState extends State<SelecionarFotoWidget> {
           decoration: BoxDecoration(
             color: colorScheme.primaryContainer,
             borderRadius: BorderRadius.circular(8),
-            image: widget.urlImage != null
+            image: widget.urlImage != null || _image != null
                 ? DecorationImage(
-                    image: NetworkImage(widget.urlImage!),
+                    image: widget.urlImage != null
+                        ? NetworkImage(widget.urlImage!)
+                        : FileImage(_image!),
                     fit: BoxFit.cover,
                   )
-                : _image != null
-                    ? DecorationImage(
-                        image: FileImage(_image!),
-                        fit: BoxFit.cover,
-                      )
-                    : null,
+                : null,
           ),
           child: _image == null && widget.urlImage == null
               ? Icon(
