@@ -74,6 +74,22 @@ class _LivroDetailPageState extends State<LivroDetailPage> {
                   alignment: Alignment.center,
                 ),
               const SizedBox(height: 24),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  DetailLivroRow(
+                    title: 'Páginas',
+                    value: livro.paginas.toString(),
+                  ),
+                  DetailLivroRow(title: 'Ano', value: livro.ano),
+                  if (!livro.isPesquisa)
+                    DetailLivroRow(
+                      title: 'Quant.',
+                      value: livro.estoque.toString(),
+                    ),
+                ],
+              ),
+              const SizedBox(height: 24),
               Text(
                 livro.descricao,
                 textAlign: TextAlign.justify,
@@ -174,6 +190,27 @@ class _LivroDetailPageState extends State<LivroDetailPage> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class DetailLivroRow extends StatelessWidget {
+  final String title;
+  final String value;
+  const DetailLivroRow({super.key, required this.title, required this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text(value),
+        Text(
+          title,
+          style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+        ),
+      ],
     );
   }
 }
