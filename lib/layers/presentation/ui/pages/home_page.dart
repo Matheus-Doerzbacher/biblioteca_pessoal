@@ -1,3 +1,4 @@
+import 'package:biblioteca_pessoal/layers/domain/entities/livro_entity.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/livro_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/widgets/drawer_custom/drawer_custom.dart';
@@ -15,12 +16,17 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final _pesquisarController = TextEditingController();
   final controller = GetIt.instance.get<LivroController>();
+  List<Livro> _filteredLivros = [];
 
   @override
   void initState() {
     super.initState();
     _pesquisarController.addListener(_onSearchChanged);
-    controller.getLivros(UserController.user?.uid ?? '');
+    controller.getLivros(UserController.user?.uid ?? '').then((_) {
+      setState(() {
+        _filteredLivros = controller.livros;
+      });
+    });
   }
 
   @override
@@ -32,13 +38,19 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _onSearchChanged() {
-    setState(() {});
+    setState(() {
+      final query = _pesquisarController.text.toLowerCase();
+      _filteredLivros = controller.livros.where((livro) {
+        return livro.titulo.toLowerCase().contains(query) ||
+            livro.autor.toLowerCase().contains(query);
+      }).toList();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final livros = controller.livros;
+    final livros = _filteredLivros;
 
     // final livros =
     //  Provider.of<LivroController>(context).livros.where((livro) {
@@ -120,35 +132,40 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-          Expanded(
-            child: livros.isNotEmpty
-                ? GridView.builder(
-                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 0.58,
-                      mainAxisSpacing: 16,
+          if (controller.isLoading)
+            const Center(
+              child: CircularProgressIndicator(),
+            )
+          else
+            Expanded(
+              child: livros.isNotEmpty
+                  ? GridView.builder(
+                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: 0.58,
+                        mainAxisSpacing: 16,
+                      ),
+                      itemCount: livros.length,
+                      itemBuilder: (context, index) {
+                        final livro = livros[index];
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              '/livro-detail',
+                              arguments: livro,
+                            );
+                          },
+                          child: LivroCard(livro: livro, context: context),
+                        );
+                      },
+                    )
+                  : const Center(
+                      child: Text('Nenhum livro encontrado'),
                     ),
-                    itemCount: livros.length,
-                    itemBuilder: (context, index) {
-                      final livro = livros[index];
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(
-                            context,
-                            '/livro-detail',
-                            arguments: livro,
-                          );
-                        },
-                        child: LivroCard(livro: livro, context: context),
-                      );
-                    },
-                  )
-                : const Center(
-                    child: Text('Nenhum livro encontrado'),
-                  ),
-          ),
+            ),
         ],
       ),
     );

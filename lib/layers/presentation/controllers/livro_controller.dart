@@ -29,6 +29,7 @@ class LivroController extends ChangeNotifier {
   final _userId = UserController.user?.uid ?? '';
 
   late List<Livro> livros = [];
+  bool isLoading = false;
 
   Future<Livro> getLivroById(String idLivro) async {
     return _getLivroByIdUsecase(idLivro);
@@ -39,26 +40,63 @@ class LivroController extends ChangeNotifier {
   }
 
   Future<void> getLivros(String uidUsuario) async {
-    livros = await _getLivrosUsecase(uidUsuario);
-    notifyListeners();
+    try {
+      isLoading = true;
+      notifyListeners();
+      livros = await _getLivrosUsecase(uidUsuario);
+      notifyListeners();
+    } catch (e) {
+      isLoading = false;
+      notifyListeners();
+    } finally {
+      isLoading = false;
+      notifyListeners();
+    }
   }
 
   Future<bool> createLivro(Livro livro) async {
-    final result = await _createLivroUsecase(livro);
-    await getLivros(_userId);
-    return result;
+    try {
+      isLoading = true;
+      notifyListeners();
+      final result = await _createLivroUsecase(livro);
+      return result;
+    } catch (e) {
+      isLoading = false;
+      notifyListeners();
+      return false;
+    } finally {
+      await getLivros(_userId);
+    }
   }
 
   Future<bool> updateLivro(Livro livro) async {
-    final result = await _updateLivroUsecase(livro);
-    await getLivros(_userId);
-    return result;
+    try {
+      isLoading = true;
+      notifyListeners();
+      final result = await _updateLivroUsecase(livro);
+      return result;
+    } catch (e) {
+      isLoading = false;
+      notifyListeners();
+      return false;
+    } finally {
+      await getLivros(_userId);
+    }
   }
 
   Future<bool> deleteLivro(String idLivro) async {
-    final result = await _deleteLivroUsecase(idLivro);
-    await getLivros(_userId);
-    return result;
+    try {
+      isLoading = true;
+      notifyListeners();
+      final result = await _deleteLivroUsecase(idLivro);
+      return result;
+    } catch (e) {
+      isLoading = false;
+      notifyListeners();
+      return false;
+    } finally {
+      await getLivros(_userId);
+    }
   }
 
   Future<String> salvarImageLivro(File imagem) async {
