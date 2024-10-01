@@ -45,9 +45,6 @@ class LivroController extends ChangeNotifier {
       notifyListeners();
       livros = await _getLivrosUsecase(uidUsuario);
       notifyListeners();
-    } catch (e) {
-      isLoading = false;
-      notifyListeners();
     } finally {
       isLoading = false;
       notifyListeners();
