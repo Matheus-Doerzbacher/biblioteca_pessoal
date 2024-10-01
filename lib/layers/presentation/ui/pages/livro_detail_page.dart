@@ -120,12 +120,15 @@ class _LivroDetailPageState extends State<LivroDetailPage> {
                     ),
                   ],
                 ),
-              const SizedBox(height: 24),
-              Text(
-                livro.descricao,
-                textAlign: TextAlign.justify,
-                style: Theme.of(context).textTheme.bodyLarge,
-              ),
+              if (livro.descricao.isNotEmpty)
+                Padding(
+                  padding: const EdgeInsets.only(top: 24),
+                  child: Text(
+                    livro.descricao,
+                    textAlign: TextAlign.justify,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                ),
               const SizedBox(height: 16),
               if (livro.isPesquisa)
                 Row(

@@ -39,9 +39,20 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
   double _ratingController = 3;
   File? _imageSelected;
   String? _urlImage;
+  late List<Categoria> categoriasUsuario = [];
 
   final MultiSelectController<Categoria> _multiSelectController =
       MultiSelectController<Categoria>();
+
+  bool isSelected(Categoria categoria) {
+    var result = false;
+    for (final catController in _categoriasController) {
+      if (catController.nome == categoria.nome) {
+        result = true;
+      }
+    }
+    return result;
+  }
 
   bool _isLoading = false;
 
@@ -60,14 +71,21 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
       _categoriasController = widget.livroUpdate!.categorias;
       _ratingController = widget.livroUpdate!.avaliacao.toDouble();
       _urlImage = widget.livroUpdate!.urlImage;
+    }
+  }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    categoriasUsuario = Provider.of<CategoriaController>(context).categorias;
+    if (widget.livroUpdate != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         _multiSelectController.setItems(
-          _categoriasController.map((categoria) {
+          categoriasUsuario.map((categoria) {
             return DropdownItem(
               label: categoria.nome,
               value: categoria,
-              selected: _categoriasController.contains(categoria),
+              selected: isSelected(categoria),
             );
           }).toList(),
         );
@@ -209,7 +227,6 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final categorias = Provider.of<CategoriaController>(context).categorias;
 
     return Scaffold(
       appBar: AppBar(
@@ -267,7 +284,7 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
             DropDownMultiCustom(
               alterarCategorias: _alterarCategoria,
               categoriasSelecionadas: _categoriasController,
-              categorias: categorias,
+              categorias: categoriasUsuario,
               colorScheme: colorScheme,
               multiSelectController: _multiSelectController,
             ),
@@ -331,6 +348,7 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
                 ],
               ),
             ),
+            const SizedBox(height: 24),
           ],
         ),
       ),
