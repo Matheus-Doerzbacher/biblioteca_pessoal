@@ -146,10 +146,11 @@ class _LivroDetailPageState extends State<LivroDetailPage> {
                               Theme.of(context).colorScheme.onPrimary,
                         ),
                         onPressed: () async {
-                          await controller.createLivro(livro);
                           if (context.mounted) {
-                            await Navigator.of(context)
-                                .pushReplacementNamed('/');
+                            await Navigator.of(context).pushReplacementNamed(
+                              '/adicionar-manual',
+                              arguments: livro,
+                            );
                           }
                         },
                         child: const Text('Adicionar a minha biblioteca'),

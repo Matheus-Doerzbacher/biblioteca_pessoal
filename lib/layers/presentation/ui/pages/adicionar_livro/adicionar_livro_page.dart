@@ -198,7 +198,7 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
 
       late bool result;
 
-      if (widget.livroUpdate != null) {
+      if (widget.livroUpdate?.id != null) {
         result = await controller.updateLivro(livro);
       } else {
         result = await controller.createLivro(livro);
