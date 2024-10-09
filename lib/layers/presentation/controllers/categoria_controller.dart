@@ -14,9 +14,8 @@ class CategoriaController extends ChangeNotifier {
     this._deleteCategoriaUsecase,
     this._getCategoriasUsecase,
     this._updateCategoriaUsecase,
-  ) {
-    getCategorias(userId);
-  }
+  );
+
   final userId = UserController.user?.uid ?? '';
   late bool isLoading = false;
   late List<Categoria> categorias = [];

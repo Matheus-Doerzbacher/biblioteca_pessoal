@@ -96,10 +96,6 @@ class _LoginPageState extends State<LoginPage> {
                                         ),
                                       );
                                     }
-                                  } finally {
-                                    setState(() {
-                                      _isLoading = false; // Stop loading
-                                    });
                                   }
                                 },
                           label: _isLoading

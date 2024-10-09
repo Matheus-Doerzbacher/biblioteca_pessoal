@@ -10,7 +10,11 @@ class GetCategoriasFirebaseDatasourceImp implements GetCategoriasDatasource {
       final querySnapshot = await firestore
           .collection('categorias')
           .where('uidUsuario', isEqualTo: uidUsuario)
-          .get();
+          .get(
+            const GetOptions(
+              source: Source.server,
+            ),
+          ); // Força a busca no servidor
 
       return querySnapshot.docs.map((doc) {
         final data = doc.data();

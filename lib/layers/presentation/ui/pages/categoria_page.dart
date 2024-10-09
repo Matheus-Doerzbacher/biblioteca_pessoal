@@ -22,7 +22,9 @@ class _CategoriaPageState extends State<CategoriaPage> {
   @override
   void initState() {
     super.initState();
-    // Não é mais necessário usar o Provider aqui
+    controller
+        .getCategorias(UserController.user?.uid ?? '')
+        .then((_) => setState(() {}));
   }
 
   @override
