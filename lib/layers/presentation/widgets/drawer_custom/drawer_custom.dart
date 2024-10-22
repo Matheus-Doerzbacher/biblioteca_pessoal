@@ -69,27 +69,26 @@ class DrawerCustom extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 8),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          user.displayName != null
-                              // ignore: lines_longer_than_80_chars
-                              ? '${user.displayName!.split(' ')[0]} ${user.displayName!.split(' ').skip(1).map((e) => '${e[0]}.').join(' ')}'
-                              : '',
-                          style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            user.displayName ?? '',
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                        Text(
-                          user.email ?? '',
-                          style: const TextStyle(fontSize: 9),
-                        ),
-                      ],
+                          Text(
+                            user.email ?? '',
+                            style: const TextStyle(fontSize: 9),
+                          ),
+                        ],
+                      ),
                     ),
-                    const Spacer(),
                     IconButton(
                       onPressed: () {
                         UserController.signOut(context);

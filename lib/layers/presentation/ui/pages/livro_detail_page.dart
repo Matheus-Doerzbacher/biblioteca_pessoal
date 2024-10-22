@@ -16,10 +16,10 @@ class _LivroDetailPageState extends State<LivroDetailPage> {
   final LivroController controller = GetIt.instance<LivroController>();
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final livro = widget.livro;
     return Scaffold(
       appBar: AppBar(
-        title: Text(livro.titulo),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -31,10 +31,10 @@ class _LivroDetailPageState extends State<LivroDetailPage> {
                 height: 300,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
-                  color: Theme.of(context).colorScheme.error,
+                  color: colorScheme.error,
                   boxShadow: [
                     BoxShadow(
-                      color: Theme.of(context).colorScheme.shadow,
+                      color: colorScheme.shadow,
                       offset: const Offset(0, 2),
                       blurRadius: 4,
                     ),

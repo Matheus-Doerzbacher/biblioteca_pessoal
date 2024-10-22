@@ -23,12 +23,9 @@ class LivroCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
           boxShadow: [
             BoxShadow(
-              blurRadius: 4,
               color: colorScheme.shadow,
-              offset: const Offset(
-                2,
-                2,
-              ),
+              blurRadius: 4,
+              offset: const Offset(2, 2),
             ),
           ],
         ),
@@ -36,19 +33,19 @@ class LivroCard extends StatelessWidget {
           children: [
             Container(
               padding: const EdgeInsets.fromLTRB(4, 4, 4, 0),
-              color: colorScheme.surface,
-              child: ClipRRect(
+              decoration: BoxDecoration(
+                color: colorScheme.surface,
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(8),
                   topRight: Radius.circular(8),
                 ),
-                child: Image.network(
-                  livro.urlImage.isNotEmpty
-                      ? livro.urlImage
-                      : 'https://cdn.pixabay.com/photo/2017/08/11/09/11/books-2630076_1280.jpg',
-                  height: 200,
-                  width: double.infinity,
-                ),
+              ),
+              child: Image.network(
+                livro.urlImage.isNotEmpty
+                    ? livro.urlImage
+                    : 'https://cdn.pixabay.com/photo/2017/08/11/09/11/books-2630076_1280.jpg',
+                height: 200,
+                width: double.infinity,
               ),
             ),
             Expanded(
@@ -68,15 +65,13 @@ class LivroCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        livro.titulo.length > 20
-                            ? '${livro.titulo.substring(0, 20)}...'
-                            : livro.titulo,
+                        livro.titulo,
                         style: Theme.of(context).textTheme.titleSmall,
+                        overflow: TextOverflow.ellipsis,
                       ),
                       Text(
-                        livro.autor.length > 20
-                            ? '${livro.autor.substring(0, 20)}...'
-                            : livro.autor,
+                        livro.autor,
+                        overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.labelSmall?.copyWith(
                               color: colorScheme.onSurfaceVariant,
                             ),

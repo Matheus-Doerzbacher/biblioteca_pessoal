@@ -68,10 +68,7 @@ class _PesquisaApiPageState extends State<PesquisaApiPage> {
                       BoxShadow(
                         blurRadius: 4,
                         color: colorScheme.shadow,
-                        offset: const Offset(
-                          2,
-                          2,
-                        ),
+                        offset: const Offset(2, 2),
                       ),
                     ],
                     borderRadius: BorderRadius.circular(8),
@@ -79,9 +76,12 @@ class _PesquisaApiPageState extends State<PesquisaApiPage> {
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: TextFormField(
-                      onFieldSubmitted: controller.getLivrosApi,
+                      onFieldSubmitted: (value) {
+                        if (value != '') {
+                          controller.getLivrosApi(value);
+                        }
+                      },
                       textAlignVertical: TextAlignVertical.top,
-                      style: TextStyle(color: colorScheme.onSurface),
                       controller: _pesquisarController,
                       decoration: InputDecoration(
                         suffixIcon: ValueListenableBuilder<TextEditingValue>(
@@ -103,30 +103,17 @@ class _PesquisaApiPageState extends State<PesquisaApiPage> {
                         alignLabelWithHint: true,
                         enabledBorder: OutlineInputBorder(
                           borderSide: const BorderSide(
-                            color: Color(0x00000000),
+                            color: Colors.transparent,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: const BorderSide(
-                            color: Color(0x00000000),
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: colorScheme.error,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        focusedErrorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: colorScheme.error,
+                            color: Colors.transparent,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                      cursorColor: colorScheme.primary,
                     ),
                   ),
                 ),
@@ -139,33 +126,31 @@ class _PesquisaApiPageState extends State<PesquisaApiPage> {
             ),
           if (controller.livros.isNotEmpty && !controller.isLoading)
             Expanded(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(14, 0, 14, 0),
-                child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 0.65,
-                    mainAxisSpacing: 10,
-                  ),
-                  itemCount: controller.livros.length,
-                  itemBuilder: (context, index) {
-                    final livro = controller.livros[index];
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(
-                          context,
-                          '/livro-detail',
-                          arguments: livro,
-                        );
-                      },
-                      child: LivroCard(
-                        livro: livro,
-                        context: context,
-                        isPesquisa: true,
-                      ),
-                    );
-                  },
+              child: GridView.builder(
+                padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 0.70,
+                  mainAxisSpacing: 16,
                 ),
+                itemCount: controller.livros.length,
+                itemBuilder: (context, index) {
+                  final livro = controller.livros[index];
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        '/livro-detail',
+                        arguments: livro,
+                      );
+                    },
+                    child: LivroCard(
+                      livro: livro,
+                      context: context,
+                      isPesquisa: true,
+                    ),
+                  );
+                },
               ),
             ),
         ],

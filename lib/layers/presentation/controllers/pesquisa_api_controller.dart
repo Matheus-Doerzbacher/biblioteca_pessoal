@@ -10,14 +10,13 @@ class PesquisaApiController extends ChangeNotifier {
   List<Livro> livros = [];
   bool isLoading = false;
 
-  Future<List<Livro>> getLivrosApi(String titulo) async {
+  Future<void> getLivrosApi(String titulo) async {
     isLoading = true;
     notifyListeners();
     livros = await _pesquisarLivroApiUsecase(titulo);
     notifyListeners();
     isLoading = false;
     notifyListeners();
-    return livros;
   }
 
   void clearLivros() {

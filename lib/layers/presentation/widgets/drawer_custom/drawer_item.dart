@@ -44,7 +44,6 @@ class DrawerItem extends StatelessWidget {
                 padding: const EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
                 child: Text(
                   text,
-                  style: TextStyle(color: colorScheme.onSurface),
                 ),
               ),
             ],

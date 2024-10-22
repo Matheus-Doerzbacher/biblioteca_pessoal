@@ -15,7 +15,6 @@ import 'package:biblioteca_pessoal/layers/presentation/ui/pages/login_page.dart'
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
@@ -59,26 +58,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Biblioteca Pessoal',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        textTheme: GoogleFonts.poppinsTextTheme(),
-        colorScheme: lightColorSchema,
-        useMaterial3: true,
-        appBarTheme: const AppBarTheme().copyWith(
-          centerTitle: true,
-          backgroundColor: lightColorSchema.primary,
-          foregroundColor: lightColorSchema.onPrimary,
-        ),
-      ),
-      darkTheme: ThemeData(
-        textTheme: GoogleFonts.poppinsTextTheme(),
-        colorScheme: darkColorSchema,
-        useMaterial3: true,
-        appBarTheme: const AppBarTheme().copyWith(
-          centerTitle: true,
-          backgroundColor: darkColorSchema.primary,
-          foregroundColor: darkColorSchema.onPrimary,
-        ),
-      ),
+      theme: ThemeDataCustom().light(),
+      darkTheme: ThemeDataCustom().dark(),
       initialRoute: UserController.user != null ? '/' : '/login',
       routes: {
         '/login': (context) => const LoginPage(),

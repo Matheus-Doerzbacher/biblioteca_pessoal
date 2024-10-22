@@ -50,7 +50,6 @@ class InputTextCustom extends StatelessWidget {
                 textAlignVertical: TextAlignVertical.top,
                 minLines: numeroLinhas,
                 maxLines: numeroLinhas,
-                style: TextStyle(color: colorScheme.onSurface),
                 keyboardType: isNumber == true
                     ? TextInputType.number
                     : TextInputType.text,
@@ -61,13 +60,13 @@ class InputTextCustom extends StatelessWidget {
                   alignLabelWithHint: true,
                   enabledBorder: OutlineInputBorder(
                     borderSide: const BorderSide(
-                      color: Color(0x00000000),
+                      color: Colors.transparent,
                     ),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: const BorderSide(
-                      color: Color(0x00000000),
+                      color: Colors.transparent,
                     ),
                     borderRadius: BorderRadius.circular(8),
                   ),

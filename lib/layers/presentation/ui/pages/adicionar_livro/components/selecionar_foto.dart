@@ -46,7 +46,7 @@ class _SelecionarFotoWidgetState extends State<SelecionarFotoWidget> {
           height: 120,
           width: 80,
           decoration: BoxDecoration(
-            color: colorScheme.primaryContainer,
+            color: colorScheme.surfaceContainer,
             borderRadius: BorderRadius.circular(8),
             image: widget.urlImage != null || _image != null
                 ? DecorationImage(

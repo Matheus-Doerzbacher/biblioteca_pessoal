@@ -42,10 +42,7 @@ class DropDownSingleCustom extends StatelessWidget {
               child: DropdownButton<StatusLeitura>(
                 value: statusAtual,
                 icon: const Icon(Icons.keyboard_arrow_down_rounded),
-                style: Theme.of(context)
-                    .textTheme
-                    .titleMedium
-                    ?.copyWith(color: colorScheme.onSurface),
+                style: Theme.of(context).textTheme.titleMedium,
                 underline: Container(
                   color: colorScheme.onPrimary,
                 ),

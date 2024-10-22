@@ -24,15 +24,12 @@ class CategoriaItem extends StatelessWidget {
               child: Container(
                 width: 100,
                 decoration: BoxDecoration(
-                  color: colorScheme.surfaceContainer,
+                  color: colorScheme.surface,
                   boxShadow: [
                     BoxShadow(
                       blurRadius: 4,
                       color: colorScheme.shadow,
-                      offset: const Offset(
-                        0,
-                        2,
-                      ),
+                      offset: const Offset(0, 2),
                     ),
                   ],
                   borderRadius: BorderRadius.circular(12),

@@ -1,8 +1,54 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
+class ThemeDataCustom {
+  ThemeData light() {
+    final baseTheme = ThemeData(
+      brightness: Brightness.light,
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: const Color.fromARGB(255, 146, 129, 99),
+      ).copyWith(
+        primary: const Color.fromARGB(255, 146, 129, 99),
+        // Ajuste outras cores conforme necessário
+      ),
+      appBarTheme: const AppBarTheme(
+        centerTitle: true,
+      ),
+      useMaterial3: true,
+    );
+
+    return baseTheme.copyWith(
+      textTheme: GoogleFonts.poppinsTextTheme(baseTheme.textTheme),
+    );
+  }
+
+  ThemeData dark() {
+    final baseTheme = ThemeData(
+      brightness: Brightness.dark,
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: const Color.fromARGB(255, 146, 129, 99),
+        brightness: Brightness.dark,
+      ).copyWith(
+        primary: const Color.fromARGB(255, 146, 129, 99),
+        surface: const Color.fromARGB(255, 22, 19, 13),
+        shadow: const Color.fromARGB(255, 209, 193, 160),
+      ),
+      appBarTheme: const AppBarTheme(
+        centerTitle: true,
+      ),
+      useMaterial3: true,
+    );
+
+    return baseTheme.copyWith(
+      textTheme: GoogleFonts.poppinsTextTheme(baseTheme.textTheme),
+    );
+  }
+}
+
+// APENAS PARA CONSULTA
 final ColorScheme lightColorSchema = ColorScheme.fromSeed(
   dynamicSchemeVariant: DynamicSchemeVariant.fidelity,
-  seedColor: const Color(0xFF928163),
+  seedColor: const Color.fromARGB(255, 146, 129, 99),
   secondary: const Color(0xFF4b986c),
   tertiary: const Color(0xFF6D604A),
   error: const Color(0xFFC4454D),
@@ -16,7 +62,7 @@ final ColorScheme lightColorSchema = ColorScheme.fromSeed(
 final ColorScheme darkColorSchema = ColorScheme.fromSeed(
   dynamicSchemeVariant: DynamicSchemeVariant.fidelity,
   brightness: Brightness.dark,
-  seedColor: const Color(0xFF928163),
+  seedColor: const Color.fromARGB(255, 146, 129, 99),
   secondary: const Color(0xFF4b986c),
   tertiary: const Color(0xFF6D604A),
   error: const Color(0xFFC4454D),

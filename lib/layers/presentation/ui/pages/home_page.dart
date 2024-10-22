@@ -23,9 +23,11 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     _pesquisarController.addListener(_onSearchChanged);
     controller.getLivros(UserController.user?.uid ?? '').then((_) {
-      setState(() {
-        _filteredLivros = controller.livros;
-      });
+      if (mounted) {
+        setState(() {
+          _filteredLivros = controller.livros;
+        });
+      }
     });
   }
 
@@ -65,108 +67,96 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
       ),
       drawer: const DrawerCustom(namePageActive: '/'),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(14, 24, 14, 24),
-            child: Container(
-              decoration: const BoxDecoration(),
-              child: Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
-                child: Container(
-                  width: MediaQuery.sizeOf(context).width,
-                  decoration: BoxDecoration(
-                    color: colorScheme.surface,
-                    boxShadow: [
-                      BoxShadow(
-                        blurRadius: 4,
-                        color: colorScheme.shadow,
-                        offset: const Offset(
-                          2,
-                          2,
-                        ),
-                      ),
-                    ],
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: SizedBox(
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(14, 24, 14, 24),
+              child: Container(
+                decoration: const BoxDecoration(),
+                child: Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
+                  child: Container(
                     width: MediaQuery.sizeOf(context).width,
-                    child: TextFormField(
-                      textAlignVertical: TextAlignVertical.top,
-                      style: TextStyle(color: colorScheme.onSurface),
-                      controller: _pesquisarController,
-                      decoration: InputDecoration(
-                        suffixIcon: const Icon(Icons.search),
-                        isDense: true,
-                        labelText: 'Pesquisar',
-                        alignLabelWithHint: true,
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x00000000),
-                          ),
-                          borderRadius: BorderRadius.circular(8),
+                    decoration: BoxDecoration(
+                      color: colorScheme.surface,
+                      boxShadow: [
+                        BoxShadow(
+                          color: colorScheme.shadow,
+                          blurRadius: 4,
+                          offset: const Offset(2, 2),
                         ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x00000000),
+                      ],
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: SizedBox(
+                      width: MediaQuery.sizeOf(context).width,
+                      child: TextFormField(
+                        textAlignVertical: TextAlignVertical.top,
+                        controller: _pesquisarController,
+                        decoration: InputDecoration(
+                          suffixIcon: const Icon(Icons.search),
+                          isDense: true,
+                          labelText: 'Pesquisar',
+                          alignLabelWithHint: true,
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: const BorderSide(
+                              color: Colors.transparent,
+                            ),
                           ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: colorScheme.error,
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                              color: Colors.transparent,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
                           ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        focusedErrorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: colorScheme.error,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                      cursorColor: colorScheme.primary,
                     ),
                   ),
                 ),
               ),
             ),
-          ),
-          if (controller.isLoading)
-            const Center(
-              child: CircularProgressIndicator(),
-            )
-          else
-            Expanded(
-              child: livros.isNotEmpty
-                  ? GridView.builder(
-                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 0.58,
-                        mainAxisSpacing: 16,
+            if (controller.isLoading)
+              const Center(
+                child: CircularProgressIndicator(),
+              )
+            else
+              Expanded(
+                child: livros.isNotEmpty
+                    ? GridView.builder(
+                        padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          childAspectRatio: 0.63,
+                          mainAxisSpacing: 16,
+                        ),
+                        itemCount: livros.length,
+                        itemBuilder: (context, index) {
+                          final livro = livros[index];
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                '/livro-detail',
+                                arguments: livro,
+                              );
+                            },
+                            child: LivroCard(livro: livro, context: context),
+                          );
+                        },
+                      )
+                    : const Center(
+                        child: Text('Nenhum livro encontrado'),
                       ),
-                      itemCount: livros.length,
-                      itemBuilder: (context, index) {
-                        final livro = livros[index];
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(
-                              context,
-                              '/livro-detail',
-                              arguments: livro,
-                            );
-                          },
-                          child: LivroCard(livro: livro, context: context),
-                        );
-                      },
-                    )
-                  : const Center(
-                      child: Text('Nenhum livro encontrado'),
-                    ),
-            ),
-        ],
+              ),
+          ],
+        ),
       ),
     );
   }

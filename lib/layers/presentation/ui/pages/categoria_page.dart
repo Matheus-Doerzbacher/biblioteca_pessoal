@@ -136,40 +136,24 @@ class _CategoriaPageState extends State<CategoriaPage> {
                         width: MediaQuery.of(context).size.width,
                         child: TextField(
                           controller: _textController,
-                          style: TextStyle(
-                            color: colorScheme.onSurface,
-                          ), // Alteração para mudar a cor do texto
                           decoration: InputDecoration(
                             isDense: true,
                             labelText: 'Nome da Categoria',
                             enabledBorder: OutlineInputBorder(
                               borderSide: const BorderSide(
-                                color: Color(0x00000000),
+                                color: Colors.transparent,
                               ),
                               borderRadius: BorderRadius.circular(8),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: const BorderSide(
-                                color: Color(0x00000000),
-                              ),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: colorScheme.error,
-                              ),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            focusedErrorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: colorScheme.error,
+                                color: Colors.transparent,
                               ),
                               borderRadius: BorderRadius.circular(8),
                             ),
                             filled: true,
-                            fillColor: colorScheme.surfaceContainer,
+                            fillColor: colorScheme.surface,
                           ),
-                          cursorColor: colorScheme.onSurface,
                         ),
                       ),
                     ),

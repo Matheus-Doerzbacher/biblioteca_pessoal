@@ -53,17 +53,16 @@ class DropDownMultiCustom extends StatelessWidget {
               fieldDecoration: FieldDecoration(
                 suffixIcon: const Icon(Icons.keyboard_arrow_down),
                 hintText: 'Categorias',
-                hintStyle: TextStyle(color: colorScheme.onSurface),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: const BorderSide(
-                    color: Color(0x00000000),
+                    color: Colors.transparent,
                   ),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: const BorderSide(
-                    color: Color(0x00000000),
+                    color: Colors.transparent,
                   ),
                 ),
               ),
