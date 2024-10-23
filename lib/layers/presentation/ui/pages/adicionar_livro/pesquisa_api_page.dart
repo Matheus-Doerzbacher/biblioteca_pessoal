@@ -76,9 +76,9 @@ class _PesquisaApiPageState extends State<PesquisaApiPage> {
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: TextFormField(
-                      onFieldSubmitted: (value) {
-                        if (value != '') {
-                          controller.getLivrosApi(value);
+                      onFieldSubmitted: (_) {
+                        if (_pesquisarController.text != '') {
+                          controller.getLivrosApi(_pesquisarController.text);
                         }
                       },
                       textAlignVertical: TextAlignVertical.top,
