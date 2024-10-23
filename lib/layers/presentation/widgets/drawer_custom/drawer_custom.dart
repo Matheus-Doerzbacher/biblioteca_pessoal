@@ -1,3 +1,4 @@
+import 'package:biblioteca_pessoal/core/routes/app_routes.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/widgets/drawer_custom/drawer_item.dart';
 import 'package:biblioteca_pessoal/layers/presentation/widgets/logo_app.dart';
@@ -37,18 +38,18 @@ class DrawerCustom extends StatelessWidget {
                   const SizedBox(height: 12),
                   DrawerItem(
                     icon: Icons.dashboard_rounded,
-                    namePage: '/',
+                    namePage: AppRoutes.home,
                     namePageActive: namePageActive,
                     text: 'Meus Livros',
                   ),
                   DrawerItem(
-                    namePage: '/adicionar',
+                    namePage: AppRoutes.livro.adicionar,
                     namePageActive: namePageActive,
                     icon: Icons.add_circle_outline,
                     text: 'Adicionar um livro',
                   ),
                   DrawerItem(
-                    namePage: '/categoria',
+                    namePage: AppRoutes.categoria,
                     namePageActive: namePageActive,
                     icon: Icons.category,
                     text: 'Categorias',

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:biblioteca_pessoal/core/routes/app_routes.dart';
 import 'package:biblioteca_pessoal/layers/domain/entities/categoria_entity.dart';
 import 'package:biblioteca_pessoal/layers/domain/entities/livro_entity.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/adicionar_livro_controller.dart';
@@ -206,7 +207,7 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
 
       if (result == true) {
         if (mounted) {
-          await Navigator.of(context).pushNamed('/');
+          await Navigator.of(context).pushNamed(AppRoutes.home);
         }
       } else {
         throw Exception('Houve um problema ao salvar o livro');

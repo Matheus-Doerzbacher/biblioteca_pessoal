@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
 
+import 'package:biblioteca_pessoal/core/routes/app_routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -54,7 +55,7 @@ class UserController {
     user = null;
     if (context.mounted) {
       await Navigator.of(context)
-          .pushNamedAndRemoveUntil('/login', (route) => false);
+          .pushNamedAndRemoveUntil(AppRoutes.login, (route) => false);
     }
   }
 }

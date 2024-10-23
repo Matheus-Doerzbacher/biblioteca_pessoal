@@ -1,3 +1,4 @@
+import 'package:biblioteca_pessoal/core/routes/app_routes.dart';
 import 'package:biblioteca_pessoal/layers/domain/entities/categoria_entity.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/categoria_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
@@ -106,7 +107,7 @@ class _CategoriaPageState extends State<CategoriaPage> {
         title: const Text('Categorias'),
         centerTitle: true,
       ),
-      drawer: const DrawerCustom(namePageActive: '/categoria'),
+      drawer: const DrawerCustom(namePageActive: AppRoutes.categoria),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(14, 24, 24, 0),
         child: Column(

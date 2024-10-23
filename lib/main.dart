@@ -1,4 +1,5 @@
 import 'package:biblioteca_pessoal/core/inject/_inject.dart';
+import 'package:biblioteca_pessoal/core/routes/app_routes.dart';
 import 'package:biblioteca_pessoal/layers/domain/entities/livro_entity.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/categoria_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/home_page_controller.dart';
@@ -7,7 +8,8 @@ import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controll
 import 'package:biblioteca_pessoal/layers/presentation/theme/theme.dart';
 import 'package:biblioteca_pessoal/layers/presentation/ui/pages/adicionar_livro/adicionar_livro_page.dart';
 import 'package:biblioteca_pessoal/layers/presentation/ui/pages/adicionar_livro/pesquisa_api_page.dart';
-import 'package:biblioteca_pessoal/layers/presentation/ui/pages/categoria_page.dart';
+import 'package:biblioteca_pessoal/layers/presentation/ui/pages/categoria/categoria_page.dart';
+import 'package:biblioteca_pessoal/layers/presentation/ui/pages/emprestimo_page.dart';
 import 'package:biblioteca_pessoal/layers/presentation/ui/pages/home_page.dart';
 import 'package:biblioteca_pessoal/layers/presentation/ui/pages/livro_detail_page.dart';
 import 'package:biblioteca_pessoal/layers/presentation/ui/pages/login_page.dart';
@@ -56,18 +58,20 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeDataCustom().light(),
       darkTheme: ThemeDataCustom().dark(),
-      initialRoute: UserController.user != null ? '/' : '/login',
+      initialRoute:
+          UserController.user != null ? AppRoutes.home : AppRoutes.login,
       routes: {
-        '/login': (context) => const LoginPage(),
-        '/': (context) => const HomePage(),
-        '/categoria': (context) => const CategoriaPage(),
-        '/adicionar': (context) => const PesquisaApiPage(),
-        '/adicionar-manual': (context) => AdicionarLivroPage(
+        AppRoutes.login: (context) => const LoginPage(),
+        AppRoutes.home: (context) => const HomePage(),
+        AppRoutes.categoria: (context) => const CategoriaPage(),
+        AppRoutes.livro.adicionar: (context) => const PesquisaApiPage(),
+        AppRoutes.livro.adicionarManual: (context) => AdicionarLivroPage(
               livroUpdate: ModalRoute.of(context)!.settings.arguments as Livro?,
             ),
-        '/livro-detail': (context) => LivroDetailPage(
+        AppRoutes.livro.livroDetail: (context) => LivroDetailPage(
               livro: ModalRoute.of(context)!.settings.arguments! as Livro,
             ),
+        AppRoutes.emprestimo: (context) => const EmprestimosPage(),
       },
     );
   }

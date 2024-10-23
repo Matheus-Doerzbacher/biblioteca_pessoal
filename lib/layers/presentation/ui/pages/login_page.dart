@@ -1,3 +1,4 @@
+import 'package:biblioteca_pessoal/core/routes/app_routes.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -67,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
 
                                     if (user != null && context.mounted) {
                                       await Navigator.of(context)
-                                          .pushReplacementNamed('/');
+                                          .pushReplacementNamed(AppRoutes.home);
                                     }
                                   } on FirebaseAuthException catch (error) {
                                     if (kDebugMode) {

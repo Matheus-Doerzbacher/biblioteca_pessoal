@@ -1,3 +1,4 @@
+import 'package:biblioteca_pessoal/core/routes/app_routes.dart';
 import 'package:biblioteca_pessoal/layers/domain/entities/livro_entity.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/home_page_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
@@ -66,7 +67,7 @@ class _HomePageState extends State<HomePage> {
         title: const Text('Meus Livros'),
         centerTitle: true,
       ),
-      drawer: const DrawerCustom(namePageActive: '/'),
+      drawer: const DrawerCustom(namePageActive: AppRoutes.home),
       body: GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();
@@ -143,7 +144,7 @@ class _HomePageState extends State<HomePage> {
                             onTap: () {
                               Navigator.pushNamed(
                                 context,
-                                '/livro-detail',
+                                AppRoutes.livro.livroDetail,
                                 arguments: livro,
                               );
                             },

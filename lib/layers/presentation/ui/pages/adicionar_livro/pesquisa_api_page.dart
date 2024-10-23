@@ -1,3 +1,4 @@
+import 'package:biblioteca_pessoal/core/routes/app_routes.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/pesquisa_api_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/widgets/drawer_custom/drawer_custom.dart';
 import 'package:biblioteca_pessoal/layers/presentation/widgets/livro_card_widget.dart';
@@ -45,13 +46,13 @@ class _PesquisaApiPageState extends State<PesquisaApiPage> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.of(context).pushNamed('/adicionar-manual');
+              Navigator.of(context).pushNamed(AppRoutes.livro.adicionarManual);
             },
             icon: const Icon(Icons.add_circle_outline),
           ),
         ],
       ),
-      drawer: const DrawerCustom(namePageActive: '/adicionar'),
+      drawer: DrawerCustom(namePageActive: AppRoutes.livro.adicionar),
       body: Column(
         children: [
           Padding(
@@ -140,7 +141,7 @@ class _PesquisaApiPageState extends State<PesquisaApiPage> {
                     onTap: () {
                       Navigator.pushNamed(
                         context,
-                        '/livro-detail',
+                        AppRoutes.livro.livroDetail,
                         arguments: livro,
                       );
                     },

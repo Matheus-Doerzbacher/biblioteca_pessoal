@@ -1,3 +1,4 @@
+import 'package:biblioteca_pessoal/core/routes/app_routes.dart';
 import 'package:biblioteca_pessoal/layers/domain/entities/livro_entity.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/livro_datail_controller.dart';
 import 'package:custom_rating_bar/custom_rating_bar.dart';
@@ -148,7 +149,7 @@ class _LivroDetailPageState extends State<LivroDetailPage> {
                         onPressed: () async {
                           if (context.mounted) {
                             await Navigator.of(context).pushReplacementNamed(
-                              '/adicionar-manual',
+                              AppRoutes.livro.adicionarManual,
                               arguments: livro,
                             );
                           }
@@ -179,7 +180,7 @@ class _LivroDetailPageState extends State<LivroDetailPage> {
                               await controller.deleteLivro(livro.id!);
                               if (context.mounted) {
                                 await Navigator.of(context)
-                                    .pushReplacementNamed('/');
+                                    .pushReplacementNamed(AppRoutes.home);
                               }
                             },
                             child: const Text(
@@ -207,7 +208,7 @@ class _LivroDetailPageState extends State<LivroDetailPage> {
                               if (context.mounted) {
                                 await Navigator.of(context)
                                     .pushReplacementNamed(
-                                  '/adicionar-manual',
+                                  AppRoutes.livro.adicionarManual,
                                   arguments: livro,
                                 );
                               }
