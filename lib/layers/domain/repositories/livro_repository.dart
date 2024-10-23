@@ -33,3 +33,7 @@ abstract class SalvarImagemLivroRepository {
 abstract class PesquisarLivroApiRepository {
   Future<List<Livro>> call(String titulo);
 }
+
+abstract class GetLivrosComEstoqueRepository {
+  Future<List<Livro>> call(String uidUsuario);
+}

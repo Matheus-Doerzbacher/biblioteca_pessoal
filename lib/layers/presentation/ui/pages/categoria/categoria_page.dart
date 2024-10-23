@@ -112,92 +112,102 @@ class _CategoriaPageState extends State<CategoriaPage> {
         padding: const EdgeInsets.fromLTRB(14, 24, 24, 0),
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(10, 0, 10, 6),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                        color: colorScheme.surfaceContainer,
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 4,
-                            color: colorScheme.shadow,
-                            offset: const Offset(
-                              2,
-                              2,
-                            ),
-                          ),
-                        ],
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        child: TextField(
-                          controller: _textController,
-                          decoration: InputDecoration(
-                            isDense: true,
-                            labelText: 'Nome da Categoria',
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                color: Colors.transparent,
-                              ),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                color: Colors.transparent,
-                              ),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            filled: true,
-                            fillColor: colorScheme.surface,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  IconButton(
-                    color: colorScheme.primary,
-                    style: IconButton.styleFrom(
-                      backgroundColor: colorScheme.primary,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                    icon: Icon(
-                      Icons.add,
-                      color: colorScheme.onPrimary,
-                      size: 24,
-                    ),
-                    onPressed: _adicionarCategoria,
-                  ),
-                ],
-              ),
-            ),
+            // Input adicionar Tarefas
+            _inputAdicionarTarefa(context, colorScheme),
             if (controller.isLoading)
+              // Loading
               const Center(
                 child: CircularProgressIndicator(),
               )
             else
+              // Lista de Tarefas
               Expanded(
-                child: ListView.builder(
-                  itemCount: controller.categorias.length,
-                  itemBuilder: (context, index) {
-                    final categoria = controller.categorias[index];
-                    return CategoriaItem(
-                      text: categoria.nome,
-                      deleteCategoria: () => _deleteCategoria(categoria),
-                      updateCategoria: () => _editarCategoria(categoria),
-                    );
-                  },
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 8),
+                  child: ListView.builder(
+                    itemCount: controller.categorias.length,
+                    itemBuilder: (context, index) {
+                      final categoria = controller.categorias[index];
+                      return CategoriaItem(
+                        text: categoria.nome,
+                        deleteCategoria: () => _deleteCategoria(categoria),
+                        updateCategoria: () => _editarCategoria(categoria),
+                      );
+                    },
+                  ),
                 ),
               ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _inputAdicionarTarefa(BuildContext context, ColorScheme colorScheme) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(10, 0, 10, 6),
+      child: Row(
+        children: [
+          Expanded(
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                color: colorScheme.surfaceContainer,
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 4,
+                    color: colorScheme.shadow,
+                    offset: const Offset(
+                      2,
+                      2,
+                    ),
+                  ),
+                ],
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: TextField(
+                  controller: _textController,
+                  decoration: InputDecoration(
+                    isDense: true,
+                    labelText: 'Nome da Categoria',
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color: Colors.transparent,
+                      ),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color: Colors.transparent,
+                      ),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    filled: true,
+                    fillColor: colorScheme.surface,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(width: 8),
+          IconButton(
+            color: colorScheme.primary,
+            style: IconButton.styleFrom(
+              backgroundColor: colorScheme.primary,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+            icon: Icon(
+              Icons.add,
+              color: colorScheme.onPrimary,
+              size: 24,
+            ),
+            onPressed: _adicionarCategoria,
+          ),
+        ],
       ),
     );
   }

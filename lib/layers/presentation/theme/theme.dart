@@ -30,8 +30,8 @@ class ThemeDataCustom {
         brightness: Brightness.dark,
       ).copyWith(
         primary: const Color.fromARGB(255, 146, 129, 99),
-        surface: const Color.fromARGB(255, 22, 19, 13),
-        shadow: const Color.fromARGB(255, 209, 193, 160),
+        surface: const Color.fromARGB(255, 11, 9, 6),
+        shadow: const Color.fromARGB(255, 90, 83, 69),
       ),
       appBarTheme: const AppBarTheme(
         centerTitle: true,

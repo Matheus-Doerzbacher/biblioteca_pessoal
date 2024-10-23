@@ -33,3 +33,7 @@ abstract class SalvarImagemLivroUsecase {
 abstract class PesquisarLivroApiUsecase {
   Future<List<Livro>> call(String titulo);
 }
+
+abstract class GetLivrosComEstoqueUsecase {
+  Future<List<Livro>> call(String uidUsuario);
+}

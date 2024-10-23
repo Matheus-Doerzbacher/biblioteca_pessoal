@@ -104,3 +104,16 @@ class PesquisarLivroApiRepositoryImp implements PesquisarLivroApiRepository {
     return _pesquisarLivroApiDatasource(titulo);
   }
 }
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class GetLivrosComEstoqueRepositoryImp
+    implements GetLivrosComEstoqueRepository {
+  final GetLivrosComEstoqueDatasource _getLivrosComEstoqueDatasource;
+
+  GetLivrosComEstoqueRepositoryImp(this._getLivrosComEstoqueDatasource);
+
+  @override
+  Future<List<Livro>> call(String titulo) async {
+    return _getLivrosComEstoqueDatasource(titulo);
+  }
+}

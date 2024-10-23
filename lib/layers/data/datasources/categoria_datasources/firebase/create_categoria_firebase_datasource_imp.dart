@@ -8,7 +8,9 @@ class CreateCategoriaFirebaseDatasourceImp
   Future<bool> call(Categoria categoria) async {
     try {
       final firestore = FirebaseFirestore.instance;
-      await firestore.collection('categorias').add(categoria.toJson());
+      final docRef =
+          await firestore.collection('categorias').add(categoria.toJson());
+      await docRef.update({'id': docRef.id});
       return true;
     } catch (e) {
       return false;

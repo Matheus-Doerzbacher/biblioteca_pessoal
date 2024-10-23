@@ -105,3 +105,16 @@ class PesquisarLivroApiUsecaseImp implements PesquisarLivroApiUsecase {
     return _pesquisarLivroApiRepository(titulo);
   }
 }
+// --------------------------------------------------
+
+class GetLivrosComEstoqueUsecaseUsecaseImp
+    implements GetLivrosComEstoqueUsecase {
+  final GetLivrosComEstoqueRepository _getLivrosComEstoqueRepository;
+
+  GetLivrosComEstoqueUsecaseUsecaseImp(this._getLivrosComEstoqueRepository);
+
+  @override
+  Future<List<Livro>> call(String titulo) async {
+    return _getLivrosComEstoqueRepository(titulo);
+  }
+}

@@ -33,3 +33,7 @@ abstract class SalvarImagemLivroDatasource {
 abstract class PesquisarLivroApiDatasource {
   Future<List<Livro>> call(String titulo);
 }
+
+abstract class GetLivrosComEstoqueDatasource {
+  Future<List<Livro>> call(String uidUsuario);
+}

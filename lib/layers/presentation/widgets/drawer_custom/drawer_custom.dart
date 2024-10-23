@@ -55,7 +55,7 @@ class DrawerCustom extends StatelessWidget {
                     text: 'Categorias',
                   ),
                   DrawerItem(
-                    namePage: AppRoutes.emprestimo,
+                    namePage: AppRoutes.emprestimo.base,
                     namePageActive: namePageActive,
                     icon: Icons.book,
                     text: 'Emprestimos',

@@ -6,7 +6,8 @@ enum StatusEmprestimo { emprestado, atrasado, devolvido }
 class Emprestimo {
   final String? id;
   final String uidUsuario;
-  final Livro livro;
+  final String idLivro;
+  Livro? livro;
   final String destinatario;
   final DateTime dataEmprestimo;
   final DateTime? dataDevolucao;
@@ -16,7 +17,8 @@ class Emprestimo {
   Emprestimo({
     this.id,
     required this.uidUsuario,
-    required this.livro,
+    required this.idLivro,
+    this.livro,
     required this.destinatario,
     DateTime? dataEmprestimo,
     this.dataDevolucao,
@@ -28,6 +30,7 @@ class Emprestimo {
     return Emprestimo(
       id: json['id'],
       uidUsuario: json['uidUsuario'],
+      idLivro: json['idLivro'],
       livro: Livro.fromJson(json['livro']),
       destinatario: json['destinatario'],
       dataEmprestimo: (json['dataEmprestimo'] as Timestamp).toDate(),
@@ -43,7 +46,8 @@ class Emprestimo {
   Map<String, dynamic> toJson() {
     return {
       'uidUsuario': uidUsuario,
-      'livro': livro.toJson(),
+      'idLivro': idLivro,
+      'livro': livro?.toJson(),
       'destinatario': destinatario,
       'dataEmprestimo': dataEmprestimo,
       'dataDevolucao': dataDevolucao,

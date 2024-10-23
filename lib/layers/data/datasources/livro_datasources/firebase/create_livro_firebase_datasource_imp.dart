@@ -10,8 +10,9 @@ class CreateLivroFirebaseDatasourceImp implements CreateLivroDatasource {
       final firestore = FirebaseFirestore.instance;
       final livroJson = livro.toJson();
 
-      await firestore.collection('livros').add(livroJson);
+      final docRef = await firestore.collection('livros').add(livroJson);
 
+      await docRef.update({'id': docRef.id});
       return true;
     } catch (e) {
       if (kDebugMode) {

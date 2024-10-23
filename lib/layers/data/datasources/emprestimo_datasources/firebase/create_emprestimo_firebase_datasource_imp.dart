@@ -8,9 +8,10 @@ class CreateEmprestimoFirebaseDatasourceImp
   Future<bool> call(Emprestimo emprestimo) async {
     try {
       final firestore = FirebaseFirestore.instance;
-      final emprestimoRef = firestore.collection('emprestimos').doc();
+      final emprestimoRef =
+          await firestore.collection('emprestimos').add(emprestimo.toJson());
 
-      await emprestimoRef.set(emprestimo.toJson());
+      await emprestimoRef.update({'id': emprestimoRef.id});
 
       return true;
     } catch (e) {
