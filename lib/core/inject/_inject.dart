@@ -1,16 +1,16 @@
-import 'package:biblioteca_pessoal/core/inject/categoria_inject.dart';
-import 'package:biblioteca_pessoal/core/inject/emprestimo_inject.dart';
-import 'package:biblioteca_pessoal/core/inject/livro_inject.dart';
-import 'package:biblioteca_pessoal/core/inject/pesquisa_livro_inject.dart';
+import 'package:biblioteca_pessoal/core/inject/controllers_inject.dart';
+import 'package:biblioteca_pessoal/core/inject/datasources_inject.dart';
+import 'package:biblioteca_pessoal/core/inject/repositories_inject.dart';
+import 'package:biblioteca_pessoal/core/inject/usecases_inject.dart';
 import 'package:get_it/get_it.dart';
 
 class Inject {
   static void init() {
     final getIt = GetIt.instance;
 
-    livroInject(getIt);
-    categoriaInject(getIt);
-    emprestimoInject(getIt);
-    pesquisaLivroInject(getIt);
+    datasourcesInject(getIt);
+    repositoriesInject(getIt);
+    usecasesInject(getIt);
+    controllersInject(getIt);
   }
 }

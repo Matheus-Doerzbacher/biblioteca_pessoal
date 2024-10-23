@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:biblioteca_pessoal/layers/domain/entities/categoria_entity.dart';
 import 'package:biblioteca_pessoal/layers/domain/entities/livro_entity.dart';
+import 'package:biblioteca_pessoal/layers/presentation/controllers/adicionar_livro_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/categoria_controller.dart';
-import 'package:biblioteca_pessoal/layers/presentation/controllers/livro_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/ui/pages/adicionar_livro/components/drop_down_multi_custom.dart';
 import 'package:biblioteca_pessoal/layers/presentation/ui/pages/adicionar_livro/components/drop_down_single_custom.dart';
@@ -25,7 +25,7 @@ class AdicionarLivroPage extends StatefulWidget {
 
 class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
   final user = UserController.user;
-  final LivroController controller = GetIt.instance<LivroController>();
+  final controller = GetIt.instance<AdicionarLivroController>();
 
   final _tituloController = TextEditingController();
   final _autorController = TextEditingController();

@@ -1,8 +1,7 @@
 import 'package:biblioteca_pessoal/core/inject/_inject.dart';
 import 'package:biblioteca_pessoal/layers/domain/entities/livro_entity.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/categoria_controller.dart';
-import 'package:biblioteca_pessoal/layers/presentation/controllers/emprestimo_controller.dart';
-import 'package:biblioteca_pessoal/layers/presentation/controllers/livro_controller.dart';
+import 'package:biblioteca_pessoal/layers/presentation/controllers/home_page_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/pesquisa_api_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/theme/theme.dart';
@@ -32,16 +31,13 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => GetIt.I<LivroController>(),
-        ),
-        ChangeNotifierProvider(
           create: (context) => GetIt.I<CategoriaController>(),
         ),
         ChangeNotifierProvider(
-          create: (context) => GetIt.I<EmprestimoController>(),
+          create: (context) => GetIt.I<PesquisaApiController>(),
         ),
         ChangeNotifierProvider(
-          create: (context) => GetIt.I<PesquisaApiController>(),
+          create: (context) => GetIt.I<HomePageController>(),
         ),
       ],
       child: const MyApp(),

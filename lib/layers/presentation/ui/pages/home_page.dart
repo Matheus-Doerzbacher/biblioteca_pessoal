@@ -1,5 +1,5 @@
 import 'package:biblioteca_pessoal/layers/domain/entities/livro_entity.dart';
-import 'package:biblioteca_pessoal/layers/presentation/controllers/livro_controller.dart';
+import 'package:biblioteca_pessoal/layers/presentation/controllers/home_page_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/widgets/drawer_custom/drawer_custom.dart';
 import 'package:biblioteca_pessoal/layers/presentation/widgets/livro_card_widget.dart';
@@ -15,7 +15,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _pesquisarController = TextEditingController();
-  final controller = GetIt.instance.get<LivroController>();
+  final controller = GetIt.instance.get<HomePageController>();
   List<Livro> _filteredLivros = [];
 
   @override

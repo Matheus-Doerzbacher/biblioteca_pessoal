@@ -1,5 +1,5 @@
 import 'package:biblioteca_pessoal/layers/domain/entities/livro_entity.dart';
-import 'package:biblioteca_pessoal/layers/presentation/controllers/livro_controller.dart';
+import 'package:biblioteca_pessoal/layers/presentation/controllers/livro_datail_controller.dart';
 import 'package:custom_rating_bar/custom_rating_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -13,7 +13,7 @@ class LivroDetailPage extends StatefulWidget {
 }
 
 class _LivroDetailPageState extends State<LivroDetailPage> {
-  final LivroController controller = GetIt.instance<LivroController>();
+  final controller = GetIt.instance<LivroDatailController>();
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
