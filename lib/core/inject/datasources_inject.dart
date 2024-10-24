@@ -13,6 +13,7 @@ import 'package:biblioteca_pessoal/layers/data/datasources/livro_datasources/fir
 import 'package:biblioteca_pessoal/layers/data/datasources/livro_datasources/firebase/delete_livro_firebase_datasource_imp.dart';
 import 'package:biblioteca_pessoal/layers/data/datasources/livro_datasources/firebase/get_livro_by_id_firebase_datasource_imp.dart';
 import 'package:biblioteca_pessoal/layers/data/datasources/livro_datasources/firebase/get_livro_by_name_firebase_datasource_imp.dart';
+import 'package:biblioteca_pessoal/layers/data/datasources/livro_datasources/firebase/get_livros_com_estoque_firebase_datasource_imp.dart';
 import 'package:biblioteca_pessoal/layers/data/datasources/livro_datasources/firebase/get_livros_firebase_datasource_imp.dart';
 import 'package:biblioteca_pessoal/layers/data/datasources/livro_datasources/firebase/pesquisar_livro_api_datasource_imp.dart';
 import 'package:biblioteca_pessoal/layers/data/datasources/livro_datasources/firebase/salvar_imagem_livro_firabase_datasource_imp.dart';
@@ -77,5 +78,8 @@ void datasourcesInject(GetIt getIt) {
     )
     ..registerLazySingleton<PesquisarLivroApiDatasource>(
       PesquisarLivroApiDatasourceImp.new,
+    )
+    ..registerLazySingleton<GetLivrosComEstoqueDatasource>(
+      GetLivrosComEstoqueFirebaseDatasourceImp.new,
     );
 }

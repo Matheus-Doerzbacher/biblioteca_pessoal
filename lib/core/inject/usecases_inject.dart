@@ -63,5 +63,8 @@ void usecasesInject(GetIt getIt) {
     )
     ..registerLazySingleton<PesquisarLivroApiUsecase>(
       () => PesquisarLivroApiUsecaseImp(getIt()),
+    )
+    ..registerLazySingleton<GetLivrosComEstoqueUsecase>(
+      () => GetLivrosComEstoqueUsecaseUsecaseImp(getIt()),
     );
 }

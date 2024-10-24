@@ -10,7 +10,9 @@ class GetLivrosComEstoqueFirebaseDatasourceImp
       final firestore = FirebaseFirestore.instance;
       final livroSnapShot = await firestore
           .collection('livros')
+          .where('uidUsuario', isEqualTo: uidUsuario)
           .where('estoque', isGreaterThan: 0)
+          .orderBy('titulo')
           .get();
 
       return livroSnapShot.docs.map((doc) {

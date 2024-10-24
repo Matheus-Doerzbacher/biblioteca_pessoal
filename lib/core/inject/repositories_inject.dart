@@ -63,5 +63,8 @@ void repositoriesInject(GetIt getIt) {
     )
     ..registerLazySingleton<PesquisarLivroApiRepository>(
       () => PesquisarLivroApiRepositoryImp(getIt()),
+    )
+    ..registerLazySingleton<GetLivrosComEstoqueRepository>(
+      () => GetLivrosComEstoqueRepositoryImp(getIt()),
     );
 }
