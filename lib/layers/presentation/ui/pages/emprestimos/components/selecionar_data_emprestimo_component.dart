@@ -61,12 +61,10 @@ class _DatePickerExampleState extends State<SelecionarDataEmprestimoComponent>
           initialDate: DateTime.fromMillisecondsSinceEpoch(arguments! as int),
           // Define a primeira data que pode ser selecionada
           // como 1 de janeiro de 2021.
-          firstDate: DateTime.fromMillisecondsSinceEpoch(arguments as int),
+          firstDate: DateTime.now(),
           // Define a última data que pode ser selecionada
           //como 31 de dezembro de 2022.
-          lastDate: DateTime(
-            DateTime.fromMillisecondsSinceEpoch(arguments).year + 2,
-          ),
+          lastDate: DateTime(DateTime.now().year + 2),
         );
       },
     );

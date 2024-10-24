@@ -1,5 +1,7 @@
+import 'package:biblioteca_pessoal/layers/domain/entities/emprestimo_entity.dart';
 import 'package:biblioteca_pessoal/layers/domain/entities/livro_entity.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/emprestimo_controller.dart';
+import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/ui/pages/emprestimos/components/selecionar_data_emprestimo_component.dart';
 import 'package:biblioteca_pessoal/layers/presentation/widgets/input_text_custom.dart';
 import 'package:flutter/foundation.dart';
@@ -18,7 +20,7 @@ class _NovoEmprestimoPageState extends State<NovoEmprestimoPage> {
 
   // Controllers Inputs
   final _nomeController = TextEditingController();
-  final _quantidadeController = TextEditingController();
+  final _quantidadeController = TextEditingController(text: '1');
   bool _switchDataController = false;
   final _dataDevolucao =
       TextEditingController(text: DateTime.now().toIso8601String());
@@ -55,12 +57,58 @@ class _NovoEmprestimoPageState extends State<NovoEmprestimoPage> {
     });
   }
 
-  void _submitForm() {
-    // Valida todos os campos do formulário
+  void _bottomErrorMesage(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: Colors.red,
+        content: Text(message),
+      ),
+    );
+  }
+
+  Future<void> _submitForm() async {
     if (_formKey.currentState?.validate() ?? false) {
-      // Se o formulário for válido, continue com o processo de empréstimo
-      if (kDebugMode) {
-        print('Formulário válido!');
+      if (_livroController == null) {
+        _bottomErrorMesage('Por favor selecione um livro');
+      }
+
+      int? dias;
+      DateTime? dataDevolucao;
+
+      if (_switchDataController) {
+        final hoje = DateTime(
+          DateTime.now().year,
+          DateTime.now().month,
+          DateTime.now().day,
+        );
+
+        dataDevolucao = DateTime.parse(_dataDevolucao.text);
+        dias = dataDevolucao.difference(hoje).inDays;
+      }
+
+      final emprestimo = Emprestimo(
+        uidUsuario: UserController.user!.uid,
+        idLivro: _livroController!.id ?? '',
+        destinatario: _nomeController.text,
+        quantidade: int.parse(_quantidadeController.text),
+        dataDevolucao: dataDevolucao,
+        dias: dias,
+      );
+
+      final result = await controller.createEmprestimo(emprestimo);
+
+      if (result) {
+        _nomeController.clear();
+        _dataDevolucao.clear();
+        _quantidadeController.clear();
+        _switchDataController = false;
+        _livroController = null;
+
+        if (mounted) {
+          Navigator.of(context).pop();
+        }
+      } else {
+        _bottomErrorMesage('Ouve um problema ao fazer o Emprestimo');
       }
     } else {
       if (kDebugMode) {
@@ -84,6 +132,12 @@ class _NovoEmprestimoPageState extends State<NovoEmprestimoPage> {
               controller: _nomeController,
               colorScheme: colorScheme,
               text: 'Nome da Pessoa',
+              validator: (value) {
+                if (value == '') {
+                  return 'Informe o nome da Pessoa';
+                }
+                return null;
+              },
             ),
             const SizedBox(height: 24),
             // Select Livro
@@ -96,9 +150,17 @@ class _NovoEmprestimoPageState extends State<NovoEmprestimoPage> {
               validator: (value) {
                 if (_livroController != null) {
                   final estoque = _livroController!.estoque;
+
+                  final quantidade = int.tryParse(value);
+
+                  if (quantidade == null) {
+                    return 'Informe um numero válido';
+                  }
+
                   if (int.parse(value) < 1) {
                     return 'Você deve informar pelo menos 1';
                   }
+
                   if (int.parse(value) > estoque) {
                     return 'A quantidade deve ser no máximo $estoque';
                   }
@@ -136,7 +198,9 @@ class _NovoEmprestimoPageState extends State<NovoEmprestimoPage> {
               padding: const EdgeInsets.only(top: 24),
               child: FilledButton(
                 onPressed: _submitForm, // Chama a validação do formulário
-                child: const Text('Confirmar Empréstimo'),
+                child: controller.isLoading
+                    ? const CircularProgressIndicator()
+                    : const Text('Confirmar Empréstimo'),
               ),
             ),
           ],

@@ -7,23 +7,25 @@ class Emprestimo {
   final String? id;
   final String uidUsuario;
   final String idLivro;
+  final int quantidade;
   Livro? livro;
   final String destinatario;
   final DateTime dataEmprestimo;
   final DateTime? dataDevolucao;
-  final int dias;
+  final int? dias;
   StatusEmprestimo status;
 
   Emprestimo({
     this.id,
     required this.uidUsuario,
     required this.idLivro,
+    required this.quantidade,
     this.livro,
     required this.destinatario,
     DateTime? dataEmprestimo,
     this.dataDevolucao,
     this.status = StatusEmprestimo.emprestado,
-    required this.dias,
+    this.dias,
   }) : dataEmprestimo = dataEmprestimo ?? DateTime.now();
 
   factory Emprestimo.fromJson(Map<String, dynamic> json) {
@@ -31,7 +33,8 @@ class Emprestimo {
       id: json['id'],
       uidUsuario: json['uidUsuario'],
       idLivro: json['idLivro'],
-      livro: Livro.fromJson(json['livro']),
+      quantidade: json['quantidade'],
+      livro: json['livro'] != null ? Livro.fromJson(json['livro']) : null,
       destinatario: json['destinatario'],
       dataEmprestimo: (json['dataEmprestimo'] as Timestamp).toDate(),
       dataDevolucao: (json['dataDevolucao'] as Timestamp?)?.toDate(),
@@ -47,6 +50,7 @@ class Emprestimo {
     return {
       'uidUsuario': uidUsuario,
       'idLivro': idLivro,
+      'quantidade': quantidade,
       'livro': livro?.toJson(),
       'destinatario': destinatario,
       'dataEmprestimo': dataEmprestimo,
@@ -58,7 +62,8 @@ class Emprestimo {
 
   bool get estaAtrasado {
     if (status == StatusEmprestimo.devolvido) return false;
-    final prazo = dataEmprestimo.add(Duration(days: dias));
+    if (dias == null) return false;
+    final prazo = dataEmprestimo.add(Duration(days: dias!));
     return DateTime.now().isAfter(prazo);
   }
 

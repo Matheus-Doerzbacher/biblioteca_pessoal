@@ -43,6 +43,8 @@ void controllersInject(GetIt getIt) {
         getIt(),
         getIt(),
         getIt(),
+        getIt(),
+        getIt(),
       ),
     );
 }

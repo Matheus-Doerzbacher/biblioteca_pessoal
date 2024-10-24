@@ -46,9 +46,32 @@ class _EmprestimosPageState extends State<EmprestimosPage> {
           itemCount: emprestimos.length,
           itemBuilder: (context, index) {
             final emprestimo = emprestimos[index];
-            return ListTile(
-              title: Text(emprestimo.idLivro),
-              subtitle: Text(emprestimo.destinatario),
+            final livro = emprestimo.livro;
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4),
+              child: ListTile(
+                tileColor: Theme.of(context).colorScheme.surfaceContainer,
+                shape: RoundedRectangleBorder(
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(16),
+                  ),
+                  side: BorderSide(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                ),
+                leading: Image.network(livro?.urlImage ?? ''),
+                title: Text(
+                  livro?.titulo ?? '',
+                  overflow: TextOverflow.ellipsis,
+                ),
+                subtitle: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(emprestimo.destinatario),
+                    Text('Quantidade: ${emprestimo.quantidade}'),
+                  ],
+                ),
+              ),
             );
           },
         ),

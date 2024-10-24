@@ -12,7 +12,7 @@ class Livro {
   final String autor;
   final String titulo;
   final int paginas;
-  final int estoque;
+  int estoque;
   final int avaliacao;
   final String editora;
   final String ano;
@@ -47,6 +47,10 @@ class Livro {
     } else {
       return 'Quero ler';
     }
+  }
+
+  void emprestimo(int quantidade) {
+    estoque -= quantidade;
   }
 
   factory Livro.fromJson(Map<String, dynamic> json) {

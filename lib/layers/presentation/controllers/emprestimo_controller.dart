@@ -3,17 +3,21 @@ import 'package:biblioteca_pessoal/layers/domain/entities/livro_entity.dart';
 import 'package:biblioteca_pessoal/layers/domain/usecases/emprestimo_usecase/emprestimo_usecase.dart';
 import 'package:biblioteca_pessoal/layers/domain/usecases/livro_usecase/livro_usecase.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 class EmprestimoController extends ChangeNotifier {
   final CreateEmprestimoUsecase _createEmprestimoUsecase;
   final GetEmprestimosUsecase _getEmprestimosUsecase;
   final GetLivrosComEstoqueUsecase _getLivrosComEstoqueUsecase;
+  final GetLivroByIdUsecase _getLivroByIdUsecase;
+  final UpdateLivroUsecase _updateLivroUsecase;
 
   EmprestimoController(
     this._createEmprestimoUsecase,
     this._getEmprestimosUsecase,
     this._getLivrosComEstoqueUsecase,
+    this._getLivroByIdUsecase,
+    this._updateLivroUsecase,
   );
 
   List<Emprestimo> emprestimos = [];
@@ -26,10 +30,23 @@ class EmprestimoController extends ChangeNotifier {
       isLoading = true;
       notifyListeners();
       await _createEmprestimoUsecase(emprestimo);
-      await getEmprestimos();
+
+      // Fas os ajuste na quantidade de estoque do livro emprestado
+      final livro = await _getLivroByIdUsecase(emprestimo.idLivro);
+      livro.emprestimo(emprestimo.quantidade);
+      await _updateLivroUsecase(livro);
       return true;
     } catch (error) {
+      isLoading = false;
+      notifyListeners();
+
+      if (kDebugMode) {
+        print(error);
+      }
+
       return false;
+    } finally {
+      await getEmprestimos();
     }
   }
 
@@ -37,7 +54,6 @@ class EmprestimoController extends ChangeNotifier {
     try {
       isLoading = true;
       notifyListeners();
-
       emprestimos = await _getEmprestimosUsecase(UserController.user!.uid);
       notifyListeners();
     } finally {
