@@ -26,64 +26,46 @@ class InputTextCustom extends StatelessWidget {
       padding: isMeiaLinha == true
           ? EdgeInsetsDirectional.zero
           : const EdgeInsetsDirectional.fromSTEB(14, 24, 14, 0),
-      child: Container(
-        decoration: const BoxDecoration(),
-        child: Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
-          child: Container(
-            width: MediaQuery.sizeOf(context).width,
-            decoration: BoxDecoration(
-              color: colorScheme.surface,
-              boxShadow: [
-                BoxShadow(
-                  blurRadius: 4,
-                  color: colorScheme.shadow,
-                  offset: const Offset(2, 2),
-                ),
-              ],
-              borderRadius: BorderRadius.circular(8),
+      child: TextFormField(
+        validator: validator,
+        textAlignVertical: TextAlignVertical.top,
+        minLines: numeroLinhas,
+        maxLines: numeroLinhas,
+        keyboardType:
+            isNumber == true ? TextInputType.number : TextInputType.text,
+        controller: controller,
+        decoration: InputDecoration(
+          isDense: true,
+          labelText: text,
+          filled: true,
+          fillColor: colorScheme.surfaceContainer,
+          alignLabelWithHint: true,
+          enabledBorder: OutlineInputBorder(
+            borderSide: const BorderSide(
+              color: Colors.transparent,
             ),
-            child: TextFormField(
-              validator: validator,
-              textAlignVertical: TextAlignVertical.top,
-              minLines: numeroLinhas,
-              maxLines: numeroLinhas,
-              keyboardType:
-                  isNumber == true ? TextInputType.number : TextInputType.text,
-              controller: controller,
-              decoration: InputDecoration(
-                isDense: true,
-                labelText: text,
-                alignLabelWithHint: true,
-                enabledBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(
-                    color: Colors.transparent,
-                  ),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(
-                    color: Colors.transparent,
-                  ),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                errorBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(
-                    color: Colors.transparent,
-                  ),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                focusedErrorBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(
-                    color: Colors.transparent,
-                  ),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              cursorColor: colorScheme.primary,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(
+              color: Colors.transparent,
             ),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          errorBorder: OutlineInputBorder(
+            borderSide: const BorderSide(
+              color: Colors.transparent,
+            ),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          focusedErrorBorder: OutlineInputBorder(
+            borderSide: const BorderSide(
+              color: Colors.transparent,
+            ),
+            borderRadius: BorderRadius.circular(8),
           ),
         ),
+        cursorColor: colorScheme.primary,
       ),
     );
   }

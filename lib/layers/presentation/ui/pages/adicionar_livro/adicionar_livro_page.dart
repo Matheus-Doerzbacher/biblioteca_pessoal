@@ -4,7 +4,6 @@ import 'package:biblioteca_pessoal/core/routes/app_routes.dart';
 import 'package:biblioteca_pessoal/layers/domain/entities/categoria_entity.dart';
 import 'package:biblioteca_pessoal/layers/domain/entities/livro_entity.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/adicionar_livro_controller.dart';
-import 'package:biblioteca_pessoal/layers/presentation/controllers/categoria_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/ui/pages/adicionar_livro/components/drop_down_multi_custom.dart';
 import 'package:biblioteca_pessoal/layers/presentation/ui/pages/adicionar_livro/components/drop_down_single_custom.dart';
@@ -14,7 +13,6 @@ import 'package:custom_rating_bar/custom_rating_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:multi_dropdown/multi_dropdown.dart';
-import 'package:provider/provider.dart';
 
 class AdicionarLivroPage extends StatefulWidget {
   final Livro? livroUpdate;
@@ -40,7 +38,6 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
   double _ratingController = 3;
   File? _imageSelected;
   String? _urlImage;
-  late List<Categoria> categoriasUsuario = [];
 
   final MultiSelectController<Categoria> _multiSelectController =
       MultiSelectController<Categoria>();
@@ -60,6 +57,13 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
   @override
   void initState() {
     super.initState();
+
+    controller.getCategorias().then((categorias) {
+      if (mounted) {
+        setState(() {});
+      }
+    });
+
     if (widget.livroUpdate != null) {
       _tituloController.text = widget.livroUpdate!.titulo;
       _autorController.text = widget.livroUpdate!.autor;
@@ -78,20 +82,17 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    categoriasUsuario = Provider.of<CategoriaController>(context).categorias;
-    if (widget.livroUpdate != null) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        _multiSelectController.setItems(
-          categoriasUsuario.map((categoria) {
-            return DropdownItem(
-              label: categoria.nome,
-              value: categoria,
-              selected: isSelected(categoria),
-            );
-          }).toList(),
-        );
-      });
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _multiSelectController.setItems(
+        controller.categoriasUsuario.map((categoria) {
+          return DropdownItem(
+            label: categoria.nome,
+            value: categoria,
+            selected: isSelected(categoria),
+          );
+        }).toList(),
+      );
+    });
   }
 
   @override
@@ -257,7 +258,7 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
               text: 'Editora',
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(14, 24, 14, 0),
+              padding: const EdgeInsets.fromLTRB(16, 24, 16, 0),
               child: Row(
                 children: [
                   Expanded(
@@ -269,6 +270,7 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
                       isNumber: true,
                     ),
                   ),
+                  const SizedBox(width: 24),
                   Expanded(
                     child: InputTextCustom(
                       controller: _anoController,
@@ -285,7 +287,7 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
             DropDownMultiCustom(
               alterarCategorias: _alterarCategoria,
               categoriasSelecionadas: _categoriasController,
-              categorias: categoriasUsuario,
+              categorias: controller.categoriasUsuario,
               colorScheme: colorScheme,
               multiSelectController: _multiSelectController,
             ),

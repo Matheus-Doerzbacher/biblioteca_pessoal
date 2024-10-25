@@ -16,63 +16,43 @@ class CategoriaItem extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
-      child: Row(
-        children: [
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Container(
-                width: 100,
-                decoration: BoxDecoration(
-                  color: colorScheme.surface,
-                  boxShadow: [
-                    BoxShadow(
-                      blurRadius: 4,
-                      color: colorScheme.shadow,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
-                  borderRadius: BorderRadius.circular(12),
-                ),
+      child: Container(
+        decoration: BoxDecoration(
+          color: colorScheme.surfaceContainer,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Expanded(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
                 child: Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(8, 4, 4, 4),
-                  child: Container(
-                    decoration: const BoxDecoration(),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          text,
-                          style: TextStyle(color: colorScheme.onSurfaceVariant),
-                        ),
-                        Row(
-                          children: [
-                            IconButton(
-                              icon: Icon(
-                                Icons.edit,
-                                color: colorScheme.inversePrimary,
-                                size: 24,
-                              ),
-                              onPressed: updateCategoria,
-                            ),
-                            IconButton(
-                              icon: Icon(
-                                Icons.delete_forever,
-                                color: colorScheme.error,
-                                size: 24,
-                              ),
-                              onPressed: deleteCategoria,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                  padding: const EdgeInsets.only(left: 8),
+                  child: Text(
+                    text,
+                    style: TextStyle(color: colorScheme.onSurfaceVariant),
                   ),
                 ),
               ),
-            ),
+              IconButton(
+                icon: Icon(
+                  Icons.edit,
+                  color: colorScheme.inversePrimary,
+                  size: 24,
+                ),
+                onPressed: updateCategoria,
+              ),
+              IconButton(
+                icon: Icon(
+                  Icons.delete_forever,
+                  color: colorScheme.error,
+                  size: 24,
+                ),
+                onPressed: deleteCategoria,
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
