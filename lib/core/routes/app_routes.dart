@@ -1,6 +1,6 @@
 class AppRoutes {
   static final livro = AdicionarLivro();
-  static final emprestimo = Emprestimo();
+  static final emprestimo = EmprestimoRouter();
 
   static const String home = '/';
   static const String login = '/login';
@@ -13,7 +13,7 @@ class AdicionarLivro {
   final String livroDetail = '/livroDetail';
 }
 
-class Emprestimo {
+class EmprestimoRouter {
   final String base = '/emprestimo';
   final String novo = '/novoEmprestimo';
 }

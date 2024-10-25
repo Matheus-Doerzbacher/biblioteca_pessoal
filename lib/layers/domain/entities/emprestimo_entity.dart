@@ -1,8 +1,6 @@
 import 'package:biblioteca_pessoal/layers/domain/entities/livro_entity.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-enum StatusEmprestimo { emprestado, atrasado, devolvido }
-
 class Emprestimo {
   final String? id;
   final String uidUsuario;
@@ -12,8 +10,7 @@ class Emprestimo {
   final String destinatario;
   final DateTime dataEmprestimo;
   final DateTime? dataDevolucao;
-  final int? dias;
-  StatusEmprestimo status;
+  final bool foiDevolvido;
 
   Emprestimo({
     this.id,
@@ -24,9 +21,12 @@ class Emprestimo {
     required this.destinatario,
     DateTime? dataEmprestimo,
     this.dataDevolucao,
-    this.status = StatusEmprestimo.emprestado,
-    this.dias,
-  }) : dataEmprestimo = dataEmprestimo ?? DateTime.now();
+    this.foiDevolvido = false,
+  }) : dataEmprestimo = dataEmprestimo ??
+            DateTime.parse(
+              // ignore: lines_longer_than_80_chars
+              '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}',
+            );
 
   factory Emprestimo.fromJson(Map<String, dynamic> json) {
     return Emprestimo(
@@ -38,11 +38,7 @@ class Emprestimo {
       destinatario: json['destinatario'],
       dataEmprestimo: (json['dataEmprestimo'] as Timestamp).toDate(),
       dataDevolucao: (json['dataDevolucao'] as Timestamp?)?.toDate(),
-      dias: json['dias'],
-      status: StatusEmprestimo.values.firstWhere(
-        (e) => e.toString() == 'StatusEmprestimo.${json['status']}',
-        orElse: () => StatusEmprestimo.emprestado,
-      ),
+      foiDevolvido: json['foiDevolvido'],
     );
   }
 
@@ -55,25 +51,7 @@ class Emprestimo {
       'destinatario': destinatario,
       'dataEmprestimo': dataEmprestimo,
       'dataDevolucao': dataDevolucao,
-      'dias': dias,
-      'status': status.toString().split('.').last,
+      'foiDevolvido': foiDevolvido,
     };
-  }
-
-  bool get estaAtrasado {
-    if (status == StatusEmprestimo.devolvido) return false;
-    if (dias == null) return false;
-    final prazo = dataEmprestimo.add(Duration(days: dias!));
-    return DateTime.now().isAfter(prazo);
-  }
-
-  void atualizarStatus() {
-    if (dataDevolucao != null) {
-      status = StatusEmprestimo.devolvido;
-    } else if (estaAtrasado) {
-      status = StatusEmprestimo.atrasado;
-    } else {
-      status = StatusEmprestimo.emprestado;
-    }
   }
 }

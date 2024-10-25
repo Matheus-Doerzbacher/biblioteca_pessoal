@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+const surfaceColorLight = Color.fromARGB(255, 236, 236, 244);
+
 class ThemeDataCustom {
   ThemeData light() {
     final baseTheme = ThemeData(
       brightness: Brightness.light,
       colorScheme: ColorScheme.fromSeed(
-        seedColor: const Color.fromARGB(255, 146, 129, 99),
+        seedColor: const Color.fromARGB(255, 138, 121, 95),
       ).copyWith(
-        primary: const Color.fromARGB(255, 146, 129, 99),
+        primary: const Color.fromARGB(255, 138, 121, 95),
+        surface: surfaceColorLight,
+        surfaceContainer: const Color.fromARGB(255, 255, 255, 255),
         // Ajuste outras cores conforme necessário
       ),
       appBarTheme: const AppBarTheme(
         centerTitle: true,
+        backgroundColor: surfaceColorLight,
+        scrolledUnderElevation: 0,
       ),
       useMaterial3: true,
     );

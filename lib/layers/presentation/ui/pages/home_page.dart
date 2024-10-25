@@ -1,7 +1,6 @@
 import 'package:biblioteca_pessoal/core/routes/app_routes.dart';
 import 'package:biblioteca_pessoal/layers/domain/entities/livro_entity.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/home_page_controller.dart';
-import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/widgets/drawer_custom/drawer_custom.dart';
 import 'package:biblioteca_pessoal/layers/presentation/widgets/livro_card_widget.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +22,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     _pesquisarController.addListener(_onSearchChanged);
-    controller.getLivros(UserController.user?.uid ?? '').then((_) {
+    controller.getLivros().then((_) {
       if (mounted) {
         setState(() {
           _filteredLivros = controller.livros;
@@ -50,6 +49,20 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  Future<void> _favoritarLivro(Livro livro) async {
+    final result = await controller.favoritarLivro(livro);
+
+    if (result) {
+      setState(() {
+        for (final liv in _filteredLivros) {
+          if (liv.id! == livro.id!) {
+            liv.isFavorito = livro.isFavorito;
+          }
+        }
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
@@ -72,91 +85,74 @@ class _HomePageState extends State<HomePage> {
         onTap: () {
           FocusScope.of(context).unfocus();
         },
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(14, 24, 14, 24),
-              child: Container(
-                decoration: const BoxDecoration(),
-                child: Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
-                  child: Container(
-                    width: MediaQuery.sizeOf(context).width,
-                    decoration: BoxDecoration(
-                      color: colorScheme.surface,
-                      boxShadow: [
-                        BoxShadow(
-                          color: colorScheme.shadow,
-                          blurRadius: 4,
-                          offset: const Offset(2, 2),
-                        ),
-                      ],
-                      borderRadius: BorderRadius.circular(8),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              TextFormField(
+                textAlignVertical: TextAlignVertical.top,
+                controller: _pesquisarController,
+                decoration: InputDecoration(
+                  suffixIcon: const Icon(Icons.search, size: 24),
+                  isDense: true,
+                  hintText: 'Pesquisar',
+                  fillColor: colorScheme.surfaceContainer,
+                  filled: true,
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: const BorderSide(
+                      color: Colors.transparent,
                     ),
-                    child: SizedBox(
-                      width: MediaQuery.sizeOf(context).width,
-                      child: TextFormField(
-                        textAlignVertical: TextAlignVertical.top,
-                        controller: _pesquisarController,
-                        decoration: InputDecoration(
-                          suffixIcon: const Icon(Icons.search),
-                          isDense: true,
-                          labelText: 'Pesquisar',
-                          alignLabelWithHint: true,
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(
-                              color: Colors.transparent,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Colors.transparent,
-                            ),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                      ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Colors.transparent,
                     ),
+                    borderRadius: BorderRadius.circular(8),
                   ),
                 ),
               ),
-            ),
-            if (controller.isLoading)
-              const Center(
-                child: CircularProgressIndicator(),
-              )
-            else
-              Expanded(
-                child: livros.isNotEmpty
-                    ? GridView.builder(
-                        padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          childAspectRatio: 0.63,
-                          mainAxisSpacing: 16,
+              const SizedBox(height: 16),
+              if (controller.isLoading)
+                const Center(
+                  child: CircularProgressIndicator(),
+                )
+              else
+                Expanded(
+                  child: livros.isNotEmpty
+                      ? GridView.builder(
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 0.59,
+                            mainAxisSpacing: 16,
+                            crossAxisSpacing: 16,
+                          ),
+                          itemCount: livros.length,
+                          itemBuilder: (context, index) {
+                            final livro = livros[index];
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  AppRoutes.livro.livroDetail,
+                                  arguments: livro,
+                                );
+                              },
+                              child: LivroCard(
+                                livro: livro,
+                                context: context,
+                                favoritarLivro: () => _favoritarLivro(livro),
+                              ),
+                            );
+                          },
+                        )
+                      : const Center(
+                          child: Text('Nenhum livro encontrado'),
                         ),
-                        itemCount: livros.length,
-                        itemBuilder: (context, index) {
-                          final livro = livros[index];
-                          return GestureDetector(
-                            onTap: () {
-                              Navigator.pushNamed(
-                                context,
-                                AppRoutes.livro.livroDetail,
-                                arguments: livro,
-                              );
-                            },
-                            child: LivroCard(livro: livro, context: context),
-                          );
-                        },
-                      )
-                    : const Center(
-                        child: Text('Nenhum livro encontrado'),
-                      ),
-              ),
-          ],
+                ),
+            ],
+          ),
         ),
       ),
     );

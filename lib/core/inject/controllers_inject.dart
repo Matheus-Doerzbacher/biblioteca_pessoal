@@ -23,6 +23,7 @@ void controllersInject(GetIt getIt) {
     ..registerLazySingleton<HomePageController>(
       () => HomePageController(
         getIt(),
+        getIt(),
       ),
     )
     ..registerLazySingleton<LivroDatailController>(

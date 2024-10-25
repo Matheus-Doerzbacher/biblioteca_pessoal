@@ -21,6 +21,7 @@ class Livro {
   final StatusLeitura status;
   final String urlImage;
   final bool isPesquisa;
+  bool isFavorito;
 
   Livro({
     this.id,
@@ -37,6 +38,7 @@ class Livro {
     this.status = StatusLeitura.queroLer,
     this.urlImage = '',
     this.isPesquisa = false,
+    this.isFavorito = false,
   });
 
   String get statusName {
@@ -53,6 +55,10 @@ class Livro {
     estoque -= quantidade;
   }
 
+  void atualizarIsFavorito() {
+    isFavorito = !isFavorito;
+  }
+
   factory Livro.fromJson(Map<String, dynamic> json) {
     return Livro(
       id: json['id'],
@@ -65,6 +71,7 @@ class Livro {
       editora: json['editora'] ?? '',
       ano: json['ano'],
       isPesquisa: json['isPesquisa'] ?? false,
+      isFavorito: json['isFavorito'] ?? false,
       categorias: (json['categorias'] as List<dynamic>?)
               ?.map((e) => Categoria.fromJson(e as Map<String, dynamic>))
               .toList() ??
@@ -93,6 +100,7 @@ class Livro {
       'status': status.name,
       'urlImage': urlImage,
       'isPesquisa': false,
+      'isFavorito': isFavorito,
     };
   }
 }

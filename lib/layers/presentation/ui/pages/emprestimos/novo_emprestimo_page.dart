@@ -72,18 +72,10 @@ class _NovoEmprestimoPageState extends State<NovoEmprestimoPage> {
         _bottomErrorMesage('Por favor selecione um livro');
       }
 
-      int? dias;
       DateTime? dataDevolucao;
 
       if (_switchDataController) {
-        final hoje = DateTime(
-          DateTime.now().year,
-          DateTime.now().month,
-          DateTime.now().day,
-        );
-
         dataDevolucao = DateTime.parse(_dataDevolucao.text);
-        dias = dataDevolucao.difference(hoje).inDays;
       }
 
       final emprestimo = Emprestimo(
@@ -92,7 +84,6 @@ class _NovoEmprestimoPageState extends State<NovoEmprestimoPage> {
         destinatario: _nomeController.text,
         quantidade: int.parse(_quantidadeController.text),
         dataDevolucao: dataDevolucao,
-        dias: dias,
       );
 
       final result = await controller.createEmprestimo(emprestimo);
@@ -124,86 +115,88 @@ class _NovoEmprestimoPageState extends State<NovoEmprestimoPage> {
       appBar: AppBar(
         title: const Text('Novo Emprestimo'),
       ),
-      body: Form(
-        key: _formKey,
-        child: Column(
-          children: [
-            InputTextCustom(
-              controller: _nomeController,
-              colorScheme: colorScheme,
-              text: 'Nome da Pessoa',
-              validator: (value) {
-                if (value == '') {
-                  return 'Informe o nome da Pessoa';
-                }
-                return null;
-              },
-            ),
-            const SizedBox(height: 24),
-            // Select Livro
-            _selectLivro(context, colorScheme),
-            InputTextCustom(
-              controller: _quantidadeController,
-              colorScheme: colorScheme,
-              text: 'Quantidade',
-              isNumber: true,
-              validator: (value) {
-                if (_livroController != null) {
-                  final estoque = _livroController!.estoque;
-
-                  final quantidade = int.tryParse(value);
-
-                  if (quantidade == null) {
-                    return 'Informe um numero válido';
+      body: SingleChildScrollView(
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              InputTextCustom(
+                controller: _nomeController,
+                colorScheme: colorScheme,
+                text: 'Nome da Pessoa',
+                validator: (value) {
+                  if (value == '') {
+                    return 'Informe o nome da Pessoa';
                   }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 24),
+              // Select Livro
+              _selectLivro(context, colorScheme),
+              InputTextCustom(
+                controller: _quantidadeController,
+                colorScheme: colorScheme,
+                text: 'Quantidade',
+                isNumber: true,
+                validator: (value) {
+                  if (_livroController != null) {
+                    final estoque = _livroController!.estoque;
 
-                  if (int.parse(value) < 1) {
-                    return 'Você deve informar pelo menos 1';
-                  }
+                    final quantidade = int.tryParse(value);
 
-                  if (int.parse(value) > estoque) {
-                    return 'A quantidade deve ser no máximo $estoque';
+                    if (quantidade == null) {
+                      return 'Informe um numero válido';
+                    }
+
+                    if (int.parse(value) < 1) {
+                      return 'Você deve informar pelo menos 1';
+                    }
+
+                    if (int.parse(value) > estoque) {
+                      return 'A quantidade deve ser no máximo $estoque';
+                    }
                   }
-                }
-                return null;
-              },
-            ),
-            // Switch Data Devolução
-            Padding(
-              padding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Adicionar data de devolução',
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-                  const SizedBox(width: 16),
-                  Switch(
-                    value: _switchDataController,
-                    onChanged: (bool value) {
-                      setState(() {
-                        _switchDataController = value;
-                      });
-                    },
-                  ),
-                ],
+                  return null;
+                },
               ),
-            ),
-            if (_switchDataController)
-              SelecionarDataEmprestimoComponent(
-                handleDate: _handleData,
+              // Switch Data Devolução
+              Padding(
+                padding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Adicionar data de devolução',
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                    const SizedBox(width: 16),
+                    Switch(
+                      value: _switchDataController,
+                      onChanged: (bool value) {
+                        setState(() {
+                          _switchDataController = value;
+                        });
+                      },
+                    ),
+                  ],
+                ),
               ),
-            Padding(
-              padding: const EdgeInsets.only(top: 24),
-              child: FilledButton(
-                onPressed: _submitForm, // Chama a validação do formulário
-                child: controller.isLoading
-                    ? const CircularProgressIndicator()
-                    : const Text('Confirmar Empréstimo'),
+              if (_switchDataController)
+                SelecionarDataEmprestimoComponent(
+                  handleDate: _handleData,
+                ),
+              Padding(
+                padding: const EdgeInsets.only(top: 24),
+                child: FilledButton(
+                  onPressed: _submitForm, // Chama a validação do formulário
+                  child: controller.isLoading
+                      ? const CircularProgressIndicator()
+                      : const Text('Confirmar Empréstimo'),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
