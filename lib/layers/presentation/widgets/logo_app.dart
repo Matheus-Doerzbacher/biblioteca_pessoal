@@ -11,14 +11,15 @@ class LogoApp extends StatelessWidget {
       textScaler: MediaQuery.of(context).textScaler,
       text: TextSpan(
         children: [
-          const TextSpan(
+          TextSpan(
             text: 'Minha',
+            style: Theme.of(context).textTheme.titleLarge,
           ),
           TextSpan(
             text: 'Biblioteca',
-            style: TextStyle(
-              color: colorScheme.primary,
-            ),
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  color: colorScheme.primary,
+                ),
           ),
         ],
         style: TextStyle(fontSize: size),

@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+// Light
 const surfaceColorLight = Color.fromARGB(255, 236, 236, 244);
+const primaryColorLight = Color.fromARGB(255, 102, 51, 0);
+
+// Dark
+const primaryColorDark = Color.fromARGB(255, 97, 62, 26);
 
 class ThemeDataCustom {
   ThemeData light() {
     final baseTheme = ThemeData(
       brightness: Brightness.light,
       colorScheme: ColorScheme.fromSeed(
-        seedColor: const Color.fromARGB(255, 138, 121, 95),
+        seedColor: primaryColorLight,
       ).copyWith(
-        primary: const Color.fromARGB(255, 138, 121, 95),
+        primary: primaryColorLight,
         surface: surfaceColorLight,
         surfaceContainer: const Color.fromARGB(255, 255, 255, 255),
         // Ajuste outras cores conforme necessário
@@ -32,10 +37,10 @@ class ThemeDataCustom {
     final baseTheme = ThemeData(
       brightness: Brightness.dark,
       colorScheme: ColorScheme.fromSeed(
-        seedColor: const Color.fromARGB(255, 146, 129, 99),
+        seedColor: primaryColorDark,
         brightness: Brightness.dark,
       ).copyWith(
-        primary: const Color.fromARGB(255, 146, 129, 99),
+        primary: primaryColorDark,
         surface: const Color.fromARGB(255, 11, 9, 6),
         shadow: const Color.fromARGB(255, 90, 83, 69),
       ),

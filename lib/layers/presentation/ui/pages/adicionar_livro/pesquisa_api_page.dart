@@ -57,65 +57,47 @@ class _PesquisaApiPageState extends State<PesquisaApiPage> {
         children: [
           Padding(
             padding: const EdgeInsets.fromLTRB(14, 24, 14, 24),
-            child: Container(
-              decoration: const BoxDecoration(),
-              child: Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    color: colorScheme.surface,
-                    boxShadow: [
-                      BoxShadow(
-                        blurRadius: 4,
-                        color: colorScheme.shadow,
-                        offset: const Offset(2, 2),
-                      ),
-                    ],
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: TextFormField(
+                onFieldSubmitted: (_) {
+                  if (_pesquisarController.text != '') {
+                    controller.getLivrosApi(_pesquisarController.text);
+                  }
+                },
+                textAlignVertical: TextAlignVertical.top,
+                controller: _pesquisarController,
+                decoration: InputDecoration(
+                  suffixIcon: ValueListenableBuilder<TextEditingValue>(
+                    valueListenable: _pesquisarController,
+                    builder: (context, value, child) {
+                      return value.text.isNotEmpty
+                          ? IconButton(
+                              onPressed: () {
+                                _pesquisarController.clear();
+                                controller.clearLivros();
+                              },
+                              icon: const Icon(Icons.close),
+                            )
+                          : const Icon(Icons.search);
+                    },
+                  ),
+                  isDense: true,
+                  hintText: 'Pesquisar Livro',
+                  filled: true,
+                  fillColor: colorScheme.surfaceContainer,
+                  alignLabelWithHint: true,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Colors.transparent,
+                    ),
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    child: TextFormField(
-                      onFieldSubmitted: (_) {
-                        if (_pesquisarController.text != '') {
-                          controller.getLivrosApi(_pesquisarController.text);
-                        }
-                      },
-                      textAlignVertical: TextAlignVertical.top,
-                      controller: _pesquisarController,
-                      decoration: InputDecoration(
-                        suffixIcon: ValueListenableBuilder<TextEditingValue>(
-                          valueListenable: _pesquisarController,
-                          builder: (context, value, child) {
-                            return value.text.isNotEmpty
-                                ? IconButton(
-                                    onPressed: () {
-                                      _pesquisarController.clear();
-                                      controller.clearLivros();
-                                    },
-                                    icon: const Icon(Icons.close),
-                                  )
-                                : const Icon(Icons.search);
-                          },
-                        ),
-                        isDense: true,
-                        labelText: 'Pesquisar Livro',
-                        alignLabelWithHint: true,
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Colors.transparent,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Colors.transparent,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Colors.transparent,
                     ),
+                    borderRadius: BorderRadius.circular(8),
                   ),
                 ),
               ),
@@ -124,8 +106,8 @@ class _PesquisaApiPageState extends State<PesquisaApiPage> {
           if (controller.isLoading)
             const Center(
               child: CircularProgressIndicator(),
-            ),
-          if (controller.livros.isNotEmpty && !controller.isLoading)
+            )
+          else if (controller.livros.isNotEmpty && !controller.isLoading)
             Expanded(
               child: GridView.builder(
                 padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
@@ -133,6 +115,7 @@ class _PesquisaApiPageState extends State<PesquisaApiPage> {
                   crossAxisCount: 2,
                   childAspectRatio: 0.70,
                   mainAxisSpacing: 16,
+                  crossAxisSpacing: 16,
                 ),
                 itemCount: controller.livros.length,
                 itemBuilder: (context, index) {
@@ -152,6 +135,13 @@ class _PesquisaApiPageState extends State<PesquisaApiPage> {
                     ),
                   );
                 },
+              ),
+            )
+          else
+            Center(
+              child: Text(
+                'Pequise um livro',
+                style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
         ],

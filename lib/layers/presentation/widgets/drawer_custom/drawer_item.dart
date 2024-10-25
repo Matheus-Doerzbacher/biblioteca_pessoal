@@ -25,8 +25,7 @@ class DrawerItem extends StatelessWidget {
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color:
-              isActive() ? colorScheme.primaryContainer.withOpacity(0.5) : null,
+          color: isActive() ? colorScheme.surfaceContainer : null,
           borderRadius: BorderRadius.circular(8),
         ),
         child: Padding(
