@@ -12,6 +12,7 @@ class EmprestimoController extends ChangeNotifier {
   final GetLivroByIdUsecase _getLivroByIdUsecase;
   final UpdateLivroUsecase _updateLivroUsecase;
   final UpdateEmprestimoUsecase _updateEmprestimoUsecase;
+  final DeleteEmprestimoUsecase _deleteEmprestimoUsecase;
 
   EmprestimoController(
     this._createEmprestimoUsecase,
@@ -20,6 +21,7 @@ class EmprestimoController extends ChangeNotifier {
     this._getLivroByIdUsecase,
     this._updateLivroUsecase,
     this._updateEmprestimoUsecase,
+    this._deleteEmprestimoUsecase,
   );
 
   List<Emprestimo> emprestimos = [];
@@ -101,6 +103,17 @@ class EmprestimoController extends ChangeNotifier {
       return false;
     } finally {
       await getEmprestimos();
+    }
+  }
+
+  Future<bool> deleteEmprestimo(Emprestimo emprestimo) async {
+    try {
+      await _deleteEmprestimoUsecase(emprestimo.id!);
+      emprestimos.remove(emprestimo);
+      notifyListeners();
+      return true;
+    } catch (error) {
+      return false;
     }
   }
 }

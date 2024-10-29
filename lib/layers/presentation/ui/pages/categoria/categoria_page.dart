@@ -124,20 +124,20 @@ class _CategoriaPageState extends State<CategoriaPage> {
             else
               // Lista de Tarefas
               Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 8),
-                  child: ListView.builder(
-                    itemCount: controller.categorias.length,
-                    itemBuilder: (context, index) {
-                      final categoria = controller.categorias[index];
-                      return CategoriaItem(
-                        text: categoria.nome,
-                        deleteCategoria: () => _deleteCategoria(categoria),
-                        updateCategoria: () => _editarCategoria(categoria),
-                      );
-                    },
-                  ),
-                ),
+                child: controller.categorias.isNotEmpty
+                    ? ListView.builder(
+                        padding: const EdgeInsets.only(top: 8),
+                        itemCount: controller.categorias.length,
+                        itemBuilder: (context, index) {
+                          final categoria = controller.categorias[index];
+                          return CategoriaItem(
+                            text: categoria.nome,
+                            deleteCategoria: () => _deleteCategoria(categoria),
+                            updateCategoria: () => _editarCategoria(categoria),
+                          );
+                        },
+                      )
+                    : const Center(child: Text('Insira algumas categorias')),
               ),
           ],
         ),

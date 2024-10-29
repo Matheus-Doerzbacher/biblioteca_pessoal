@@ -24,6 +24,8 @@ class _NovoEmprestimoPageState extends State<NovoEmprestimoPage> {
   bool _switchDataController = false;
   final _dataDevolucao =
       TextEditingController(text: DateTime.now().toIso8601String());
+  final _dataEmprestimo =
+      TextEditingController(text: DateTime.now().toIso8601String());
   Livro? _livroController;
 
   final _formKey = GlobalKey<FormState>();
@@ -39,6 +41,8 @@ class _NovoEmprestimoPageState extends State<NovoEmprestimoPage> {
   @override
   void dispose() {
     _nomeController.dispose();
+    _quantidadeController.dispose();
+    _dataDevolucao.dispose();
     super.dispose();
   }
 
@@ -51,9 +55,15 @@ class _NovoEmprestimoPageState extends State<NovoEmprestimoPage> {
     }
   }
 
-  void _handleData(DateTime dateTime) {
+  void _handleDataDevolucao(DateTime dateTime) {
     setState(() {
       _dataDevolucao.text = dateTime.toIso8601String();
+    });
+  }
+
+  void _handleDataEmprestimo(DateTime dateTime) {
+    setState(() {
+      _dataEmprestimo.text = dateTime.toIso8601String();
     });
   }
 
@@ -84,6 +94,7 @@ class _NovoEmprestimoPageState extends State<NovoEmprestimoPage> {
         destinatario: _nomeController.text,
         quantidade: int.parse(_quantidadeController.text),
         dataDevolucao: dataDevolucao,
+        dataEmprestimo: DateTime.parse(_dataEmprestimo.text),
       );
 
       final result = await controller.createEmprestimo(emprestimo);
@@ -191,6 +202,10 @@ class _NovoEmprestimoPageState extends State<NovoEmprestimoPage> {
                   ],
                 ),
               ),
+              const SizedBox(height: 16),
+              SelecionarDataEmprestimoComponent(
+                handleDate: _handleDataEmprestimo,
+              ),
               // Switch Data Devolução
               Padding(
                 padding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
@@ -215,7 +230,8 @@ class _NovoEmprestimoPageState extends State<NovoEmprestimoPage> {
               ),
               if (_switchDataController)
                 SelecionarDataEmprestimoComponent(
-                  handleDate: _handleData,
+                  handleDate: _handleDataDevolucao,
+                  isDevolucao: true,
                 ),
               Padding(
                 padding: const EdgeInsets.only(top: 24),

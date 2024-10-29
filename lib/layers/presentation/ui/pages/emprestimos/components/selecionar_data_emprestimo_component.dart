@@ -3,13 +3,16 @@ import 'package:flutter/material.dart';
 // Componente personalizado que utiliza o RestorableDateTime para persistir o
 //estado da data
 class SelecionarDataEmprestimoComponent extends StatefulWidget {
+  final String? restorationId;
+  final Function handleDate;
+  final bool isDevolucao;
+
   const SelecionarDataEmprestimoComponent({
     super.key,
     this.restorationId,
     required this.handleDate,
+    this.isDevolucao = false,
   });
-  final String? restorationId;
-  final Function handleDate;
 
   @override
   State<SelecionarDataEmprestimoComponent> createState() =>
@@ -61,7 +64,7 @@ class _DatePickerExampleState extends State<SelecionarDataEmprestimoComponent>
           initialDate: DateTime.fromMillisecondsSinceEpoch(arguments! as int),
           // Define a primeira data que pode ser selecionada
           // como 1 de janeiro de 2021.
-          firstDate: DateTime.now(),
+          firstDate: DateTime.now().subtract(const Duration(days: 15)),
           // Define a última data que pode ser selecionada
           //como 31 de dezembro de 2022.
           lastDate: DateTime(DateTime.now().year + 2),
@@ -104,7 +107,7 @@ class _DatePickerExampleState extends State<SelecionarDataEmprestimoComponent>
         children: [
           Expanded(
             child: Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(14, 0, 8, 0),
+              padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
               child: Container(
                 decoration: const BoxDecoration(),
                 child: Padding(
@@ -124,7 +127,7 @@ class _DatePickerExampleState extends State<SelecionarDataEmprestimoComponent>
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
-                      'Devolução: ${_selectedDate.value.day}/${_selectedDate.value.month}/${_selectedDate.value.year}',
+                      '${widget.isDevolucao ? 'Devolução' : 'Emprestimo'}: ${_selectedDate.value.day}/${_selectedDate.value.month}/${_selectedDate.value.year}',
                       style: Theme.of(context).textTheme.bodyLarge,
                       textAlign: TextAlign.center,
                     ),

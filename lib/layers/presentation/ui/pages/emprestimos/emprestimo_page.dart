@@ -3,7 +3,6 @@ import 'package:biblioteca_pessoal/layers/domain/entities/emprestimo_entity.dart
 import 'package:biblioteca_pessoal/layers/presentation/controllers/emprestimo_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/ui/pages/emprestimos/components/emprestimo_item_component.dart';
 import 'package:biblioteca_pessoal/layers/presentation/widgets/drawer_custom/drawer_custom.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -30,12 +29,9 @@ class _EmprestimosPageState extends State<EmprestimosPage> {
     setState(() {});
   }
 
-  void excluirDevolucao(Emprestimo emprestimo) {
-    if (kDebugMode) {
-      print(
-        'excluio emprestimo com o livro: ${emprestimo.livro?.titulo ?? ''}',
-      );
-    }
+  Future<void> excluirDevolucao(Emprestimo emprestimo) async {
+    await controller.deleteEmprestimo(emprestimo);
+    setState(() {});
   }
 
   @override
@@ -96,21 +92,25 @@ class _EmprestimosPageState extends State<EmprestimosPage> {
   }
 
   Widget _listTodos(BuildContext context, List<Emprestimo> emprestimos) {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: ListView.builder(
-        itemCount: emprestimos.length,
-        itemBuilder: (context, index) {
-          final emprestimo = emprestimos[index];
+    return emprestimos.isNotEmpty
+        ? Padding(
+            padding: const EdgeInsets.all(16),
+            child: ListView.builder(
+              itemCount: emprestimos.length,
+              itemBuilder: (context, index) {
+                final emprestimo = emprestimos[index];
 
-          return EmprestimoItemComponents(
-            emprestimo: emprestimo,
-            excluirDevolucao: () => excluirDevolucao(emprestimo),
-            fazerDevolucao: () => fazerDevolucao(emprestimo),
+                return EmprestimoItemComponents(
+                  emprestimo: emprestimo,
+                  excluirDevolucao: () => excluirDevolucao(emprestimo),
+                  fazerDevolucao: () => fazerDevolucao(emprestimo),
+                );
+              },
+            ),
+          )
+        : const Center(
+            child: Text('Nenhum emprestimo encontrado'),
           );
-        },
-      ),
-    );
   }
 
   Widget _listAtrasados(BuildContext context, List<Emprestimo> emprestimos) {
@@ -126,20 +126,24 @@ class _EmprestimosPageState extends State<EmprestimosPage> {
       return false;
     }).toList();
 
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: ListView.builder(
-        itemCount: atrasados.length,
-        itemBuilder: (context, index) {
-          final emprestimo = atrasados[index];
-          return EmprestimoItemComponents(
-            emprestimo: emprestimo,
-            excluirDevolucao: () => excluirDevolucao(emprestimo),
-            fazerDevolucao: () => fazerDevolucao(emprestimo),
+    return emprestimos.isNotEmpty
+        ? Padding(
+            padding: const EdgeInsets.all(16),
+            child: ListView.builder(
+              itemCount: atrasados.length,
+              itemBuilder: (context, index) {
+                final emprestimo = atrasados[index];
+                return EmprestimoItemComponents(
+                  emprestimo: emprestimo,
+                  excluirDevolucao: () => excluirDevolucao(emprestimo),
+                  fazerDevolucao: () => fazerDevolucao(emprestimo),
+                );
+              },
+            ),
+          )
+        : const Center(
+            child: Text('Nenhum emprestimo atrassado'),
           );
-        },
-      ),
-    );
   }
 
   Widget _listSemPrazo(BuildContext context, List<Emprestimo> emprestimos) {
@@ -148,20 +152,24 @@ class _EmprestimosPageState extends State<EmprestimosPage> {
           emprestimo.foiDevolvido == false;
     }).toList();
 
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: ListView.builder(
-        itemCount: semPrazo.length,
-        itemBuilder: (context, index) {
-          final emprestimo = semPrazo[index];
-          return EmprestimoItemComponents(
-            emprestimo: emprestimo,
-            excluirDevolucao: () => excluirDevolucao(emprestimo),
-            fazerDevolucao: () => fazerDevolucao(emprestimo),
+    return emprestimos.isNotEmpty
+        ? Padding(
+            padding: const EdgeInsets.all(16),
+            child: ListView.builder(
+              itemCount: semPrazo.length,
+              itemBuilder: (context, index) {
+                final emprestimo = semPrazo[index];
+                return EmprestimoItemComponents(
+                  emprestimo: emprestimo,
+                  excluirDevolucao: () => excluirDevolucao(emprestimo),
+                  fazerDevolucao: () => fazerDevolucao(emprestimo),
+                );
+              },
+            ),
+          )
+        : const Center(
+            child: Text('Nenhum emprestimo sem prazo'),
           );
-        },
-      ),
-    );
   }
 
   Widget _listDevolvidos(BuildContext context, List<Emprestimo> emprestimos) {
@@ -169,19 +177,23 @@ class _EmprestimosPageState extends State<EmprestimosPage> {
       return emprestimo.foiDevolvido == true;
     }).toList();
 
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: ListView.builder(
-        itemCount: semPrazo.length,
-        itemBuilder: (context, index) {
-          final emprestimo = semPrazo[index];
-          return EmprestimoItemComponents(
-            emprestimo: emprestimo,
-            excluirDevolucao: () => excluirDevolucao(emprestimo),
-            fazerDevolucao: () => fazerDevolucao(emprestimo),
+    return emprestimos.isNotEmpty
+        ? Padding(
+            padding: const EdgeInsets.all(16),
+            child: ListView.builder(
+              itemCount: semPrazo.length,
+              itemBuilder: (context, index) {
+                final emprestimo = semPrazo[index];
+                return EmprestimoItemComponents(
+                  emprestimo: emprestimo,
+                  excluirDevolucao: () => excluirDevolucao(emprestimo),
+                  fazerDevolucao: () => fazerDevolucao(emprestimo),
+                );
+              },
+            ),
+          )
+        : const Center(
+            child: Text('Nenhum emprestimo devolvido'),
           );
-        },
-      ),
-    );
   }
 }

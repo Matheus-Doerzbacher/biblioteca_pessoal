@@ -21,37 +21,33 @@ class CategoriaItem extends StatelessWidget {
           color: colorScheme.surfaceContainer,
           borderRadius: BorderRadius.circular(8),
         ),
-        child: Expanded(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 8),
-                  child: Text(
-                    text,
-                    style: TextStyle(color: colorScheme.onSurfaceVariant),
-                  ),
-                ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const SizedBox(width: 16),
+            Expanded(
+              child: Text(
+                text,
+                style: TextStyle(color: colorScheme.onSurfaceVariant),
               ),
-              IconButton(
-                icon: Icon(
-                  Icons.edit,
-                  color: colorScheme.inversePrimary,
-                  size: 24,
-                ),
-                onPressed: updateCategoria,
+            ),
+            IconButton(
+              icon: Icon(
+                Icons.edit,
+                color: colorScheme.inversePrimary,
+                size: 24,
               ),
-              IconButton(
-                icon: Icon(
-                  Icons.delete_forever,
-                  color: colorScheme.error,
-                  size: 24,
-                ),
-                onPressed: deleteCategoria,
+              onPressed: updateCategoria,
+            ),
+            IconButton(
+              icon: Icon(
+                Icons.delete_forever,
+                color: colorScheme.error,
+                size: 24,
               ),
-            ],
-          ),
+              onPressed: deleteCategoria,
+            ),
+          ],
         ),
       ),
     );
