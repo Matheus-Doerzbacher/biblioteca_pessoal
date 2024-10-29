@@ -96,7 +96,7 @@ class _NovoEmprestimoPageState extends State<NovoEmprestimoPage> {
         _livroController = null;
 
         if (mounted) {
-          Navigator.of(context).pop();
+          Navigator.of(context).pop(true);
         }
       } else {
         _bottomErrorMesage('Ouve um problema ao fazer o Emprestimo');
@@ -134,31 +134,62 @@ class _NovoEmprestimoPageState extends State<NovoEmprestimoPage> {
               const SizedBox(height: 24),
               // Select Livro
               _selectLivro(context, colorScheme),
-              InputTextCustom(
-                controller: _quantidadeController,
-                colorScheme: colorScheme,
-                text: 'Quantidade',
-                isNumber: true,
-                validator: (value) {
-                  if (_livroController != null) {
-                    final estoque = _livroController!.estoque;
+              Padding(
+                padding: const EdgeInsets.only(right: 16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Expanded(
+                      child: InputTextCustom(
+                        controller: _quantidadeController,
+                        colorScheme: colorScheme,
+                        text: 'Quantidade',
+                        isNumber: true,
+                        validator: (value) {
+                          if (_livroController != null) {
+                            final estoque = _livroController!.estoque;
 
-                    final quantidade = int.tryParse(value);
+                            final quantidade = int.tryParse(value);
 
-                    if (quantidade == null) {
-                      return 'Informe um numero válido';
-                    }
+                            if (quantidade == null) {
+                              return 'Informe um numero válido';
+                            }
 
-                    if (int.parse(value) < 1) {
-                      return 'Você deve informar pelo menos 1';
-                    }
+                            if (int.parse(value) < 1) {
+                              return 'Você deve informar pelo menos 1';
+                            }
 
-                    if (int.parse(value) > estoque) {
-                      return 'A quantidade deve ser no máximo $estoque';
-                    }
-                  }
-                  return null;
-                },
+                            if (int.parse(value) > estoque) {
+                              return 'Quantidade máxima: $estoque';
+                            }
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    IconButton.filled(
+                      onPressed: () {
+                        setState(() {
+                          _quantidadeController.text =
+                              (int.parse(_quantidadeController.text) + 1)
+                                  .toString();
+                        });
+                      },
+                      icon: const Icon(Icons.add),
+                    ),
+                    IconButton.filled(
+                      onPressed: () {
+                        setState(() {
+                          _quantidadeController.text =
+                              (int.parse(_quantidadeController.text) - 1)
+                                  .toString();
+                        });
+                      },
+                      icon: const Icon(Icons.remove),
+                    ),
+                  ],
+                ),
               ),
               // Switch Data Devolução
               Padding(
@@ -205,60 +236,41 @@ class _NovoEmprestimoPageState extends State<NovoEmprestimoPage> {
   Widget _selectLivro(BuildContext context, ColorScheme colorScheme) {
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(14, 0, 14, 0),
-      child: Container(
-        width: double.infinity,
-        decoration: const BoxDecoration(),
-        child: Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
-          child: Container(
-            decoration: BoxDecoration(
-              color: colorScheme.surface,
-              boxShadow: [
-                BoxShadow(
-                  blurRadius: 4,
-                  color: colorScheme.shadow,
-                  offset: const Offset(2, 2),
-                ),
-              ],
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: DropdownMenu<Livro>(
-              textStyle: Theme.of(context).textTheme.bodyMedium,
-              expandedInsets: EdgeInsets.zero,
-              label: const Text('Selecione um livro'),
-              leadingIcon: const Icon(Icons.search),
-              inputDecorationTheme: const InputDecorationTheme(
-                border: OutlineInputBorder(
-                  borderSide: BorderSide.none, // Remove a borda
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide
-                      .none, // Remove a borda quando o campo está habilitado
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide
-                      .none, // Remove a borda quando o campo está focado
-                ),
-              ),
-              onSelected: (Livro? livro) {
-                if (livro != null) {
-                  _handleLivro(livro);
-                }
-              },
-              dropdownMenuEntries: controller.meusLivros
-                  .map<DropdownMenuEntry<Livro>>((Livro livro) {
-                return DropdownMenuEntry<Livro>(
-                  value: livro,
-                  label: livro.titulo,
-                  leadingIcon: Image.network(
-                    livro.urlImage,
-                    height: 30,
-                  ),
-                );
-              }).toList(),
-            ),
+      child: DropdownMenu<Livro>(
+        textStyle: Theme.of(context).textTheme.bodyMedium,
+        expandedInsets: EdgeInsets.zero,
+        label: const Text('Selecione um livro'),
+        leadingIcon: const Icon(Icons.search),
+        inputDecorationTheme: InputDecorationTheme(
+          filled: true,
+          fillColor: Theme.of(context).colorScheme.surfaceContainer,
+          border: const OutlineInputBorder(
+            borderSide: BorderSide.none,
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          focusedBorder: const OutlineInputBorder(
+            borderSide: BorderSide.none,
           ),
         ),
+        onSelected: (Livro? livro) {
+          if (livro != null) {
+            _handleLivro(livro);
+          }
+        },
+        dropdownMenuEntries:
+            controller.meusLivros.map<DropdownMenuEntry<Livro>>((Livro livro) {
+          return DropdownMenuEntry<Livro>(
+            value: livro,
+            label: livro.titulo,
+            leadingIcon: Image.network(
+              livro.urlImage,
+              height: 30,
+            ),
+          );
+        }).toList(),
       ),
     );
   }

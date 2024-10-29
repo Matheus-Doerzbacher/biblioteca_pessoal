@@ -11,6 +11,7 @@ class EmprestimoController extends ChangeNotifier {
   final GetLivrosComEstoqueUsecase _getLivrosComEstoqueUsecase;
   final GetLivroByIdUsecase _getLivroByIdUsecase;
   final UpdateLivroUsecase _updateLivroUsecase;
+  final UpdateEmprestimoUsecase _updateEmprestimoUsecase;
 
   EmprestimoController(
     this._createEmprestimoUsecase,
@@ -18,6 +19,7 @@ class EmprestimoController extends ChangeNotifier {
     this._getLivrosComEstoqueUsecase,
     this._getLivroByIdUsecase,
     this._updateLivroUsecase,
+    this._updateEmprestimoUsecase,
   );
 
   List<Emprestimo> emprestimos = [];
@@ -72,6 +74,33 @@ class EmprestimoController extends ChangeNotifier {
     } finally {
       isLoading = false;
       notifyListeners();
+    }
+  }
+
+  Future<bool> updateEmprestimo(Emprestimo emprestimo) async {
+    try {
+      isLoading = true;
+      notifyListeners();
+
+      emprestimo.fazerDevolucao();
+      await _updateEmprestimoUsecase(emprestimo);
+
+      final livro = await _getLivroByIdUsecase(emprestimo.idLivro);
+      livro.devolverEmprestimo(emprestimo.quantidade);
+
+      await _updateLivroUsecase(livro);
+
+      return true;
+    } catch (error) {
+      isLoading = false;
+      notifyListeners();
+
+      if (kDebugMode) {
+        print(error);
+      }
+      return false;
+    } finally {
+      await getEmprestimos();
     }
   }
 }

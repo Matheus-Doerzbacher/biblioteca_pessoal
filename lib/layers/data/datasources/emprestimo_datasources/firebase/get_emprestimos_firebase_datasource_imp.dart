@@ -2,6 +2,7 @@ import 'package:biblioteca_pessoal/layers/data/datasources/emprestimo_datasource
 import 'package:biblioteca_pessoal/layers/domain/entities/emprestimo_entity.dart';
 import 'package:biblioteca_pessoal/layers/domain/entities/livro_entity.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 
 class GetEmprestimosFirebaseDatasourceImp implements GetEmprestimosDatasource {
   @override
@@ -12,8 +13,10 @@ class GetEmprestimosFirebaseDatasourceImp implements GetEmprestimosDatasource {
       final livrosRef = firestore.collection('livros');
 
       // Consulta inicial para buscar os empréstimos do usuário
-      final snapshot =
-          await emprestimosRef.where('uidUsuario', isEqualTo: uidUsuario).get();
+      final snapshot = await emprestimosRef
+          .where('uidUsuario', isEqualTo: uidUsuario)
+          .orderBy('dataEmprestimo')
+          .get();
 
       if (snapshot.docs.isNotEmpty) {
         // Mapear os empréstimos e buscar os dados do livro para cada um
@@ -42,6 +45,9 @@ class GetEmprestimosFirebaseDatasourceImp implements GetEmprestimosDatasource {
         return [];
       }
     } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
       throw Exception('Hove um erro ao buscar os emprestimos');
     }
   }

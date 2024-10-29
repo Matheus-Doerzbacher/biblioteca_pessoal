@@ -10,7 +10,7 @@ class Emprestimo {
   final String destinatario;
   final DateTime dataEmprestimo;
   final DateTime? dataDevolucao;
-  final bool foiDevolvido;
+  bool foiDevolvido;
 
   Emprestimo({
     this.id,
@@ -22,11 +22,7 @@ class Emprestimo {
     DateTime? dataEmprestimo,
     this.dataDevolucao,
     this.foiDevolvido = false,
-  }) : dataEmprestimo = dataEmprestimo ??
-            DateTime.parse(
-              // ignore: lines_longer_than_80_chars
-              '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}',
-            );
+  }) : dataEmprestimo = dataEmprestimo ?? DateTime.now();
 
   factory Emprestimo.fromJson(Map<String, dynamic> json) {
     return Emprestimo(
@@ -44,6 +40,7 @@ class Emprestimo {
 
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
       'uidUsuario': uidUsuario,
       'idLivro': idLivro,
       'quantidade': quantidade,
@@ -53,5 +50,10 @@ class Emprestimo {
       'dataDevolucao': dataDevolucao,
       'foiDevolvido': foiDevolvido,
     };
+  }
+
+  void fazerDevolucao() {
+    foiDevolvido = !foiDevolvido;
+    livro = null;
   }
 }

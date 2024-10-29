@@ -55,6 +55,10 @@ class Livro {
     estoque -= quantidade;
   }
 
+  void devolverEmprestimo(int quantidade) {
+    estoque += quantidade;
+  }
+
   void atualizarIsFavorito() {
     isFavorito = !isFavorito;
   }

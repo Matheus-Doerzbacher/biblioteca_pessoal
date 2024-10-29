@@ -1,7 +1,9 @@
 import 'package:biblioteca_pessoal/core/routes/app_routes.dart';
 import 'package:biblioteca_pessoal/layers/domain/entities/emprestimo_entity.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/emprestimo_controller.dart';
+import 'package:biblioteca_pessoal/layers/presentation/ui/pages/emprestimos/components/emprestimo_item_component.dart';
 import 'package:biblioteca_pessoal/layers/presentation/widgets/drawer_custom/drawer_custom.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -23,31 +25,56 @@ class _EmprestimosPageState extends State<EmprestimosPage> {
     super.initState();
   }
 
+  Future<void> fazerDevolucao(Emprestimo emprestimo) async {
+    await controller.updateEmprestimo(emprestimo);
+    setState(() {});
+  }
+
+  void excluirDevolucao(Emprestimo emprestimo) {
+    if (kDebugMode) {
+      print(
+        'excluio emprestimo com o livro: ${emprestimo.livro?.titulo ?? ''}',
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final emprestimos = controller.emprestimos;
     return DefaultTabController(
-      length: 3,
+      length: 4,
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Emprestimos'),
           bottom: const TabBar(
+            isScrollable: true,
             tabs: [
               Tab(
                 text: 'Todos',
               ),
               Tab(
-                text: 'Atrasados',
+                text: 'Atrassados',
               ),
               Tab(
-                text: 'Sem Prazo',
+                text: 'Sem prazo',
+              ),
+              Tab(
+                text: 'Entregues',
               ),
             ],
           ),
           actions: [
             TextButton.icon(
-              onPressed: () {
-                Navigator.of(context).pushNamed(AppRoutes.emprestimo.novo);
+              onPressed: () async {
+                final result = await Navigator.of(context).pushNamed(
+                  AppRoutes.emprestimo.novo,
+                );
+
+                // Após retornar, atualiza os dados da página
+                if (result != null) {
+                  await controller.getEmprestimos();
+                  setState(() {});
+                }
               },
               label: const Text('Novo'),
               icon: const Icon(Icons.add),
@@ -61,6 +88,7 @@ class _EmprestimosPageState extends State<EmprestimosPage> {
             _listTodos(context, emprestimos),
             _listAtrasados(context, emprestimos),
             _listSemPrazo(context, emprestimos),
+            _listDevolvidos(context, emprestimos),
           ],
         ),
       ),
@@ -74,18 +102,24 @@ class _EmprestimosPageState extends State<EmprestimosPage> {
         itemCount: emprestimos.length,
         itemBuilder: (context, index) {
           final emprestimo = emprestimos[index];
-          return EmprestimoItemComponents(emprestimo);
+
+          return EmprestimoItemComponents(
+            emprestimo: emprestimo,
+            excluirDevolucao: () => excluirDevolucao(emprestimo),
+            fazerDevolucao: () => fazerDevolucao(emprestimo),
+          );
         },
       ),
     );
   }
 
   Widget _listAtrasados(BuildContext context, List<Emprestimo> emprestimos) {
+    final agora = DateTime.now();
+    final hoje = DateTime.parse('${agora.year}-${agora.month}-${agora.day}');
     final atrasados = emprestimos.where((emprestimo) {
       if (emprestimo.dataDevolucao != null) {
-        final result =
-            emprestimo.dataDevolucao!.compareTo(emprestimo.dataEmprestimo);
-        if (result < 0) {
+        final result = emprestimo.dataDevolucao!.compareTo(hoje);
+        if (result < 0 && emprestimo.foiDevolvido == false) {
           return true;
         }
       }
@@ -98,7 +132,11 @@ class _EmprestimosPageState extends State<EmprestimosPage> {
         itemCount: atrasados.length,
         itemBuilder: (context, index) {
           final emprestimo = atrasados[index];
-          return EmprestimoItemComponents(emprestimo);
+          return EmprestimoItemComponents(
+            emprestimo: emprestimo,
+            excluirDevolucao: () => excluirDevolucao(emprestimo),
+            fazerDevolucao: () => fazerDevolucao(emprestimo),
+          );
         },
       ),
     );
@@ -106,7 +144,8 @@ class _EmprestimosPageState extends State<EmprestimosPage> {
 
   Widget _listSemPrazo(BuildContext context, List<Emprestimo> emprestimos) {
     final semPrazo = emprestimos.where((emprestimo) {
-      return emprestimo.dataDevolucao == null;
+      return emprestimo.dataDevolucao == null &&
+          emprestimo.foiDevolvido == false;
     }).toList();
 
     return Padding(
@@ -115,44 +154,33 @@ class _EmprestimosPageState extends State<EmprestimosPage> {
         itemCount: semPrazo.length,
         itemBuilder: (context, index) {
           final emprestimo = semPrazo[index];
-          return EmprestimoItemComponents(emprestimo);
+          return EmprestimoItemComponents(
+            emprestimo: emprestimo,
+            excluirDevolucao: () => excluirDevolucao(emprestimo),
+            fazerDevolucao: () => fazerDevolucao(emprestimo),
+          );
         },
       ),
     );
   }
-}
 
-class EmprestimoItemComponents extends StatelessWidget {
-  final Emprestimo emprestimo;
-  const EmprestimoItemComponents(this.emprestimo, {super.key});
+  Widget _listDevolvidos(BuildContext context, List<Emprestimo> emprestimos) {
+    final semPrazo = emprestimos.where((emprestimo) {
+      return emprestimo.foiDevolvido == true;
+    }).toList();
 
-  @override
-  Widget build(BuildContext context) {
-    final livro = emprestimo.livro;
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: ListTile(
-        tileColor: Theme.of(context).colorScheme.surfaceContainer,
-        shape: RoundedRectangleBorder(
-          borderRadius: const BorderRadius.all(
-            Radius.circular(16),
-          ),
-          side: BorderSide(
-            color: Theme.of(context).colorScheme.primary,
-          ),
-        ),
-        leading: Image.network(livro?.urlImage ?? ''),
-        title: Text(
-          livro?.titulo ?? '',
-          overflow: TextOverflow.ellipsis,
-        ),
-        subtitle: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(emprestimo.destinatario),
-            Text('Quantidade: ${emprestimo.quantidade}'),
-          ],
-        ),
+      padding: const EdgeInsets.all(16),
+      child: ListView.builder(
+        itemCount: semPrazo.length,
+        itemBuilder: (context, index) {
+          final emprestimo = semPrazo[index];
+          return EmprestimoItemComponents(
+            emprestimo: emprestimo,
+            excluirDevolucao: () => excluirDevolucao(emprestimo),
+            fazerDevolucao: () => fazerDevolucao(emprestimo),
+          );
+        },
       ),
     );
   }
