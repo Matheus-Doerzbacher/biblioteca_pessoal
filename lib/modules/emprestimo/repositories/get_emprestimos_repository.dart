@@ -1,11 +1,9 @@
-import 'package:biblioteca_pessoal/layers/data/datasources/emprestimo_datasources/emprestimo_datasource.dart';
-import 'package:biblioteca_pessoal/layers/domain/entities/emprestimo.dart';
+import 'package:biblioteca_pessoal/modules/emprestimo/models/emprestimo.dart';
 import 'package:biblioteca_pessoal/layers/domain/entities/livro.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 
-class GetEmprestimosFirebaseDatasourceImp implements GetEmprestimosDatasource {
-  @override
+class GetEmprestimosRepository {
   Future<List<Emprestimo>> call(String uidUsuario) async {
     try {
       final firestore = FirebaseFirestore.instance;

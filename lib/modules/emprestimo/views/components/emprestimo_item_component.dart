@@ -1,5 +1,5 @@
 import 'package:biblioteca_pessoal/core/functions/format_date_function.dart';
-import 'package:biblioteca_pessoal/layers/domain/entities/emprestimo.dart';
+import 'package:biblioteca_pessoal/modules/emprestimo/models/emprestimo.dart';
 import 'package:flutter/material.dart';
 
 class EmprestimoItemComponents extends StatefulWidget {

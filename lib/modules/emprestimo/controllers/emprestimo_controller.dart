@@ -1,27 +1,49 @@
-import 'package:biblioteca_pessoal/layers/domain/entities/emprestimo.dart';
+import 'package:biblioteca_pessoal/modules/emprestimo/models/emprestimo.dart';
 import 'package:biblioteca_pessoal/layers/domain/entities/livro.dart';
-import 'package:biblioteca_pessoal/layers/domain/usecases/emprestimo_usecase/emprestimo_usecase.dart';
 import 'package:biblioteca_pessoal/layers/domain/usecases/livro_usecase/livro_usecase.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
+import 'package:biblioteca_pessoal/modules/emprestimo/repositories/create_emprestimo_repository.dart';
+import 'package:biblioteca_pessoal/modules/emprestimo/repositories/delete_emprestimo_repository.dart';
+import 'package:biblioteca_pessoal/modules/emprestimo/repositories/get_emprestimos_repository.dart';
+import 'package:biblioteca_pessoal/modules/emprestimo/repositories/update_emprestimo_repository.dart';
 import 'package:flutter/foundation.dart';
 
 class EmprestimoController extends ChangeNotifier {
-  final CreateEmprestimoUsecase _createEmprestimoUsecase;
-  final GetEmprestimosUsecase _getEmprestimosUsecase;
+  final CreateEmprestimoRepository _createEmprestimoRepository;
+  final GetEmprestimosRepository _emprestimosRepository;
   final GetLivrosComEstoqueUsecase _getLivrosComEstoqueUsecase;
   final GetLivroByIdUsecase _getLivroByIdUsecase;
   final UpdateLivroUsecase _updateLivroUsecase;
-  final UpdateEmprestimoUsecase _updateEmprestimoUsecase;
-  final DeleteEmprestimoUsecase _deleteEmprestimoUsecase;
+  final UpdateEmprestimoRepository _updateEmprestimoRepository;
+  final DeleteEmprestimoRepository _deleteEmprestimoRepository;
+
+  // i.add(CreateEmprestimoRepository)
+  // i.add(CreateEmprestimoRepository)
+  // i.add(CreateEmprestimoRepository)
+  // i.add(CreateEmprestimoRepository)
+  // i.add(CreateEmprestimoRepository)
+  // i.add(CreateEmprestimoRepository)
+  // i.add(CreateEmprestimoRepository)
+  // i.add(CreateEmprestimoRepository)
+  //
+  // i.add(EmprestimoController(
+  //  i(),
+  //  i(),
+  //  i(),
+  //  i(),
+  //  i(),
+  //  i(),
+  //  i(),
+  // ))
 
   EmprestimoController(
-    this._createEmprestimoUsecase,
-    this._getEmprestimosUsecase,
+    this._createEmprestimoRepository,
+    this._emprestimosRepository,
     this._getLivrosComEstoqueUsecase,
     this._getLivroByIdUsecase,
     this._updateLivroUsecase,
-    this._updateEmprestimoUsecase,
-    this._deleteEmprestimoUsecase,
+    this._updateEmprestimoRepository,
+    this._deleteEmprestimoRepository,
   );
 
   List<Emprestimo> emprestimos = [];
@@ -33,7 +55,7 @@ class EmprestimoController extends ChangeNotifier {
     try {
       isLoading = true;
       notifyListeners();
-      await _createEmprestimoUsecase(emprestimo);
+      await _createEmprestimoRepository(emprestimo);
 
       // Fas os ajuste na quantidade de estoque do livro emprestado
       final livro = await _getLivroByIdUsecase(emprestimo.idLivro);
@@ -58,7 +80,7 @@ class EmprestimoController extends ChangeNotifier {
     try {
       isLoading = true;
       notifyListeners();
-      emprestimos = await _getEmprestimosUsecase(UserController.user!.uid);
+      emprestimos = await _emprestimosRepository(UserController.user!.uid);
       notifyListeners();
     } finally {
       isLoading = false;
@@ -85,7 +107,7 @@ class EmprestimoController extends ChangeNotifier {
       notifyListeners();
 
       emprestimo.fazerDevolucao();
-      await _updateEmprestimoUsecase(emprestimo);
+      await _updateEmprestimoRepository(emprestimo);
 
       final livro = await _getLivroByIdUsecase(emprestimo.idLivro);
       livro.devolverEmprestimo(emprestimo.quantidade);
@@ -108,7 +130,7 @@ class EmprestimoController extends ChangeNotifier {
 
   Future<bool> deleteEmprestimo(Emprestimo emprestimo) async {
     try {
-      await _deleteEmprestimoUsecase(emprestimo.id!);
+      await _deleteEmprestimoRepository(emprestimo.id!);
       emprestimos.remove(emprestimo);
       notifyListeners();
       return true;

@@ -8,7 +8,7 @@ import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controll
 import 'package:biblioteca_pessoal/layers/presentation/ui/pages/adicionar_livro/adicionar_livro_page.dart';
 import 'package:biblioteca_pessoal/layers/presentation/ui/pages/adicionar_livro/pesquisa_api_page.dart';
 import 'package:biblioteca_pessoal/modules/categoria/views/categoria_page.dart';
-import 'package:biblioteca_pessoal/layers/presentation/ui/pages/emprestimos/emprestimo_page.dart';
+import 'package:biblioteca_pessoal/modules/emprestimo/views/emprestimo_page.dart';
 import 'package:biblioteca_pessoal/layers/presentation/ui/pages/emprestimos/novo_emprestimo_page.dart';
 import 'package:biblioteca_pessoal/layers/presentation/ui/pages/home_page.dart';
 import 'package:biblioteca_pessoal/layers/presentation/ui/pages/livro_detail_page.dart';

@@ -1,10 +1,7 @@
-import 'package:biblioteca_pessoal/layers/data/datasources/emprestimo_datasources/emprestimo_datasource.dart';
-import 'package:biblioteca_pessoal/layers/domain/entities/emprestimo.dart';
+import 'package:biblioteca_pessoal/modules/emprestimo/models/emprestimo.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class GetEmprestimosByIdFirebaseDatasourceImp
-    implements GetEmprestimoByIdDatasource {
-  @override
+class GetEmprestimosByRepository {
   Future<Emprestimo> call(String idEmprestimo) async {
     final firestore = FirebaseFirestore.instance;
     final emprestimoRef = firestore.collection('emprestimos').doc(idEmprestimo);

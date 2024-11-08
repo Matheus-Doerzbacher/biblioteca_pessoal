@@ -1,4 +1,4 @@
-import 'package:biblioteca_pessoal/layers/domain/entities/emprestimo.dart';
+import 'package:biblioteca_pessoal/modules/emprestimo/models/emprestimo.dart';
 
 abstract class CreateEmprestimoRepository {
   Future<bool> call(Emprestimo emprestimo);

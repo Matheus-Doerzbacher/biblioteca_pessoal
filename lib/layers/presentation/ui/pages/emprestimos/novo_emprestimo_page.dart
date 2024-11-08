@@ -1,9 +1,9 @@
 import 'package:biblioteca_pessoal/core/widgets/input_text_custom.dart';
-import 'package:biblioteca_pessoal/layers/domain/entities/emprestimo.dart';
+import 'package:biblioteca_pessoal/modules/emprestimo/models/emprestimo.dart';
 import 'package:biblioteca_pessoal/layers/domain/entities/livro.dart';
-import 'package:biblioteca_pessoal/layers/presentation/controllers/emprestimo_controller.dart';
+import 'package:biblioteca_pessoal/modules/emprestimo/controllers/emprestimo_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
-import 'package:biblioteca_pessoal/layers/presentation/ui/pages/emprestimos/components/selecionar_data_emprestimo_component.dart';
+import 'package:biblioteca_pessoal/modules/emprestimo/views/components/selecionar_data_emprestimo_component.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
