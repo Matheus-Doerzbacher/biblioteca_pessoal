@@ -1,6 +1,5 @@
 // ignore_for_file: avoid_print
 
-import 'package:biblioteca_pessoal/core/routes/app_routes.dart';
 import 'package:biblioteca_pessoal/modules/usuario/repositories/login_with_google.dart';
 import 'package:biblioteca_pessoal/modules/usuario/repositories/sign_out.dart';
 import 'package:firebase_auth/firebase_auth.dart';
