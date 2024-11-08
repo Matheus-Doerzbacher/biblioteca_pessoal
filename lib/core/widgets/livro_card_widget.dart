@@ -1,4 +1,4 @@
-import 'package:biblioteca_pessoal/layers/domain/entities/livro.dart';
+import 'package:biblioteca_pessoal/modules/livro/models/livro.dart';
 import 'package:flutter/material.dart';
 
 class LivroCard extends StatelessWidget {

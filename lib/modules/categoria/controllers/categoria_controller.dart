@@ -1,9 +1,9 @@
-import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
 import 'package:biblioteca_pessoal/modules/categoria/models/categoria.dart';
 import 'package:biblioteca_pessoal/modules/categoria/repositories/create_categoria_repository.dart';
 import 'package:biblioteca_pessoal/modules/categoria/repositories/delete_categoria_repository.dart';
 import 'package:biblioteca_pessoal/modules/categoria/repositories/get_categorias_repository.dart';
 import 'package:biblioteca_pessoal/modules/categoria/repositories/update_categoria_repository.dart';
+import 'package:biblioteca_pessoal/modules/usuario/controllers/user_controller.dart';
 import 'package:flutter/material.dart';
 
 class CategoriaController extends ChangeNotifier {

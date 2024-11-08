@@ -1,7 +1,7 @@
 import 'package:biblioteca_pessoal/core/routes/app_routes.dart';
 import 'package:biblioteca_pessoal/core/widgets/drawer_custom/drawer_item.dart';
 import 'package:biblioteca_pessoal/core/widgets/logo_app.dart';
-import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
+import 'package:biblioteca_pessoal/modules/usuario/controllers/user_controller.dart';
 import 'package:flutter/material.dart';
 
 class DrawerCustom extends StatelessWidget {

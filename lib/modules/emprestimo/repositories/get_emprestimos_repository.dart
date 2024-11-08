@@ -1,5 +1,5 @@
-import 'package:biblioteca_pessoal/layers/domain/entities/livro.dart';
 import 'package:biblioteca_pessoal/modules/emprestimo/models/emprestimo.dart';
+import 'package:biblioteca_pessoal/modules/livro/models/livro.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 

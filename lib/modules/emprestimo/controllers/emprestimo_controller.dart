@@ -1,28 +1,30 @@
-import 'package:biblioteca_pessoal/layers/domain/entities/livro.dart';
-import 'package:biblioteca_pessoal/layers/domain/usecases/livro_usecase/livro_usecase.dart';
-import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
 import 'package:biblioteca_pessoal/modules/emprestimo/models/emprestimo.dart';
 import 'package:biblioteca_pessoal/modules/emprestimo/repositories/create_emprestimo_repository.dart';
 import 'package:biblioteca_pessoal/modules/emprestimo/repositories/delete_emprestimo_repository.dart';
 import 'package:biblioteca_pessoal/modules/emprestimo/repositories/get_emprestimos_repository.dart';
 import 'package:biblioteca_pessoal/modules/emprestimo/repositories/update_emprestimo_repository.dart';
+import 'package:biblioteca_pessoal/modules/livro/models/livro.dart';
+import 'package:biblioteca_pessoal/modules/livro/repositories/get_livro_by_id_repository.dart';
+import 'package:biblioteca_pessoal/modules/livro/repositories/get_livros_com_estoque_repository.dart';
+import 'package:biblioteca_pessoal/modules/livro/repositories/update_livro_repository.dart';
+import 'package:biblioteca_pessoal/modules/usuario/controllers/user_controller.dart';
 import 'package:flutter/foundation.dart';
 
 class EmprestimoController extends ChangeNotifier {
   final CreateEmprestimoRepository _createEmprestimoRepository;
   final GetEmprestimosRepository _emprestimosRepository;
-  final GetLivrosComEstoqueUsecase _getLivrosComEstoqueUsecase;
-  final GetLivroByIdUsecase _getLivroByIdUsecase;
-  final UpdateLivroUsecase _updateLivroUsecase;
+  final GetLivrosComEstoqueRepository _getLivrosComEstoqueRepository;
+  final GetLivroByIdRepository _getLivroByIdRepository;
+  final UpdateLivroRepository _updateLivroRepository;
   final UpdateEmprestimoRepository _updateEmprestimoRepository;
   final DeleteEmprestimoRepository _deleteEmprestimoRepository;
 
   EmprestimoController(
     this._createEmprestimoRepository,
     this._emprestimosRepository,
-    this._getLivrosComEstoqueUsecase,
-    this._getLivroByIdUsecase,
-    this._updateLivroUsecase,
+    this._getLivrosComEstoqueRepository,
+    this._getLivroByIdRepository,
+    this._updateLivroRepository,
     this._updateEmprestimoRepository,
     this._deleteEmprestimoRepository,
   );
@@ -39,9 +41,9 @@ class EmprestimoController extends ChangeNotifier {
       await _createEmprestimoRepository(emprestimo);
 
       // Fas os ajuste na quantidade de estoque do livro emprestado
-      final livro = await _getLivroByIdUsecase(emprestimo.idLivro);
+      final livro = await _getLivroByIdRepository(emprestimo.idLivro);
       livro.emprestimo(emprestimo.quantidade);
-      await _updateLivroUsecase(livro);
+      await _updateLivroRepository(livro);
       return true;
     } catch (error) {
       isLoading = false;
@@ -74,7 +76,8 @@ class EmprestimoController extends ChangeNotifier {
       isLoading = true;
       notifyListeners();
 
-      meusLivros = await _getLivrosComEstoqueUsecase(UserController.user!.uid);
+      meusLivros =
+          await _getLivrosComEstoqueRepository(UserController.user!.uid);
       notifyListeners();
     } finally {
       isLoading = false;
@@ -90,10 +93,10 @@ class EmprestimoController extends ChangeNotifier {
       emprestimo.fazerDevolucao();
       await _updateEmprestimoRepository(emprestimo);
 
-      final livro = await _getLivroByIdUsecase(emprestimo.idLivro);
+      final livro = await _getLivroByIdRepository(emprestimo.idLivro);
       livro.devolverEmprestimo(emprestimo.quantidade);
 
-      await _updateLivroUsecase(livro);
+      await _updateLivroRepository(livro);
 
       return true;
     } catch (error) {

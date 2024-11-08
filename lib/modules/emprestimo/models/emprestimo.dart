@@ -1,4 +1,4 @@
-import 'package:biblioteca_pessoal/layers/domain/entities/livro.dart';
+import 'package:biblioteca_pessoal/modules/livro/models/livro.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Emprestimo {
