@@ -3,6 +3,7 @@ import 'package:biblioteca_pessoal/core/widgets/drawer_custom/drawer_item.dart';
 import 'package:biblioteca_pessoal/core/widgets/logo_app.dart';
 import 'package:biblioteca_pessoal/modules/usuario/controllers/user_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 class DrawerCustom extends StatelessWidget {
   final String namePageActive;
@@ -11,6 +12,7 @@ class DrawerCustom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorSchema = Theme.of(context).colorScheme;
+    final controller = GetIt.I<UserController>();
     final user = UserController.user;
 
     return Drawer(
@@ -97,9 +99,7 @@ class DrawerCustom extends StatelessWidget {
                       ),
                     ),
                     IconButton(
-                      onPressed: () {
-                        UserController.signOut(context);
-                      },
+                      onPressed: controller.signOut,
                       icon: const Icon(Icons.logout),
                     ),
                   ],
