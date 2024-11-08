@@ -8,16 +8,15 @@ class GetCategoriasRepository {
       final querySnapshot = await firestore
           .collection('categorias')
           .where('uidUsuario', isEqualTo: uidUsuario)
-          .get(
-            const GetOptions(
-              source: Source.server,
-            ),
-          ); // Força a busca no servidor
+          .get(); // Força a busca no servidor
 
-      return querySnapshot.docs.map((doc) {
+      final categorias = querySnapshot.docs.map((doc) {
         final data = doc.data();
-        return Categoria.fromJson({...data, 'id': doc.id});
+        final teste = Categoria.fromJson({...data, 'id': doc.id});
+        return teste;
       }).toList();
+
+      return categorias;
     } catch (e) {
       return [];
     }

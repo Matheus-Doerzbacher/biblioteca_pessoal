@@ -1,7 +1,7 @@
-import 'package:biblioteca_pessoal/modules/emprestimo/models/emprestimo.dart';
 import 'package:biblioteca_pessoal/layers/domain/entities/livro.dart';
 import 'package:biblioteca_pessoal/layers/domain/usecases/livro_usecase/livro_usecase.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
+import 'package:biblioteca_pessoal/modules/emprestimo/models/emprestimo.dart';
 import 'package:biblioteca_pessoal/modules/emprestimo/repositories/create_emprestimo_repository.dart';
 import 'package:biblioteca_pessoal/modules/emprestimo/repositories/delete_emprestimo_repository.dart';
 import 'package:biblioteca_pessoal/modules/emprestimo/repositories/get_emprestimos_repository.dart';
@@ -16,25 +16,6 @@ class EmprestimoController extends ChangeNotifier {
   final UpdateLivroUsecase _updateLivroUsecase;
   final UpdateEmprestimoRepository _updateEmprestimoRepository;
   final DeleteEmprestimoRepository _deleteEmprestimoRepository;
-
-  // i.add(CreateEmprestimoRepository)
-  // i.add(CreateEmprestimoRepository)
-  // i.add(CreateEmprestimoRepository)
-  // i.add(CreateEmprestimoRepository)
-  // i.add(CreateEmprestimoRepository)
-  // i.add(CreateEmprestimoRepository)
-  // i.add(CreateEmprestimoRepository)
-  // i.add(CreateEmprestimoRepository)
-  //
-  // i.add(EmprestimoController(
-  //  i(),
-  //  i(),
-  //  i(),
-  //  i(),
-  //  i(),
-  //  i(),
-  //  i(),
-  // ))
 
   EmprestimoController(
     this._createEmprestimoRepository,

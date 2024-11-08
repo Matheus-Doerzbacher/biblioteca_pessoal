@@ -59,6 +59,15 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
     super.initState();
 
     controller.getCategorias().then((categorias) {
+      _multiSelectController.setItems(
+        controller.categoriasUsuario.map((categoria) {
+          return DropdownItem(
+            label: categoria.nome,
+            value: categoria,
+            selected: isSelected(categoria),
+          );
+        }).toList(),
+      );
       if (mounted) {
         setState(() {});
       }
@@ -77,22 +86,6 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
       _ratingController = widget.livroUpdate!.avaliacao.toDouble();
       _urlImage = widget.livroUpdate!.urlImage;
     }
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _multiSelectController.setItems(
-        controller.categoriasUsuario.map((categoria) {
-          return DropdownItem(
-            label: categoria.nome,
-            value: categoria,
-            selected: isSelected(categoria),
-          );
-        }).toList(),
-      );
-    });
   }
 
   @override
