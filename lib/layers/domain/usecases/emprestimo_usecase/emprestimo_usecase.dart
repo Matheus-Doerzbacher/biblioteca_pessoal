@@ -1,4 +1,4 @@
-import 'package:biblioteca_pessoal/layers/domain/entities/emprestimo_entity.dart';
+import 'package:biblioteca_pessoal/layers/domain/entities/emprestimo.dart';
 
 abstract class CreateEmprestimoUsecase {
   Future<bool> call(Emprestimo emprestimo);

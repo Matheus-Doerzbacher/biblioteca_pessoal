@@ -1,5 +1,5 @@
 import 'package:biblioteca_pessoal/layers/data/datasources/emprestimo_datasources/emprestimo_datasource.dart';
-import 'package:biblioteca_pessoal/layers/domain/entities/emprestimo_entity.dart';
+import 'package:biblioteca_pessoal/layers/domain/entities/emprestimo.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class GetEmprestimosByIdFirebaseDatasourceImp

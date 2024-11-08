@@ -1,14 +1,14 @@
 import 'dart:io';
 
 import 'package:biblioteca_pessoal/core/routes/app_routes.dart';
-import 'package:biblioteca_pessoal/layers/domain/entities/categoria_entity.dart';
-import 'package:biblioteca_pessoal/layers/domain/entities/livro_entity.dart';
+import 'package:biblioteca_pessoal/core/widgets/input_text_custom.dart';
+import 'package:biblioteca_pessoal/layers/domain/entities/categoria.dart';
+import 'package:biblioteca_pessoal/layers/domain/entities/livro.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/adicionar_livro_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/ui/pages/adicionar_livro/components/drop_down_multi_custom.dart';
 import 'package:biblioteca_pessoal/layers/presentation/ui/pages/adicionar_livro/components/drop_down_single_custom.dart';
 import 'package:biblioteca_pessoal/layers/presentation/ui/pages/adicionar_livro/components/selecionar_foto.dart';
-import 'package:biblioteca_pessoal/layers/presentation/widgets/input_text_custom.dart';
 import 'package:custom_rating_bar/custom_rating_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';

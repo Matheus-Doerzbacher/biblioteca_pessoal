@@ -1,5 +1,5 @@
 import 'package:biblioteca_pessoal/core/routes/app_routes.dart';
-import 'package:biblioteca_pessoal/layers/domain/entities/livro_entity.dart';
+import 'package:biblioteca_pessoal/layers/domain/entities/livro.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/livro_datail_controller.dart';
 import 'package:custom_rating_bar/custom_rating_bar.dart';
 import 'package:flutter/material.dart';

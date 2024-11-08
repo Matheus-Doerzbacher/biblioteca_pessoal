@@ -1,4 +1,4 @@
-import 'package:biblioteca_pessoal/layers/domain/entities/categoria_entity.dart';
+import 'package:biblioteca_pessoal/layers/domain/entities/categoria.dart';
 
 abstract class CreateCategoriaDatasource {
   Future<bool> call(Categoria categoria);

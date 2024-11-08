@@ -1,5 +1,5 @@
-import 'package:biblioteca_pessoal/layers/domain/entities/categoria_entity.dart';
-import 'package:biblioteca_pessoal/layers/domain/entities/livro_entity.dart';
+import 'package:biblioteca_pessoal/layers/domain/entities/categoria.dart';
+import 'package:biblioteca_pessoal/layers/domain/entities/livro.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
 
 class LivroDto extends Livro {

@@ -1,4 +1,4 @@
-import 'package:biblioteca_pessoal/layers/domain/entities/categoria_entity.dart';
+import 'package:biblioteca_pessoal/layers/domain/entities/categoria.dart';
 import 'package:biblioteca_pessoal/layers/domain/repositories/categoria_repository.dart';
 import 'package:biblioteca_pessoal/layers/domain/usecases/categoria_usecase/categoria_usecase.dart';
 

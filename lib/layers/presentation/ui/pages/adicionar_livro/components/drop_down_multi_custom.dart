@@ -1,4 +1,4 @@
-import 'package:biblioteca_pessoal/layers/domain/entities/categoria_entity.dart';
+import 'package:biblioteca_pessoal/layers/domain/entities/categoria.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_dropdown/multi_dropdown.dart';
 

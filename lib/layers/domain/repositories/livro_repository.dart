@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:biblioteca_pessoal/layers/domain/entities/livro_entity.dart';
+import 'package:biblioteca_pessoal/layers/domain/entities/livro.dart';
 
 abstract class CreateLivroRepository {
   Future<bool> call(Livro livro);

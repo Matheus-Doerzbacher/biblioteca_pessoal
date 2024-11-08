@@ -1,5 +1,5 @@
 import 'package:biblioteca_pessoal/layers/data/datasources/categoria_datasources/categoria_datasource.dart';
-import 'package:biblioteca_pessoal/layers/domain/entities/categoria_entity.dart';
+import 'package:biblioteca_pessoal/layers/domain/entities/categoria.dart';
 import 'package:biblioteca_pessoal/layers/domain/repositories/categoria_repository.dart';
 
 class CreateCategoriaRepositoryImp implements CreateCategoriaRepository {

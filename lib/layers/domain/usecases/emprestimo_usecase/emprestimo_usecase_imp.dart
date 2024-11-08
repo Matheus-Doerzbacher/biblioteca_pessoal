@@ -1,4 +1,4 @@
-import 'package:biblioteca_pessoal/layers/domain/entities/emprestimo_entity.dart';
+import 'package:biblioteca_pessoal/layers/domain/entities/emprestimo.dart';
 import 'package:biblioteca_pessoal/layers/domain/repositories/emprestimo_respository.dart';
 import 'package:biblioteca_pessoal/layers/domain/usecases/emprestimo_usecase/emprestimo_usecase.dart';
 

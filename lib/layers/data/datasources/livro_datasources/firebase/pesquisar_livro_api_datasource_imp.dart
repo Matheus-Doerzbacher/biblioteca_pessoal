@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:biblioteca_pessoal/layers/data/datasources/livro_datasources/firebase/get_livro_by_name_firebase_datasource_imp.dart';
 import 'package:biblioteca_pessoal/layers/data/datasources/livro_datasources/livro_datasource.dart';
 import 'package:biblioteca_pessoal/layers/data/dto/livro_dto.dart';
-import 'package:biblioteca_pessoal/layers/domain/entities/livro_entity.dart';
+import 'package:biblioteca_pessoal/layers/domain/entities/livro.dart';
 import 'package:http/http.dart' as http;
 
 class PesquisarLivroApiDatasourceImp implements PesquisarLivroApiDatasource {

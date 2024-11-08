@@ -1,9 +1,9 @@
 import 'package:biblioteca_pessoal/core/routes/app_routes.dart';
-import 'package:biblioteca_pessoal/layers/domain/entities/categoria_entity.dart';
+import 'package:biblioteca_pessoal/core/widgets/drawer_custom/drawer_custom.dart';
+import 'package:biblioteca_pessoal/layers/domain/entities/categoria.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/categoria_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/ui/pages/categoria/components/categoria_item.dart';
-import 'package:biblioteca_pessoal/layers/presentation/widgets/drawer_custom/drawer_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 

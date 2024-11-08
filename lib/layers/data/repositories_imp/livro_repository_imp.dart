@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:biblioteca_pessoal/layers/data/datasources/livro_datasources/livro_datasource.dart';
-import 'package:biblioteca_pessoal/layers/domain/entities/livro_entity.dart';
+import 'package:biblioteca_pessoal/layers/domain/entities/livro.dart';
 import 'package:biblioteca_pessoal/layers/domain/repositories/livro_repository.dart';
 
 class CreateLivroRepositoryImp implements CreateLivroRepository {
