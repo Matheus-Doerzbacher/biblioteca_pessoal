@@ -1,9 +1,7 @@
-import 'package:biblioteca_pessoal/layers/data/datasources/categoria_datasources/categoria_datasource.dart';
-import 'package:biblioteca_pessoal/layers/domain/entities/categoria.dart';
+import 'package:biblioteca_pessoal/modules/categoria/models/categoria.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class GetCategoriasFirebaseDatasourceImp implements GetCategoriasDatasource {
-  @override
+class GetCategoriasRepository {
   Future<List<Categoria>> call(String uidUsuario) async {
     try {
       final firestore = FirebaseFirestore.instance;

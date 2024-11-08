@@ -1,14 +1,13 @@
-import 'package:biblioteca_pessoal/core/inject/_inject.dart';
 import 'package:biblioteca_pessoal/core/routes/app_routes.dart';
 import 'package:biblioteca_pessoal/core/theme/theme.dart';
 import 'package:biblioteca_pessoal/layers/domain/entities/livro.dart';
-import 'package:biblioteca_pessoal/layers/presentation/controllers/categoria_controller.dart';
+import 'package:biblioteca_pessoal/modules/categoria/controllers/categoria_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/home_page_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/pesquisa_api_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
 import 'package:biblioteca_pessoal/layers/presentation/ui/pages/adicionar_livro/adicionar_livro_page.dart';
 import 'package:biblioteca_pessoal/layers/presentation/ui/pages/adicionar_livro/pesquisa_api_page.dart';
-import 'package:biblioteca_pessoal/layers/presentation/ui/pages/categoria/categoria_page.dart';
+import 'package:biblioteca_pessoal/modules/categoria/views/categoria_page.dart';
 import 'package:biblioteca_pessoal/layers/presentation/ui/pages/emprestimos/emprestimo_page.dart';
 import 'package:biblioteca_pessoal/layers/presentation/ui/pages/emprestimos/novo_emprestimo_page.dart';
 import 'package:biblioteca_pessoal/layers/presentation/ui/pages/home_page.dart';
@@ -26,9 +25,6 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
-  // Inicialize todos os módulos de injeção de dependências
-  Inject.init();
 
   runApp(
     MultiProvider(

@@ -1,4 +1,4 @@
-import 'package:biblioteca_pessoal/layers/domain/entities/categoria.dart';
+import 'package:biblioteca_pessoal/modules/categoria/models/categoria.dart';
 
 enum StatusLeitura {
   lendo,

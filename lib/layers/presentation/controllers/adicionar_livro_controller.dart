@@ -1,22 +1,22 @@
 import 'dart:io';
 
-import 'package:biblioteca_pessoal/layers/domain/entities/categoria.dart';
 import 'package:biblioteca_pessoal/layers/domain/entities/livro.dart';
-import 'package:biblioteca_pessoal/layers/domain/usecases/categoria_usecase/categoria_usecase.dart';
 import 'package:biblioteca_pessoal/layers/domain/usecases/livro_usecase/livro_usecase.dart';
 import 'package:biblioteca_pessoal/layers/presentation/controllers/user_controller.dart';
+import 'package:biblioteca_pessoal/modules/categoria/models/categoria.dart';
+import 'package:biblioteca_pessoal/modules/categoria/repositories/get_categorias_repository.dart';
 
 class AdicionarLivroController {
   final CreateLivroUsecase _createLivroUsecase;
   final UpdateLivroUsecase _updateLivroUsecase;
   final SalvarImagemLivroUsecase _salvarImagemLivroUsecase;
-  final GetCategoriasUsecase _getCategoriasUsecase;
+  final GetCategoriasRepository _categoriasRepository;
 
   AdicionarLivroController(
     this._createLivroUsecase,
     this._updateLivroUsecase,
     this._salvarImagemLivroUsecase,
-    this._getCategoriasUsecase,
+    this._categoriasRepository,
   );
 
   List<Categoria> categoriasUsuario = [];
@@ -34,6 +34,6 @@ class AdicionarLivroController {
   }
 
   Future<void> getCategorias() async {
-    categoriasUsuario = await _getCategoriasUsecase(UserController.user!.uid);
+    categoriasUsuario = await _categoriasRepository(UserController.user!.uid);
   }
 }
