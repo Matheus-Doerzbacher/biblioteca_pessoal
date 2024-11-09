@@ -4,11 +4,11 @@ import 'package:biblioteca_pessoal/modules/livro/repositories/update_livro_repos
 import 'package:biblioteca_pessoal/modules/usuario/controllers/user_controller.dart';
 import 'package:flutter/foundation.dart';
 
-class HomePageController extends ChangeNotifier {
+class HomeController extends ChangeNotifier {
   final GetLivrosRepository _getLivrosRepository;
   final UpdateLivroRepository _updateLivroRepository;
 
-  HomePageController(this._getLivrosRepository, this._updateLivroRepository);
+  HomeController(this._getLivrosRepository, this._updateLivroRepository);
 
   late List<Livro> livros = [];
   bool isLoading = false;

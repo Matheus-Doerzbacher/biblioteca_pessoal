@@ -1,4 +1,3 @@
-import 'package:biblioteca_pessoal/modules/home/controllers/home_page_controller.dart';
 import 'package:biblioteca_pessoal/modules/livro/controllers/adicionar_livro_controller.dart';
 import 'package:biblioteca_pessoal/modules/livro/controllers/livro_datail_controller.dart';
 import 'package:biblioteca_pessoal/modules/livro/controllers/pesquisa_api_controller.dart';
@@ -18,6 +17,14 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 class LivroModule extends Module {
   @override
+  void exportedBinds(Injector i) {
+    i
+      ..add<GetLivrosRepository>(GetLivrosRepository.new)
+      ..add<UpdateLivroRepository>(UpdateLivroRepository.new);
+    super.exportedBinds(i);
+  }
+
+  @override
   void binds(Injector i) {
     i
       ..add<CreateLivroRepository>(CreateLivroRepository.new)
@@ -25,17 +32,12 @@ class LivroModule extends Module {
       ..add<GetLivroByIdRepository>(GetLivroByIdRepository.new)
       ..add<GetLivroByNameRepository>(GetLivroByNameRepository.new)
       ..add<GetLivrosComEstoqueRepository>(GetLivrosComEstoqueRepository.new)
-      ..add<GetLivrosRepository>(GetLivrosRepository.new)
       ..add<PesquisarLivroApiRepository>(PesquisarLivroApiRepository.new)
       ..add<SalvarImagemLivroRepository>(SalvarImagemLivroRepository.new)
-      ..add<UpdateLivroRepository>(UpdateLivroRepository.new)
 
       // CONTROLLERS
       ..addLazySingleton<AdicionarLivroController>(
         () => AdicionarLivroController(i(), i(), i(), i()),
-      )
-      ..addLazySingleton<HomePageController>(
-        () => HomePageController(i(), i()),
       )
       ..addLazySingleton<LivroDatailController>(
         () => LivroDatailController(i()),
