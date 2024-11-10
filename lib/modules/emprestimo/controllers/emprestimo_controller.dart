@@ -11,13 +11,15 @@ import 'package:biblioteca_pessoal/modules/usuario/controllers/user_controller.d
 import 'package:flutter/foundation.dart';
 
 class EmprestimoController extends ChangeNotifier {
+  // MODULE EMPRESTIMO
   final CreateEmprestimoRepository _createEmprestimoRepository;
+  final DeleteEmprestimoRepository _deleteEmprestimoRepository;
+  final UpdateEmprestimoRepository _updateEmprestimoRepository;
   final GetEmprestimosRepository _emprestimosRepository;
+  // MODULE LIVRO
   final GetLivrosComEstoqueRepository _getLivrosComEstoqueRepository;
   final GetLivroByIdRepository _getLivroByIdRepository;
   final UpdateLivroRepository _updateLivroRepository;
-  final UpdateEmprestimoRepository _updateEmprestimoRepository;
-  final DeleteEmprestimoRepository _deleteEmprestimoRepository;
 
   EmprestimoController(
     this._createEmprestimoRepository,

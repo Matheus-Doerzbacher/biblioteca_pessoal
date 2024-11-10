@@ -20,7 +20,9 @@ class LivroModule extends Module {
   void exportedBinds(Injector i) {
     i
       ..add<GetLivrosRepository>(GetLivrosRepository.new)
-      ..add<UpdateLivroRepository>(UpdateLivroRepository.new);
+      ..add<UpdateLivroRepository>(UpdateLivroRepository.new)
+      ..add<GetLivrosComEstoqueRepository>(GetLivrosComEstoqueRepository.new)
+      ..add<GetLivroByIdRepository>(GetLivroByIdRepository.new);
     super.exportedBinds(i);
   }
 
@@ -29,9 +31,7 @@ class LivroModule extends Module {
     i
       ..add<CreateLivroRepository>(CreateLivroRepository.new)
       ..add<DeleteLivroRepository>(DeleteLivroRepository.new)
-      ..add<GetLivroByIdRepository>(GetLivroByIdRepository.new)
       ..add<GetLivroByNameRepository>(GetLivroByNameRepository.new)
-      ..add<GetLivrosComEstoqueRepository>(GetLivrosComEstoqueRepository.new)
       ..add<PesquisarLivroApiRepository>(PesquisarLivroApiRepository.new)
       ..add<SalvarImagemLivroRepository>(SalvarImagemLivroRepository.new)
 
