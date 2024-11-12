@@ -5,6 +5,7 @@ import 'package:biblioteca_pessoal/modules/categoria/repositories/get_categorias
 import 'package:biblioteca_pessoal/modules/categoria/repositories/update_categoria_repository.dart';
 import 'package:biblioteca_pessoal/modules/categoria/views/categoria_page.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:provider/provider.dart';
 
 class CategoriaModule extends Module {
   @override
@@ -24,7 +25,13 @@ class CategoriaModule extends Module {
 
   @override
   void routes(RouteManager r) {
-    r.child(Modular.initialRoute, child: (_) => const CategoriaPage());
+    r.child(
+      Modular.initialRoute,
+      child: (_) => ChangeNotifierProvider<CategoriaController>(
+        create: (_) => Modular.get<CategoriaController>(),
+        child: const CategoriaPage(),
+      ),
+    );
     super.routes(r);
   }
 }

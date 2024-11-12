@@ -1,3 +1,4 @@
+import 'package:biblioteca_pessoal/core/utils/db_print.dart';
 import 'package:biblioteca_pessoal/modules/categoria/models/categoria.dart';
 import 'package:biblioteca_pessoal/modules/categoria/repositories/create_categoria_repository.dart';
 import 'package:biblioteca_pessoal/modules/categoria/repositories/delete_categoria_repository.dart';
@@ -20,31 +21,59 @@ class CategoriaController extends ChangeNotifier {
   );
 
   final userId = UserController.user?.uid ?? '';
-  late bool isLoading = false;
-  late List<Categoria> categorias = [];
 
-  Future<dynamic> createCategoria(Categoria categoria) async {
-    isLoading = true;
-    notifyListeners();
-    final result = await _createCategoriaRepository(categoria);
-    await getCategorias(userId);
-    return result;
+  List<Categoria> _categorias = [];
+
+  bool isLoading = false;
+  List<Categoria> get categorias => _categorias;
+
+  Future<void> createCategoria(Categoria categoria) async {
+    try {
+      isLoading = true;
+      notifyListeners();
+      final result = await _createCategoriaRepository(categoria);
+      if (result) {
+        _categorias.add(categoria);
+        notifyListeners();
+      }
+    } catch (error) {
+      dbPrint('Erro ao criar Categoria');
+      dbPrint(error);
+    } finally {
+      isLoading = false;
+      notifyListeners();
+    }
   }
 
-  Future<dynamic> deleteCategoria(String idCategoria) async {
-    isLoading = true;
-    notifyListeners();
-    final result = await _deleteCategoriaRepository(idCategoria);
-    await getCategorias(userId);
-    return result;
+  Future<void> deleteCategoria(String idCategoria) async {
+    try {
+      isLoading = true;
+      notifyListeners();
+      final result = await _deleteCategoriaRepository(idCategoria);
+      if (result) {
+        _categorias = _categorias.where((categoria) {
+          return categoria.id != idCategoria;
+        }).toList();
+        notifyListeners();
+      }
+    } catch (error) {
+      dbPrint('Erro ao deletar Categoria');
+      dbPrint(error);
+    } finally {
+      isLoading = false;
+      notifyListeners();
+    }
   }
 
   Future<dynamic> getCategorias(String uidUsuario) async {
     try {
       isLoading = true;
       notifyListeners();
-      categorias = await _getCategoriasRepository(uidUsuario);
+      _categorias = await _getCategoriasRepository(uidUsuario);
       notifyListeners();
+    } catch (error) {
+      dbPrint('Erro ao buscar Categorias');
+      dbPrint(error);
     } finally {
       isLoading = false;
       notifyListeners();
@@ -52,10 +81,18 @@ class CategoriaController extends ChangeNotifier {
   }
 
   Future<dynamic> updateCategoria(Categoria categoria) async {
-    isLoading = true;
-    notifyListeners();
-    final result = await _updateCategoriaRepository(categoria);
-    await getCategorias(userId);
-    return result;
+    try {
+      isLoading = true;
+      notifyListeners();
+      final result = await _updateCategoriaRepository(categoria);
+      await getCategorias(userId);
+      return result;
+    } catch (error) {
+      dbPrint('Erro ao buscar Categorias');
+      dbPrint(error);
+    } finally {
+      isLoading = false;
+      notifyListeners();
+    }
   }
 }

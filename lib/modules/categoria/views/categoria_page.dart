@@ -104,6 +104,8 @@ class _CategoriaPageState extends State<CategoriaPage> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final controllerWatch = context.watch<CategoriaController>();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Categorias'),
@@ -116,20 +118,19 @@ class _CategoriaPageState extends State<CategoriaPage> {
           children: [
             // Input adicionar Tarefas
             _inputAdicionarTarefa(context, colorScheme),
-            if (controller.isLoading)
-              // Loading
+            if (controllerWatch.isLoading)
               const Center(
                 child: CircularProgressIndicator(),
               )
             else
               // Lista de Tarefas
               Expanded(
-                child: controller.categorias.isNotEmpty
+                child: controllerWatch.categorias.isNotEmpty
                     ? ListView.builder(
                         padding: const EdgeInsets.only(top: 8),
-                        itemCount: controller.categorias.length,
+                        itemCount: controllerWatch.categorias.length,
                         itemBuilder: (context, index) {
-                          final categoria = controller.categorias[index];
+                          final categoria = controllerWatch.categorias[index];
                           return CategoriaItem(
                             text: categoria.nome,
                             deleteCategoria: () => _deleteCategoria(categoria),
