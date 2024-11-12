@@ -3,7 +3,7 @@ import 'package:biblioteca_pessoal/core/widgets/drawer_custom/drawer_item.dart';
 import 'package:biblioteca_pessoal/core/widgets/logo_app.dart';
 import 'package:biblioteca_pessoal/modules/usuario/controllers/user_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class DrawerCustom extends StatelessWidget {
   final String namePageActive;
@@ -12,7 +12,7 @@ class DrawerCustom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorSchema = Theme.of(context).colorScheme;
-    final controller = GetIt.I<UserController>();
+    final controller = Modular.get<UserController>();
     final user = UserController.user;
 
     return Drawer(
@@ -45,7 +45,7 @@ class DrawerCustom extends StatelessWidget {
                     text: 'Meus Livros',
                   ),
                   DrawerItem(
-                    namePage: AppRoutes.livro.adicionar,
+                    namePage: AppRoutes.livro.pesquisa(),
                     namePageActive: namePageActive,
                     icon: Icons.add_circle_outline,
                     text: 'Adicionar um livro',
@@ -57,7 +57,7 @@ class DrawerCustom extends StatelessWidget {
                     text: 'Categorias',
                   ),
                   DrawerItem(
-                    namePage: AppRoutes.emprestimo.base,
+                    namePage: AppRoutes.emprestimo.base(),
                     namePageActive: namePageActive,
                     icon: Icons.book,
                     text: 'Emprestimos',
@@ -74,7 +74,7 @@ class DrawerCustom extends StatelessWidget {
                     CircleAvatar(
                       radius: 32,
                       backgroundImage: NetworkImage(
-                        user!.photoURL ?? '',
+                        user?.photoURL ?? '',
                       ),
                     ),
                     const SizedBox(width: 8),
@@ -84,7 +84,7 @@ class DrawerCustom extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            user.displayName ?? '',
+                            user?.displayName ?? '',
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
                               fontSize: 14,
@@ -92,14 +92,17 @@ class DrawerCustom extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            user.email ?? '',
+                            user?.email ?? '',
                             style: const TextStyle(fontSize: 9),
                           ),
                         ],
                       ),
                     ),
                     IconButton(
-                      onPressed: controller.signOut,
+                      onPressed: () {
+                        controller.signOut();
+                        Modular.to.navigate(AppRoutes.login);
+                      },
                       icon: const Icon(Icons.logout),
                     ),
                   ],

@@ -6,7 +6,7 @@ import 'package:biblioteca_pessoal/modules/livro/models/livro.dart';
 import 'package:biblioteca_pessoal/modules/usuario/controllers/user_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class NovoEmprestimoPage extends StatefulWidget {
   const NovoEmprestimoPage({super.key});
@@ -16,7 +16,7 @@ class NovoEmprestimoPage extends StatefulWidget {
 }
 
 class _NovoEmprestimoPageState extends State<NovoEmprestimoPage> {
-  final controller = GetIt.I<EmprestimoController>();
+  final controller = Modular.get<EmprestimoController>();
 
   // Controllers Inputs
   final _nomeController = TextEditingController();
@@ -107,7 +107,7 @@ class _NovoEmprestimoPageState extends State<NovoEmprestimoPage> {
         _livroController = null;
 
         if (mounted) {
-          Navigator.of(context).pop(true);
+          Modular.to.pop(true);
         }
       } else {
         _bottomErrorMesage('Ouve um problema ao fazer o Emprestimo');

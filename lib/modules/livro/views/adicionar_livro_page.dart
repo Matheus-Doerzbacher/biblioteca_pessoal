@@ -11,7 +11,7 @@ import 'package:biblioteca_pessoal/modules/livro/views/components/selecionar_fot
 import 'package:biblioteca_pessoal/modules/usuario/controllers/user_controller.dart';
 import 'package:custom_rating_bar/custom_rating_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:multi_dropdown/multi_dropdown.dart';
 
 class AdicionarLivroPage extends StatefulWidget {
@@ -24,7 +24,7 @@ class AdicionarLivroPage extends StatefulWidget {
 
 class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
   final user = UserController.user;
-  final controller = GetIt.instance<AdicionarLivroController>();
+  final controller = Modular.get<AdicionarLivroController>();
 
   final _tituloController = TextEditingController();
   final _autorController = TextEditingController();
@@ -201,7 +201,7 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
 
       if (result == true) {
         if (mounted) {
-          await Navigator.of(context).pushNamed(AppRoutes.home);
+          Modular.to.navigate(AppRoutes.home);
         }
       } else {
         throw Exception('Houve um problema ao salvar o livro');

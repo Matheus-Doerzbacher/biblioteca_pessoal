@@ -3,7 +3,7 @@ import 'package:biblioteca_pessoal/core/widgets/drawer_custom/drawer_custom.dart
 import 'package:biblioteca_pessoal/core/widgets/livro_card_widget.dart';
 import 'package:biblioteca_pessoal/modules/livro/controllers/pesquisa_api_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class PesquisaApiPage extends StatefulWidget {
   const PesquisaApiPage({super.key});
@@ -13,7 +13,7 @@ class PesquisaApiPage extends StatefulWidget {
 }
 
 class _PesquisaApiPageState extends State<PesquisaApiPage> {
-  final controller = GetIt.instance.get<PesquisaApiController>();
+  final controller = Modular.get<PesquisaApiController>();
   final _pesquisarController = TextEditingController();
 
   @override
@@ -46,13 +46,13 @@ class _PesquisaApiPageState extends State<PesquisaApiPage> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.of(context).pushNamed(AppRoutes.livro.adicionarManual);
+              Modular.to.pushNamed(AppRoutes.livro.adicionar());
             },
             icon: const Icon(Icons.add_circle_outline),
           ),
         ],
       ),
-      drawer: DrawerCustom(namePageActive: AppRoutes.livro.adicionar),
+      drawer: DrawerCustom(namePageActive: AppRoutes.livro.pesquisa()),
       body: Column(
         children: [
           Padding(
@@ -122,9 +122,8 @@ class _PesquisaApiPageState extends State<PesquisaApiPage> {
                   final livro = controller.livros[index];
                   return GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(
-                        context,
-                        AppRoutes.livro.livroDetail,
+                      Modular.to.pushNamed(
+                        AppRoutes.livro.detail(),
                         arguments: livro,
                       );
                     },

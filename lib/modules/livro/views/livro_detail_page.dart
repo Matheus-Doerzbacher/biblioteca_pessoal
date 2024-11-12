@@ -3,7 +3,7 @@ import 'package:biblioteca_pessoal/modules/livro/controllers/livro_datail_contro
 import 'package:biblioteca_pessoal/modules/livro/models/livro.dart';
 import 'package:custom_rating_bar/custom_rating_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class LivroDetailPage extends StatefulWidget {
   final Livro livro;
@@ -14,11 +14,12 @@ class LivroDetailPage extends StatefulWidget {
 }
 
 class _LivroDetailPageState extends State<LivroDetailPage> {
-  final controller = GetIt.instance<LivroDatailController>();
+  final controller = Modular.get<LivroDatailController>();
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final livro = widget.livro;
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -148,8 +149,8 @@ class _LivroDetailPageState extends State<LivroDetailPage> {
                         ),
                         onPressed: () async {
                           if (context.mounted) {
-                            await Navigator.of(context).pushReplacementNamed(
-                              AppRoutes.livro.adicionarManual,
+                            await Modular.to.pushNamed(
+                              AppRoutes.livro.adicionar(),
                               arguments: livro,
                             );
                           }
@@ -179,8 +180,7 @@ class _LivroDetailPageState extends State<LivroDetailPage> {
                             onPressed: () async {
                               await controller.deleteLivro(livro.id!);
                               if (context.mounted) {
-                                await Navigator.of(context)
-                                    .pushReplacementNamed(AppRoutes.home);
+                                Modular.to.navigate(AppRoutes.home);
                               }
                             },
                             child: const Text(
@@ -206,9 +206,8 @@ class _LivroDetailPageState extends State<LivroDetailPage> {
                             ),
                             onPressed: () async {
                               if (context.mounted) {
-                                await Navigator.of(context)
-                                    .pushReplacementNamed(
-                                  AppRoutes.livro.adicionarManual,
+                                await Modular.to.pushNamed(
+                                  AppRoutes.livro.adicionar(),
                                   arguments: livro,
                                 );
                               }

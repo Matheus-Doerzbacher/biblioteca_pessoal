@@ -4,7 +4,7 @@ import 'package:biblioteca_pessoal/modules/emprestimo/controllers/emprestimo_con
 import 'package:biblioteca_pessoal/modules/emprestimo/models/emprestimo.dart';
 import 'package:biblioteca_pessoal/modules/emprestimo/views/components/emprestimo_item_component.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class EmprestimosPage extends StatefulWidget {
   const EmprestimosPage({super.key});
@@ -14,7 +14,7 @@ class EmprestimosPage extends StatefulWidget {
 }
 
 class _EmprestimosPageState extends State<EmprestimosPage> {
-  final controller = GetIt.I<EmprestimoController>();
+  final controller = Modular.get<EmprestimoController>();
 
   @override
   void initState() {
@@ -62,8 +62,8 @@ class _EmprestimosPageState extends State<EmprestimosPage> {
           actions: [
             TextButton.icon(
               onPressed: () async {
-                final result = await Navigator.of(context).pushNamed(
-                  AppRoutes.emprestimo.novo,
+                final result = await Modular.to.pushNamed(
+                  AppRoutes.emprestimo.novo(),
                 );
 
                 // Após retornar, atualiza os dados da página
@@ -78,7 +78,7 @@ class _EmprestimosPageState extends State<EmprestimosPage> {
             ),
           ],
         ),
-        drawer: DrawerCustom(namePageActive: AppRoutes.emprestimo.base),
+        drawer: DrawerCustom(namePageActive: AppRoutes.emprestimo.base()),
         body: TabBarView(
           children: [
             _listTodos(context, emprestimos),

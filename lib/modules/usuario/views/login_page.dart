@@ -3,8 +3,8 @@ import 'package:biblioteca_pessoal/modules/usuario/controllers/user_controller.d
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get_it/get_it.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -15,7 +15,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool _isLoading = false;
-  final controller = GetIt.I<UserController>();
+  final controller = Modular.get<UserController>();
 
   @override
   Widget build(BuildContext context) {
@@ -68,8 +68,7 @@ class _LoginPageState extends State<LoginPage> {
                                     await controller.loginWithGoogle();
 
                                     if (context.mounted) {
-                                      await Navigator.of(context)
-                                          .pushReplacementNamed(AppRoutes.home);
+                                      Modular.to.navigate(AppRoutes.home);
                                     }
                                   } on FirebaseAuthException catch (error) {
                                     if (kDebugMode) {

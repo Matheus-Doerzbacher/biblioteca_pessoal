@@ -1,3 +1,4 @@
+import 'package:biblioteca_pessoal/modules/categoria/categoria_module.dart';
 import 'package:biblioteca_pessoal/modules/livro/controllers/adicionar_livro_controller.dart';
 import 'package:biblioteca_pessoal/modules/livro/controllers/livro_datail_controller.dart';
 import 'package:biblioteca_pessoal/modules/livro/controllers/pesquisa_api_controller.dart';
@@ -17,10 +18,14 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 class LivroModule extends Module {
   @override
+  List<Module> get imports => [
+        CategoriaModule(),
+      ];
+
+  @override
   void exportedBinds(Injector i) {
     i
       ..add<GetLivrosRepository>(GetLivrosRepository.new)
-      ..add<UpdateLivroRepository>(UpdateLivroRepository.new)
       ..add<GetLivrosComEstoqueRepository>(GetLivrosComEstoqueRepository.new)
       ..add<GetLivroByIdRepository>(GetLivroByIdRepository.new);
     super.exportedBinds(i);
@@ -34,6 +39,7 @@ class LivroModule extends Module {
       ..add<GetLivroByNameRepository>(GetLivroByNameRepository.new)
       ..add<PesquisarLivroApiRepository>(PesquisarLivroApiRepository.new)
       ..add<SalvarImagemLivroRepository>(SalvarImagemLivroRepository.new)
+      ..add<UpdateLivroRepository>(UpdateLivroRepository.new)
 
       // CONTROLLERS
       ..addLazySingleton<AdicionarLivroController>(
@@ -54,7 +60,7 @@ class LivroModule extends Module {
     r
       ..child(
         '/adicionar',
-        child: (context) => const AdicionarLivroPage(),
+        child: (context) => AdicionarLivroPage(livroUpdate: r.args.data),
       )
       ..child(
         '/detail',

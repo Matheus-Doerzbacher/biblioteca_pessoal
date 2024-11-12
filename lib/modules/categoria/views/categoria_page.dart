@@ -5,7 +5,7 @@ import 'package:biblioteca_pessoal/modules/categoria/models/categoria.dart';
 import 'package:biblioteca_pessoal/modules/categoria/views/components/categoria_item.dart';
 import 'package:biblioteca_pessoal/modules/usuario/controllers/user_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class CategoriaPage extends StatefulWidget {
   const CategoriaPage({super.key});
@@ -16,7 +16,7 @@ class CategoriaPage extends StatefulWidget {
 
 class _CategoriaPageState extends State<CategoriaPage> {
   final user = UserController.user;
-  final CategoriaController controller = GetIt.I<CategoriaController>();
+  final CategoriaController controller = Modular.get<CategoriaController>();
   final TextEditingController _textController = TextEditingController();
   final TextEditingController _editController = TextEditingController();
 
@@ -70,7 +70,7 @@ class _CategoriaPageState extends State<CategoriaPage> {
             TextButton(
               child: const Text('Cancelar'),
               onPressed: () {
-                Navigator.of(context).pop();
+                Modular.to.pop();
               },
             ),
             TextButton(
@@ -96,7 +96,7 @@ class _CategoriaPageState extends State<CategoriaPage> {
       ),
     );
     if (mounted) {
-      Navigator.of(context).pop();
+      Modular.to.pop();
       setState(() {});
     }
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class DrawerItem extends StatelessWidget {
   final String namePage;
@@ -21,7 +22,7 @@ class DrawerItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     return GestureDetector(
-      onTap: () => Navigator.of(context).pushReplacementNamed(namePage),
+      onTap: () => Modular.to.navigate(namePage),
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(

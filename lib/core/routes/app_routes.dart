@@ -8,12 +8,14 @@ class AppRoutes {
 }
 
 class AdicionarLivro {
-  final String adicionar = '/adicionar';
-  final String adicionarManual = '/adicionarManual';
-  final String livroDetail = '/livroDetail';
+  final String _base = '/livro';
+  String adicionar() => '$_base/adicionar';
+  String detail() => '$_base/detail';
+  String pesquisa() => '$_base/pesquisa';
 }
 
 class EmprestimoRouter {
-  final String base = '/emprestimo';
-  final String novo = '/novoEmprestimo';
+  final String _base = '/emprestimo';
+  String base() => _base;
+  String novo() => '$_base/novo';
 }
