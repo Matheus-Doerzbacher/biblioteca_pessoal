@@ -40,7 +40,7 @@ class DrawerCustom extends StatelessWidget {
                   const SizedBox(height: 12),
                   DrawerItem(
                     icon: Icons.dashboard_rounded,
-                    namePage: AppRoutes.home,
+                    namePage: AppRoutes.livro.home(),
                     namePageActive: namePageActive,
                     text: 'Meus Livros',
                   ),

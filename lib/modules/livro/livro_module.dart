@@ -1,6 +1,5 @@
 import 'package:biblioteca_pessoal/modules/categoria/categoria_module.dart';
-import 'package:biblioteca_pessoal/modules/livro/controllers/adicionar_livro_controller.dart';
-import 'package:biblioteca_pessoal/modules/livro/controllers/livro_datail_controller.dart';
+import 'package:biblioteca_pessoal/modules/livro/controllers/livro_controller.dart';
 import 'package:biblioteca_pessoal/modules/livro/controllers/pesquisa_api_controller.dart';
 import 'package:biblioteca_pessoal/modules/livro/repositories/create_livro_repository.dart';
 import 'package:biblioteca_pessoal/modules/livro/repositories/delete_livro_repository.dart';
@@ -13,8 +12,10 @@ import 'package:biblioteca_pessoal/modules/livro/repositories/salvar_imagem_livr
 import 'package:biblioteca_pessoal/modules/livro/repositories/update_livro_repository.dart';
 import 'package:biblioteca_pessoal/modules/livro/views/adicionar_livro_page.dart';
 import 'package:biblioteca_pessoal/modules/livro/views/livro_detail_page.dart';
+import 'package:biblioteca_pessoal/modules/livro/views/livros_page.dart';
 import 'package:biblioteca_pessoal/modules/livro/views/pesquisa_api_page.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:provider/provider.dart';
 
 class LivroModule extends Module {
   @override
@@ -25,7 +26,6 @@ class LivroModule extends Module {
   @override
   void exportedBinds(Injector i) {
     i
-      ..add<GetLivrosRepository>(GetLivrosRepository.new)
       ..add<GetLivrosComEstoqueRepository>(GetLivrosComEstoqueRepository.new)
       ..add<GetLivroByIdRepository>(GetLivroByIdRepository.new);
     super.exportedBinds(i);
@@ -34,6 +34,7 @@ class LivroModule extends Module {
   @override
   void binds(Injector i) {
     i
+      ..add<GetLivrosRepository>(GetLivrosRepository.new)
       ..add<CreateLivroRepository>(CreateLivroRepository.new)
       ..add<DeleteLivroRepository>(DeleteLivroRepository.new)
       ..add<GetLivroByNameRepository>(GetLivroByNameRepository.new)
@@ -42,11 +43,8 @@ class LivroModule extends Module {
       ..add<UpdateLivroRepository>(UpdateLivroRepository.new)
 
       // CONTROLLERS
-      ..addLazySingleton<AdicionarLivroController>(
-        () => AdicionarLivroController(i(), i(), i(), i()),
-      )
-      ..addLazySingleton<LivroDatailController>(
-        () => LivroDatailController(i()),
+      ..addLazySingleton<LivroController>(
+        () => LivroController(i(), i(), i(), i(), i(), i()),
       )
       ..addLazySingleton<PesquisaApiController>(
         () => PesquisaApiController(i()),
@@ -58,6 +56,13 @@ class LivroModule extends Module {
   @override
   void routes(RouteManager r) {
     r
+      ..child(
+        Modular.initialRoute,
+        child: (_) => ChangeNotifierProvider<LivroController>(
+          create: (_) => Modular.get<LivroController>(),
+          child: const LivrosPage(),
+        ),
+      )
       ..child(
         '/adicionar',
         child: (context) => AdicionarLivroPage(livroUpdate: r.args.data),

@@ -68,7 +68,9 @@ class _LoginPageState extends State<LoginPage> {
                                     await controller.loginWithGoogle();
 
                                     if (context.mounted) {
-                                      Modular.to.navigate(AppRoutes.home);
+                                      Modular.to.navigate(
+                                        AppRoutes.livro.home(),
+                                      );
                                     }
                                   } on FirebaseAuthException catch (error) {
                                     if (kDebugMode) {

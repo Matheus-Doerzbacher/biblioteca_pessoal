@@ -1,5 +1,5 @@
 import 'package:biblioteca_pessoal/core/routes/app_routes.dart';
-import 'package:biblioteca_pessoal/modules/livro/controllers/livro_datail_controller.dart';
+import 'package:biblioteca_pessoal/modules/livro/controllers/livro_controller.dart';
 import 'package:biblioteca_pessoal/modules/livro/models/livro.dart';
 import 'package:custom_rating_bar/custom_rating_bar.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +14,7 @@ class LivroDetailPage extends StatefulWidget {
 }
 
 class _LivroDetailPageState extends State<LivroDetailPage> {
-  final controller = Modular.get<LivroDatailController>();
+  final controller = Modular.get<LivroController>();
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
@@ -180,7 +180,7 @@ class _LivroDetailPageState extends State<LivroDetailPage> {
                             onPressed: () async {
                               await controller.deleteLivro(livro.id!);
                               if (context.mounted) {
-                                Modular.to.navigate(AppRoutes.home);
+                                Modular.to.navigate(AppRoutes.livro.home());
                               }
                             },
                             child: const Text(

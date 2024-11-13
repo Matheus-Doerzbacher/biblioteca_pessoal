@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:biblioteca_pessoal/core/routes/app_routes.dart';
 import 'package:biblioteca_pessoal/core/widgets/input_text_custom.dart';
 import 'package:biblioteca_pessoal/modules/categoria/models/categoria.dart';
-import 'package:biblioteca_pessoal/modules/livro/controllers/adicionar_livro_controller.dart';
+import 'package:biblioteca_pessoal/modules/livro/controllers/livro_controller.dart';
 import 'package:biblioteca_pessoal/modules/livro/models/livro.dart';
 import 'package:biblioteca_pessoal/modules/livro/views/components/drop_down_multi_custom.dart';
 import 'package:biblioteca_pessoal/modules/livro/views/components/drop_down_single_custom.dart';
@@ -24,7 +24,7 @@ class AdicionarLivroPage extends StatefulWidget {
 
 class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
   final user = UserController.user;
-  final controller = Modular.get<AdicionarLivroController>();
+  final controller = Modular.get<LivroController>();
 
   final _tituloController = TextEditingController();
   final _autorController = TextEditingController();
@@ -191,20 +191,14 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
             : _ratingController.toInt(),
       );
 
-      late bool result;
-
       if (widget.livroUpdate?.id != null) {
-        result = await controller.updateLivro(livro);
+        await controller.updateLivro(livro);
       } else {
-        result = await controller.createLivro(livro);
+        await controller.createLivro(livro);
       }
 
-      if (result == true) {
-        if (mounted) {
-          Modular.to.navigate(AppRoutes.home);
-        }
-      } else {
-        throw Exception('Houve um problema ao salvar o livro');
+      if (mounted) {
+        Modular.to.navigate(AppRoutes.livro.home());
       }
     } catch (e) {
       _showError(

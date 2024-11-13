@@ -1,58 +1,35 @@
 import 'package:biblioteca_pessoal/core/routes/app_routes.dart';
 import 'package:biblioteca_pessoal/core/widgets/drawer_custom/drawer_custom.dart';
 import 'package:biblioteca_pessoal/core/widgets/livro_card_widget.dart';
-import 'package:biblioteca_pessoal/modules/home/controllers/home_controller.dart';
+import 'package:biblioteca_pessoal/modules/livro/controllers/livro_controller.dart';
 import 'package:biblioteca_pessoal/modules/livro/models/livro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class LivrosPage extends StatefulWidget {
+  const LivrosPage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<LivrosPage> createState() => _LivrosPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _LivrosPageState extends State<LivrosPage> {
   final _pesquisarController = TextEditingController();
-  final controller = Modular.get<HomeController>();
-  List<Livro> _filteredLivros = [];
+  final List<Livro> _filteredLivros = [];
 
   @override
   void initState() {
     super.initState();
-    _pesquisarController.addListener(_onSearchChanged);
-    controller.getLivros().then((_) {
-      if (mounted) {
-        setState(() {
-          _filteredLivros = controller.livros;
-        });
-      }
-    });
   }
 
   @override
-  void dispose() {
-    _pesquisarController
-      ..removeListener(_onSearchChanged)
-      ..dispose();
-    super.dispose();
-  }
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final controller = context.watch<LivroController>();
 
-  void _onSearchChanged() {
-    setState(() {
-      final query = _pesquisarController.text.toLowerCase();
-      _filteredLivros = controller.livros.where((livro) {
-        return livro.titulo.toLowerCase().contains(query) ||
-            livro.autor.toLowerCase().contains(query);
-      }).toList();
-    });
-  }
+    Future<void> _favoritarLivro(Livro livro) async {
+      await controller.favoritarLivro(livro);
 
-  Future<void> _favoritarLivro(Livro livro) async {
-    final result = await controller.favoritarLivro(livro);
-
-    if (result) {
       setState(() {
         for (final liv in _filteredLivros) {
           if (liv.id! == livro.id!) {
@@ -61,26 +38,13 @@ class _HomePageState extends State<HomePage> {
         }
       });
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final livros = _filteredLivros;
-
-    // final livros =
-    //  Provider.of<LivroController>(context).livros.where((livro) {
-    //   final query = _pesquisarController.text.toLowerCase();
-    //   return livro.titulo.toLowerCase().contains(query) ||
-    //       livro.autor.toLowerCase().contains(query);
-    // }).toList();
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Meus Livros'),
         centerTitle: true,
       ),
-      drawer: const DrawerCustom(namePageActive: AppRoutes.home),
+      drawer: DrawerCustom(namePageActive: AppRoutes.livro.home()),
       body: GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();
@@ -119,7 +83,7 @@ class _HomePageState extends State<HomePage> {
                 )
               else
                 Expanded(
-                  child: livros.isNotEmpty
+                  child: controller.livros.isNotEmpty
                       ? GridView.builder(
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
@@ -128,9 +92,9 @@ class _HomePageState extends State<HomePage> {
                             mainAxisSpacing: 16,
                             crossAxisSpacing: 16,
                           ),
-                          itemCount: livros.length,
+                          itemCount: controller.livros.length,
                           itemBuilder: (context, index) {
-                            final livro = livros[index];
+                            final livro = controller.livros[index];
                             return GestureDetector(
                               onTap: () {
                                 Modular.to.pushNamed(
