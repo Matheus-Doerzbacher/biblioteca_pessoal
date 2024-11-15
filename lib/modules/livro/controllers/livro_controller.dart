@@ -32,18 +32,37 @@ class LivroController extends ChangeNotifier {
 
   List<Livro> _livros = [];
   List<Categoria> _categoriasUsuario = [];
+  List<Livro> _livrosFiltrados = [];
+  String _filtroAtual = '';
 
   bool isLoading = false;
 
   List<Livro> get livros => _livros;
   List<Categoria> get categoriasUsuario => _categoriasUsuario;
+  List<Livro> get livrosFiltrados => _livrosFiltrados;
+
+  void setFiltro(String filtro) {
+    _filtroAtual = filtro;
+    _aplicarFiltro();
+  }
+
+  void _aplicarFiltro() {
+    if (_filtroAtual.isEmpty) {
+      _livrosFiltrados = _livros;
+    } else {
+      _livrosFiltrados = _livros.where((livro) {
+        return livro.titulo.contains(_filtroAtual);
+      }).toList();
+    }
+    notifyListeners();
+  }
 
   Future<void> getLivros() async {
     try {
       isLoading = true;
       notifyListeners();
       _livros = await _getLivrosRepository(UserController.user!.uid);
-      notifyListeners();
+      _aplicarFiltro();
     } finally {
       isLoading = false;
       notifyListeners();

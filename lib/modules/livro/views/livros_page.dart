@@ -15,11 +15,23 @@ class LivrosPage extends StatefulWidget {
 
 class _LivrosPageState extends State<LivrosPage> {
   final _pesquisarController = TextEditingController();
-  final List<Livro> _filteredLivros = [];
 
   @override
   void initState() {
     super.initState();
+    _pesquisarController.addListener(_onSearchChanged);
+  }
+
+  @override
+  void dispose() {
+    _pesquisarController
+      ..removeListener(_onSearchChanged)
+      ..dispose();
+    super.dispose();
+  }
+
+  void _onSearchChanged() {
+    context.read<LivroController>().setFiltro(_pesquisarController.text);
   }
 
   @override
@@ -29,14 +41,6 @@ class _LivrosPageState extends State<LivrosPage> {
 
     Future<void> _favoritarLivro(Livro livro) async {
       await controller.favoritarLivro(livro);
-
-      setState(() {
-        for (final liv in _filteredLivros) {
-          if (liv.id! == livro.id!) {
-            liv.isFavorito = livro.isFavorito;
-          }
-        }
-      });
     }
 
     return Scaffold(
@@ -83,7 +87,7 @@ class _LivrosPageState extends State<LivrosPage> {
                 )
               else
                 Expanded(
-                  child: controller.livros.isNotEmpty
+                  child: controller.livrosFiltrados.isNotEmpty
                       ? GridView.builder(
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
@@ -92,9 +96,9 @@ class _LivrosPageState extends State<LivrosPage> {
                             mainAxisSpacing: 16,
                             crossAxisSpacing: 16,
                           ),
-                          itemCount: controller.livros.length,
+                          itemCount: controller.livrosFiltrados.length,
                           itemBuilder: (context, index) {
-                            final livro = controller.livros[index];
+                            final livro = controller.livrosFiltrados[index];
                             return GestureDetector(
                               onTap: () {
                                 Modular.to.pushNamed(
