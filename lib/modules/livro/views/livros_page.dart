@@ -47,9 +47,26 @@ class _LivrosPageState extends State<LivrosPage> {
     context.read<LivroController>().setFiltro(_pesquisarController.text);
   }
 
+  void _onCloseFilter() {
+    if (_openFilter) {
+      _selectController.text = 'todos';
+      controller
+        ..setCategoriaFiltro('todos')
+        ..setSomenteFavoritos(somenteFavoritos: false);
+      setState(() {
+        _openFilter = false;
+      });
+    } else {
+      setState(() {
+        _openFilter = true;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final controller = context.watch<LivroController>();
+    final colorScheme = Theme.of(context).colorScheme;
 
     Future<void> _favoritarLivro(Livro livro) async {
       await controller.favoritarLivro(livro);
@@ -61,11 +78,7 @@ class _LivrosPageState extends State<LivrosPage> {
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: () {
-              setState(() {
-                _openFilter = !_openFilter;
-              });
-            },
+            onPressed: _onCloseFilter,
             icon: _openFilter
                 ? const Icon(Icons.close)
                 : const Icon(Icons.filter_list),
@@ -81,7 +94,37 @@ class _LivrosPageState extends State<LivrosPage> {
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
-              if (_openFilter) _buildFilter(context),
+              AnimatedCrossFade(
+                firstChild: Container(),
+                secondChild: _buildFilter(context),
+                crossFadeState: _openFilter
+                    ? CrossFadeState.showSecond
+                    : CrossFadeState.showFirst,
+                duration: const Duration(milliseconds: 300),
+              ),
+              TextFormField(
+                textAlignVertical: TextAlignVertical.top,
+                controller: _pesquisarController,
+                decoration: InputDecoration(
+                  suffixIcon: const Icon(Icons.search, size: 24),
+                  isDense: true,
+                  hintText: 'Pesquisar',
+                  fillColor: colorScheme.surfaceContainer,
+                  filled: true,
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: const BorderSide(
+                      color: Colors.transparent,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Colors.transparent,
+                    ),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+              ),
               const SizedBox(height: 16),
               if (controller.isLoading)
                 const Center(
@@ -186,29 +229,6 @@ class _LivrosPageState extends State<LivrosPage> {
           ],
         ),
         const SizedBox(height: 16),
-        TextFormField(
-          textAlignVertical: TextAlignVertical.top,
-          controller: _pesquisarController,
-          decoration: InputDecoration(
-            suffixIcon: const Icon(Icons.search, size: 24),
-            isDense: true,
-            hintText: 'Pesquisar',
-            fillColor: colorScheme.surfaceContainer,
-            filled: true,
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(
-                color: Colors.transparent,
-              ),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: const BorderSide(
-                color: Colors.transparent,
-              ),
-              borderRadius: BorderRadius.circular(8),
-            ),
-          ),
-        ),
       ],
     );
   }
