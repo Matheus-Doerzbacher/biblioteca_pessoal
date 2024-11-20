@@ -3,7 +3,7 @@ class AppRoutes {
   static final emprestimo = EmprestimoRouter();
 
   static const String login = '/login';
-  static const String categoria = '/categoria';
+  static const String categoria = '/categoria/';
 }
 
 class AdicionarLivro {

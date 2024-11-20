@@ -4,8 +4,10 @@ import 'package:biblioteca_pessoal/modules/categoria/repositories/create_categor
 import 'package:biblioteca_pessoal/modules/categoria/repositories/delete_categoria_repository.dart';
 import 'package:biblioteca_pessoal/modules/categoria/repositories/get_categorias_repository.dart';
 import 'package:biblioteca_pessoal/modules/categoria/repositories/update_categoria_repository.dart';
+import 'package:biblioteca_pessoal/modules/livro/controllers/livro_controller.dart';
 import 'package:biblioteca_pessoal/modules/usuario/controllers/user_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class CategoriaController extends ChangeNotifier {
   final CreateCategoriaRepository _createCategoriaRepository;
@@ -59,6 +61,7 @@ class CategoriaController extends ChangeNotifier {
         }).toList();
         notifyListeners();
       }
+      await Modular.get<LivroController>().getLivros();
     } catch (error) {
       dbPrint('Erro ao deletar Categoria');
       dbPrint(error);

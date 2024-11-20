@@ -99,6 +99,10 @@ class LivroController extends ChangeNotifier {
     _livros
       ..removeAt(index)
       ..insert(index, livro);
+
+    _livrosFiltrados
+      ..removeAt(index)
+      ..insert(index, livro);
     notifyListeners();
   }
 

@@ -15,6 +15,7 @@ class Categoria {
 
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
       'uidUsuario': uidUsuario,
       'nome': nome,
     };
