@@ -1,6 +1,7 @@
 import 'package:biblioteca_pessoal/core/routes/app_routes.dart';
 import 'package:biblioteca_pessoal/core/widgets/drawer_custom/drawer_custom.dart';
 import 'package:biblioteca_pessoal/core/widgets/livro_card_widget.dart';
+import 'package:biblioteca_pessoal/modules/categoria/models/categoria.dart';
 import 'package:biblioteca_pessoal/modules/livro/controllers/livro_controller.dart';
 import 'package:biblioteca_pessoal/modules/livro/models/livro.dart';
 import 'package:flutter/material.dart';
@@ -15,11 +16,22 @@ class LivrosPage extends StatefulWidget {
 
 class _LivrosPageState extends State<LivrosPage> {
   final _pesquisarController = TextEditingController();
+  final _selectController = TextEditingController();
+  final controller = Modular.get<LivroController>();
+  List<Categoria> _categorias = [];
 
   @override
   void initState() {
     super.initState();
     _pesquisarController.addListener(_onSearchChanged);
+    controller.getCategorias().then((_) {
+      if (mounted) {
+        setState(() {
+          _categorias = controller.categoriasUsuario;
+        });
+      }
+    });
+    _selectController.text = 'todos';
   }
 
   @override
@@ -36,7 +48,6 @@ class _LivrosPageState extends State<LivrosPage> {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
     final controller = context.watch<LivroController>();
 
     Future<void> _favoritarLivro(Livro livro) async {
@@ -57,29 +68,7 @@ class _LivrosPageState extends State<LivrosPage> {
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
-              TextFormField(
-                textAlignVertical: TextAlignVertical.top,
-                controller: _pesquisarController,
-                decoration: InputDecoration(
-                  suffixIcon: const Icon(Icons.search, size: 24),
-                  isDense: true,
-                  hintText: 'Pesquisar',
-                  fillColor: colorScheme.surfaceContainer,
-                  filled: true,
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: const BorderSide(
-                      color: Colors.transparent,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      color: Colors.transparent,
-                    ),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-              ),
+              _buildFilter(context),
               const SizedBox(height: 16),
               if (controller.isLoading)
                 const Center(
@@ -122,6 +111,85 @@ class _LivrosPageState extends State<LivrosPage> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildFilter(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              decoration: BoxDecoration(
+                color: colorScheme.surfaceContainer,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: DropdownButton<String>(
+                value: _selectController.text,
+                items: [
+                  const DropdownMenuItem<String>(
+                    value: 'todos',
+                    child: Text('Todos'),
+                  ),
+                  ..._categorias.map((categoria) {
+                    return DropdownMenuItem<String>(
+                      value: categoria.nome,
+                      child: Text(categoria.nome),
+                    );
+                  }).toList(),
+                ],
+                onChanged: (String? newValue) {
+                  if (newValue != null) {
+                    _selectController.text = newValue;
+                    controller.setCategoriaFiltro(newValue);
+                  }
+                },
+                hint: const Text('Categoria'),
+              ),
+            ),
+            Row(
+              children: [
+                const Text('Favoritos'),
+                Switch(
+                  value: controller.somenteFavoritos,
+                  onChanged: (bool value) {
+                    controller.setSomenteFavoritos(
+                      somenteFavoritos: value,
+                    );
+                  },
+                ),
+              ],
+            ),
+          ],
+        ),
+        const SizedBox(height: 16),
+        TextFormField(
+          textAlignVertical: TextAlignVertical.top,
+          controller: _pesquisarController,
+          decoration: InputDecoration(
+            suffixIcon: const Icon(Icons.search, size: 24),
+            isDense: true,
+            hintText: 'Pesquisar',
+            fillColor: colorScheme.surfaceContainer,
+            filled: true,
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: const BorderSide(
+                color: Colors.transparent,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: const BorderSide(
+                color: Colors.transparent,
+              ),
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

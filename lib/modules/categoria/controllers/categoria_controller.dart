@@ -25,7 +25,10 @@ class CategoriaController extends ChangeNotifier {
   List<Categoria> _categorias = [];
 
   bool isLoading = false;
-  List<Categoria> get categorias => _categorias;
+  List<Categoria> get categorias {
+    _categorias.sort((a, b) => a.nome.compareTo(b.nome));
+    return _categorias;
+  }
 
   Future<void> createCategoria(Categoria categoria) async {
     try {

@@ -5,6 +5,17 @@ class DeleteCategoriaRepository {
     try {
       final firestore = FirebaseFirestore.instance;
       await firestore.collection('categorias').doc(idCategoria).delete();
+      final livrosQuery = firestore
+          .collection('livros')
+          .where('categorias.id', isEqualTo: idCategoria);
+      final livrosSnapshot = await livrosQuery.get();
+      for (final doc in livrosSnapshot.docs) {
+        await doc.reference.update(
+          {
+            'categorias': FieldValue.arrayRemove([idCategoria]),
+          },
+        );
+      }
       return true;
     } catch (e) {
       return false;

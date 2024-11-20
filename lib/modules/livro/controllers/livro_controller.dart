@@ -28,32 +28,57 @@ class LivroController extends ChangeNotifier {
     this._deleteLivroRepository,
   ) {
     getLivros();
+    getCategorias();
   }
 
   List<Livro> _livros = [];
   List<Categoria> _categoriasUsuario = [];
   List<Livro> _livrosFiltrados = [];
   String _filtroAtual = '';
+  String _categoriaFiltro = '';
+  bool _somenteFavoritos = false;
 
   bool isLoading = false;
 
   List<Livro> get livros => _livros;
-  List<Categoria> get categoriasUsuario => _categoriasUsuario;
+  List<Categoria> get categoriasUsuario {
+    _categoriasUsuario.sort((a, b) => a.nome.compareTo(b.nome));
+    return _categoriasUsuario;
+  }
+
   List<Livro> get livrosFiltrados => _livrosFiltrados;
+
+  bool get somenteFavoritos => _somenteFavoritos;
 
   void setFiltro(String filtro) {
     _filtroAtual = filtro;
     _aplicarFiltro();
   }
 
+  void setCategoriaFiltro(String categoria) {
+    _categoriaFiltro = categoria;
+    _aplicarFiltro();
+  }
+
+  void setSomenteFavoritos({required bool somenteFavoritos}) {
+    _somenteFavoritos = somenteFavoritos;
+    _aplicarFiltro();
+  }
+
   void _aplicarFiltro() {
-    if (_filtroAtual.isEmpty) {
-      _livrosFiltrados = _livros;
-    } else {
-      _livrosFiltrados = _livros.where((livro) {
-        return livro.titulo.contains(_filtroAtual);
-      }).toList();
-    }
+    _livrosFiltrados = _livros.where((livro) {
+      final filtroTitulo = _filtroAtual.isEmpty ||
+          livro.titulo.toLowerCase().contains(_filtroAtual.toLowerCase());
+      final filtroCategoria = _categoriaFiltro.isEmpty ||
+          _categoriaFiltro.toLowerCase() == 'todos' ||
+          livro.categorias.any(
+            (categoria) =>
+                categoria.nome.toLowerCase() == _categoriaFiltro.toLowerCase(),
+          );
+      final filtroFavorito = !_somenteFavoritos || livro.isFavorito;
+
+      return filtroTitulo && filtroCategoria && filtroFavorito;
+    }).toList();
     notifyListeners();
   }
 
@@ -139,9 +164,11 @@ class LivroController extends ChangeNotifier {
 
       await _deleteLivroRepository(idLivro);
       _livros = _livros.where((livro) => livro.id != idLivro).toList();
+      _livrosFiltrados =
+          _livrosFiltrados.where((livro) => livro.id != idLivro).toList();
       notifyListeners();
     } catch (error) {
-      throw Exception('Erro ao atualizar livro');
+      throw Exception('Erro ao deletar livro');
     } finally {
       isLoading = false;
       notifyListeners();
