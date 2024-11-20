@@ -126,6 +126,7 @@ class LivroController extends ChangeNotifier {
       final newLivro = await _createLivroRepository(livro);
       if (newLivro != null) {
         _livros.add(newLivro);
+        _livrosFiltrados.add(newLivro);
         notifyListeners();
       }
     } catch (error) {

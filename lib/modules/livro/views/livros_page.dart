@@ -15,6 +15,7 @@ class LivrosPage extends StatefulWidget {
 }
 
 class _LivrosPageState extends State<LivrosPage> {
+  bool _openFilter = false;
   final _pesquisarController = TextEditingController();
   final _selectController = TextEditingController();
   final controller = Modular.get<LivroController>();
@@ -58,6 +59,18 @@ class _LivrosPageState extends State<LivrosPage> {
       appBar: AppBar(
         title: const Text('Meus Livros'),
         centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: () {
+              setState(() {
+                _openFilter = !_openFilter;
+              });
+            },
+            icon: _openFilter
+                ? const Icon(Icons.close)
+                : const Icon(Icons.filter_list),
+          ),
+        ],
       ),
       drawer: DrawerCustom(namePageActive: AppRoutes.livro.home()),
       body: GestureDetector(
@@ -68,7 +81,7 @@ class _LivrosPageState extends State<LivrosPage> {
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
-              _buildFilter(context),
+              if (_openFilter) _buildFilter(context),
               const SizedBox(height: 16),
               if (controller.isLoading)
                 const Center(
@@ -121,35 +134,42 @@ class _LivrosPageState extends State<LivrosPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              decoration: BoxDecoration(
-                color: colorScheme.surfaceContainer,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: DropdownButton<String>(
-                value: _selectController.text,
-                items: [
-                  const DropdownMenuItem<String>(
-                    value: 'todos',
-                    child: Text('Todos'),
-                  ),
-                  ..._categorias.map((categoria) {
-                    return DropdownMenuItem<String>(
-                      value: categoria.nome,
-                      child: Text(categoria.nome),
-                    );
-                  }).toList(),
-                ],
-                onChanged: (String? newValue) {
-                  if (newValue != null) {
-                    _selectController.text = newValue;
-                    controller.setCategoriaFiltro(newValue);
-                  }
-                },
-                hint: const Text('Categoria'),
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                decoration: BoxDecoration(
+                  color: colorScheme.surfaceContainer,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: DropdownButton<String>(
+                  isExpanded: true,
+                  value: _selectController.text,
+                  items: [
+                    const DropdownMenuItem<String>(
+                      value: 'todos',
+                      child: Text('Todos'),
+                    ),
+                    ..._categorias.map((categoria) {
+                      return DropdownMenuItem<String>(
+                        value: categoria.nome,
+                        child: Text(
+                          categoria.nome,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      );
+                    }).toList(),
+                  ],
+                  onChanged: (String? newValue) {
+                    if (newValue != null) {
+                      _selectController.text = newValue;
+                      controller.setCategoriaFiltro(newValue);
+                    }
+                  },
+                  hint: const Text('Categoria'),
+                ),
               ),
             ),
+            const SizedBox(width: 16),
             Row(
               children: [
                 const Text('Favoritos'),
