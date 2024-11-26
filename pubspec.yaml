@@ -30,13 +30,22 @@ dependencies:
   provider: ^6.1.2
   http: ^1.2.2
   flutter_modular: ^6.3.4
+  flutter_launcher_icons: ^0.14.1
+  flutter_native_splash: ^2.4.3
   
+flutter_native_splash:
+  color: "#663300"
+  image: assets/icon/splash.png
+  android: true
+  ios: true
+  web: true
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   flutterando_analysis: ^0.0.2
+
 
 flutter:
 
