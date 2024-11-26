@@ -275,7 +275,6 @@ class _AdicionarLivroPageState extends State<AdicionarLivroPage> {
               alterarCategorias: _alterarCategoria,
               categoriasSelecionadas: _categoriasController,
               categorias: controller.categoriasUsuario,
-              colorScheme: colorScheme,
               multiSelectController: _multiSelectController,
             ),
             const SizedBox(height: 24),

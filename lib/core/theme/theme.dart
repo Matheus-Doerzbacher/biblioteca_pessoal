@@ -41,6 +41,7 @@ class ThemeDataCustom {
         brightness: Brightness.dark,
       ).copyWith(
         primary: primaryColorDark,
+        onPrimary: const Color.fromARGB(255, 203, 178, 158),
         surface: const Color.fromARGB(255, 11, 9, 6),
         shadow: const Color.fromARGB(255, 90, 83, 69),
       ),

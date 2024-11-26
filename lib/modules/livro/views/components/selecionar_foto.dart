@@ -67,7 +67,10 @@ class _SelecionarFotoWidgetState extends State<SelecionarFotoWidget> {
         ),
         TextButton.icon(
           onPressed: _pickImage,
-          label: const Text('Adicionar Imagem'),
+          label: Text(
+            'Adicionar Imagem',
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
           icon: const Icon(Icons.image),
         ),
       ],

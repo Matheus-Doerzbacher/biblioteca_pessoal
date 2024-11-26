@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:multi_dropdown/multi_dropdown.dart';
 
 class DropDownMultiCustom extends StatelessWidget {
-  final ColorScheme colorScheme;
   final Function(List<Categoria>) alterarCategorias;
   final List<Categoria> categoriasSelecionadas;
   final List<Categoria> categorias;
@@ -11,7 +10,6 @@ class DropDownMultiCustom extends StatelessWidget {
 
   const DropDownMultiCustom({
     super.key,
-    required this.colorScheme,
     required this.alterarCategorias,
     required this.categoriasSelecionadas,
     required this.categorias,
@@ -42,12 +40,18 @@ class DropDownMultiCustom extends StatelessWidget {
             ),
           ),
         ),
+        chipDecoration: ChipDecoration(
+          backgroundColor: colorScheme.tertiary,
+          labelStyle: TextStyle(
+            color: colorScheme.onTertiary,
+          ),
+        ),
         dropdownDecoration: DropdownDecoration(
-          backgroundColor: colorScheme.surface,
+          backgroundColor: colorScheme.surfaceContainer,
           elevation: 10,
         ),
         dropdownItemDecoration: DropdownItemDecoration(
-          selectedIcon: const Icon(Icons.check_box, color: Colors.white),
+          selectedIcon: Icon(Icons.check_box, color: colorScheme.onTertiary),
           selectedBackgroundColor: colorScheme.tertiary,
           selectedTextColor: colorScheme.onTertiary,
         ),
