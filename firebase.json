@@ -1,1 +1,21 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"biblioteca-pessoal-ef666","appId":"1:965054217571:android:1e92b8acfcefe8da88e756","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"biblioteca-pessoal-ef666","configurations":{"android":"1:965054217571:android:1e92b8acfcefe8da88e756","ios":"1:965054217571:ios:0207a6fd1d8b141488e756"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "biblioteca-pessoal-ef666",
+          "appId": "1:965054217571:android:f51e6f09dffb26ca88e756",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "ios": {
+        "default": {
+          "projectId": "biblioteca-pessoal-ef666",
+          "appId": "1:965054217571:ios:ce19db764fadf1dd88e756",
+          "uploadDebugSymbols": false,
+          "fileOutput": "ios/Runner/GoogleService-Info.plist"
+        }
+      }
+    }
+  }
+}

@@ -30,7 +30,7 @@ class LoginWithGoogle {
 
       return userCredential.user;
     } catch (e) {
-      throw Exception('Erro ao fazer login com o Google');
+      throw Exception('Erro ao fazer login com o Google: $e');
     }
   }
 }
