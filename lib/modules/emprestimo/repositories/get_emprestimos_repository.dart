@@ -1,7 +1,7 @@
+import 'package:biblioteca_pessoal/core/utils/db_print.dart';
 import 'package:biblioteca_pessoal/modules/emprestimo/models/emprestimo.dart';
 import 'package:biblioteca_pessoal/modules/livro/models/livro.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
 
 class GetEmprestimosRepository {
   Future<List<Emprestimo>> call(String uidUsuario) async {
@@ -43,9 +43,7 @@ class GetEmprestimosRepository {
         return [];
       }
     } catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
+      dbPrint(e);
       throw Exception('Hove um erro ao buscar os emprestimos');
     }
   }

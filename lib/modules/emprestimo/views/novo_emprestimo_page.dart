@@ -1,10 +1,10 @@
+import 'package:biblioteca_pessoal/core/utils/db_print.dart';
 import 'package:biblioteca_pessoal/core/widgets/input_text_custom.dart';
 import 'package:biblioteca_pessoal/modules/emprestimo/controllers/emprestimo_controller.dart';
 import 'package:biblioteca_pessoal/modules/emprestimo/models/emprestimo.dart';
 import 'package:biblioteca_pessoal/modules/emprestimo/views/components/selecionar_data_emprestimo_component.dart';
 import 'package:biblioteca_pessoal/modules/livro/models/livro.dart';
 import 'package:biblioteca_pessoal/modules/usuario/controllers/user_controller.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -50,9 +50,6 @@ class _NovoEmprestimoPageState extends State<NovoEmprestimoPage> {
     setState(() {
       _livroController = livro;
     });
-    if (kDebugMode) {
-      print(_livroController?.titulo);
-    }
   }
 
   void _handleDataDevolucao(DateTime dateTime) {
@@ -113,15 +110,14 @@ class _NovoEmprestimoPageState extends State<NovoEmprestimoPage> {
         _bottomErrorMesage('Ouve um problema ao fazer o Emprestimo');
       }
     } else {
-      if (kDebugMode) {
-        print('Formulário inválido!');
-      }
+      dbPrint('Formulário inválido!');
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final watch = context.watch<EmprestimoController>();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Novo Emprestimo'),
@@ -237,7 +233,7 @@ class _NovoEmprestimoPageState extends State<NovoEmprestimoPage> {
                 padding: const EdgeInsets.only(top: 24),
                 child: FilledButton(
                   onPressed: _submitForm, // Chama a validação do formulário
-                  child: controller.isLoading
+                  child: watch.isLoading
                       ? const CircularProgressIndicator()
                       : const Text('Confirmar Empréstimo'),
                 ),

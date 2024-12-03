@@ -1,7 +1,7 @@
 import 'package:biblioteca_pessoal/core/routes/app_routes.dart';
+import 'package:biblioteca_pessoal/core/utils/db_print.dart';
 import 'package:biblioteca_pessoal/modules/usuario/controllers/user_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -73,9 +73,7 @@ class _LoginPageState extends State<LoginPage> {
                                       );
                                     }
                                   } on FirebaseAuthException catch (error) {
-                                    if (kDebugMode) {
-                                      print(error.message);
-                                    }
+                                    dbPrint(error.message);
                                     if (context.mounted) {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
@@ -88,9 +86,7 @@ class _LoginPageState extends State<LoginPage> {
                                       );
                                     }
                                   } catch (error) {
-                                    if (kDebugMode) {
-                                      print(error);
-                                    }
+                                    dbPrint(error);
                                     if (context.mounted) {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(

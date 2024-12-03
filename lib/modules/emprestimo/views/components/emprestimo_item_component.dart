@@ -23,7 +23,10 @@ class _EmprestimoItemComponentsState extends State<EmprestimoItemComponents> {
   @override
   Widget build(BuildContext context) {
     final agora = DateTime.now();
-    final hoje = DateTime.parse('${agora.year}-${agora.month}-${agora.day}');
+    final ano = agora.year.toString();
+    final mes = agora.month.toString().padLeft(2, '0');
+    final dia = agora.day.toString().padLeft(2, '0');
+    final hoje = DateTime.parse('$ano-$mes-$dia');
 
     final livro = widget.emprestimo.livro;
     var estaAtrsado = false;

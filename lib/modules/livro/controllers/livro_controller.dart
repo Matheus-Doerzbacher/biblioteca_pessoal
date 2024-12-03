@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:biblioteca_pessoal/core/utils/db_print.dart';
 import 'package:biblioteca_pessoal/modules/categoria/models/categoria.dart';
 import 'package:biblioteca_pessoal/modules/categoria/repositories/get_categorias_repository.dart';
 import 'package:biblioteca_pessoal/modules/livro/models/livro.dart';
@@ -112,9 +113,7 @@ class LivroController extends ChangeNotifier {
       await _updateLivroRepository(livro);
       _updateLivro(livro);
     } catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
+      dbPrint(e);
     }
   }
 

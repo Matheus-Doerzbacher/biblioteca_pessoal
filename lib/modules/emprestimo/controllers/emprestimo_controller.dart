@@ -1,3 +1,4 @@
+import 'package:biblioteca_pessoal/core/utils/db_print.dart';
 import 'package:biblioteca_pessoal/modules/emprestimo/models/emprestimo.dart';
 import 'package:biblioteca_pessoal/modules/emprestimo/repositories/create_emprestimo_repository.dart';
 import 'package:biblioteca_pessoal/modules/emprestimo/repositories/delete_emprestimo_repository.dart';
@@ -51,9 +52,7 @@ class EmprestimoController extends ChangeNotifier {
       isLoading = false;
       notifyListeners();
 
-      if (kDebugMode) {
-        print(error);
-      }
+      dbPrint(error);
 
       return false;
     } finally {
@@ -105,9 +104,7 @@ class EmprestimoController extends ChangeNotifier {
       isLoading = false;
       notifyListeners();
 
-      if (kDebugMode) {
-        print(error);
-      }
+      dbPrint(error);
       return false;
     } finally {
       await getEmprestimos();

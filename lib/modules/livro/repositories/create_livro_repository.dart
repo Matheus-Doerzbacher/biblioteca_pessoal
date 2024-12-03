@@ -1,6 +1,6 @@
+import 'package:biblioteca_pessoal/core/utils/db_print.dart';
 import 'package:biblioteca_pessoal/modules/livro/models/livro.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
 
 class CreateLivroRepository {
   Future<Livro?> call(Livro livro) async {
@@ -15,9 +15,7 @@ class CreateLivroRepository {
       final json = snapshot.data()!;
       return Livro.fromJson(json);
     } catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
+      dbPrint(e);
       return null;
     }
   }

@@ -1,8 +1,8 @@
 import 'dart:io';
 
+import 'package:biblioteca_pessoal/core/utils/db_print.dart';
 import 'package:biblioteca_pessoal/modules/usuario/controllers/user_controller.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart';
 
 class SalvarImagemLivroRepository {
   Future<String> call(File imagem) async {
@@ -18,9 +18,7 @@ class SalvarImagemLivroRepository {
       final url = await downloadUrl.ref.getDownloadURL();
       return url;
     } catch (e) {
-      if (kDebugMode) {
-        print('Erro ao salvar imagem no storage $e');
-      }
+      dbPrint('Erro ao salvar imagem no storage $e');
       return '';
     }
   }

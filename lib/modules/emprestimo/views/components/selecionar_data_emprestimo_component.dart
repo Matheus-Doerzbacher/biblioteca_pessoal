@@ -107,35 +107,22 @@ class _DatePickerExampleState extends State<SelecionarDataEmprestimoComponent>
         children: [
           Expanded(
             child: Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Container(
-                decoration: const BoxDecoration(),
-                child: Padding(
-                  padding: const EdgeInsetsDirectional.only(start: 10, end: 10),
-                  child: Container(
-                    alignment: Alignment.center,
-                    height: 48,
-                    decoration: BoxDecoration(
-                      color: colorScheme.surface,
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 4,
-                          color: colorScheme.shadow,
-                          offset: const Offset(2, 2),
-                        ),
-                      ],
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Text(
-                      '${widget.isDevolucao ? 'Devolução' : 'Emprestimo'}: ${_selectedDate.value.day}/${_selectedDate.value.month}/${_selectedDate.value.year}',
-                      style: Theme.of(context).textTheme.bodyLarge,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                decoration: BoxDecoration(
+                  color: colorScheme.surfaceContainer,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  '${widget.isDevolucao ? 'Devolução' : 'Emprestimo'}: ${_selectedDate.value.day}/${_selectedDate.value.month}/${_selectedDate.value.year}',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                  textAlign: TextAlign.center,
                 ),
               ),
             ),
           ),
+          const SizedBox(width: 14),
           SizedBox(
             height: 48,
             child: FilledButton(

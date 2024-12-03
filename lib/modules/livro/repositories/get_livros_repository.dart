@@ -1,6 +1,6 @@
+import 'package:biblioteca_pessoal/core/utils/db_print.dart';
 import 'package:biblioteca_pessoal/modules/livro/models/livro.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
 
 class GetLivrosRepository {
   Future<List<Livro>> call(String uidUsuario) async {
@@ -19,9 +19,7 @@ class GetLivrosRepository {
 
       return livros;
     } catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
+      dbPrint(e);
       return [];
     }
   }
