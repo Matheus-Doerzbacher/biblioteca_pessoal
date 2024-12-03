@@ -115,7 +115,11 @@ class _EmprestimosPageState extends State<EmprestimosPage> {
 
   Widget _listAtrasados(BuildContext context, List<Emprestimo> emprestimos) {
     final agora = DateTime.now();
-    final hoje = DateTime.parse('${agora.year}-${agora.month}-${agora.day}');
+    final ano = agora.year.toString();
+    final mes = agora.month.toString().padLeft(2, '0');
+    final dia = agora.day.toString().padLeft(2, '0');
+    final hoje = DateTime.parse('$ano-$mes-$dia');
+
     final atrasados = emprestimos.where((emprestimo) {
       if (emprestimo.dataDevolucao != null) {
         final result = emprestimo.dataDevolucao!.compareTo(hoje);
